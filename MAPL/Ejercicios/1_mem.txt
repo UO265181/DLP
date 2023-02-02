@@ -1,0 +1,11 @@
+' int a;
+' a = 8;
+' print a;
+
+pusha 0
+push 8
+store
+
+pusha 0
+load
+out

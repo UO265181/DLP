@@ -1,0 +1,55 @@
+' Pedir 3 n reales
+' Imprimir el menor
+
+
+pusha 0
+in
+store
+pusha 2
+in
+store
+pusha 4
+in 
+store 
+
+pusha 0
+load
+pusha 2
+load
+lt 'n1 < n2
+jnz primero_tercero 
+
+pusha 2
+load 
+pusha 4
+load
+lt 'n2 < n3
+jz tercero
+
+'print n2;
+pusha 2
+load
+out
+halt
+
+tercero:
+'print n3;
+pusha 4
+load
+out
+halt 
+
+primero_tercero:
+pusha 0
+load
+pusha 4
+load
+lt 'n1 < n3
+jz tercero
+
+'print n1;
+pusha 0 
+load
+out
+halt
+

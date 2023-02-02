@@ -1,0 +1,17 @@
+' float f;
+' read f;
+' print 1+f*2;
+
+pusha 0
+inf
+storef
+
+push 1
+i2f
+push 2
+i2f
+pusha 0
+loadf
+mulf
+addf
+outf

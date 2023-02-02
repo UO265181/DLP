@@ -1,0 +1,57 @@
+'Imprimir divisores de un n dado
+
+'int a;
+'int b;
+'read a;
+'b = a;
+'while (b!=0) {
+'    if(a%b==0)
+'        println b;
+'    b--;
+'}
+
+
+pusha 0
+in
+store
+pusha 2
+pusha 0
+load
+store
+
+while:
+pusha 2
+load
+push 0
+ne
+jz finWhile
+
+pusha 0
+load
+pusha 2
+load
+mod
+push 0
+eq 
+jz noPrint
+
+pusha 2
+load
+out
+pushb 10
+outb
+
+noPrint:
+pusha 2
+pusha 2
+load
+push 1
+sub
+store
+
+jmp while
+
+finWhile:
+
+
+

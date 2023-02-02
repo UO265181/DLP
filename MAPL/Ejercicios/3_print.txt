@@ -1,0 +1,16 @@
+' println 'a';
+' print 'b';
+
+' 97 es 'a'
+' 32 es ' '
+' 10 es '\n'
+
+
+pushb 97
+outb
+pushb 10
+outb
+
+pushb 98
+outb
+ 
