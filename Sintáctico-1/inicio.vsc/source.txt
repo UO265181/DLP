@@ -1,0 +1,34 @@
+/*
+Características del lenguaje:
+
+- La sección DATA siempre va primero que la sección CODE.
+
+- Solo en la sección data se pueden definir variables. Pueden ser de tipo entero o tipo real.
+- Es obligatorio que se defina al menos una variable.
+- Es obligatorio que el usuario escriba DATA antes de las definiciones.
+- En cada definición habrá una sola variable (no se permite "int a, b;").
+
+- Un programa debe tener al menos una sentencia.
+- Es obligatorio que el usuario escriba CODE antes de las sentencias.
+- El if/while requiere paréntesis en la condición y llaves obligatorias (aunque solo tengan una sentencia).
+- Las condiciones son, al igual que en C/C++ expresiones enteras (0 = falso / distinto de cero = cierto).
+- Debe haber al menos 1 sentencia dentro del if/else/while.
+- El else es opcional.
+- En el cast los símbolos '<' y '>' y los paréntesis son obligatorios: <int>(...).
+- No hay asignación múltiple (a = b = 0).
+- El único operador aritmético es la suma ('+').
+- El único operador relacional es el 'distinto que' ('!=').
+*/
+
+DATA
+
+    real alto;
+
+CODE
+
+    print calcula(2, nAleatorio(n));
+
+    resultado = calcula(3.4, alto) + 5;
+
+    imprime(25);
+
