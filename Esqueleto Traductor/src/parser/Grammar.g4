@@ -1,15 +1,25 @@
 grammar Grammar;
 import Lexicon;
 
+start: definitions EOF;
 
-start: definition* EOF;
+definitions: | definitions definition;
 
 definition:
 	'var' IDENT ':' type ';'
-	| 'struct' IDENT '{' (IDENT ':' type ';')* '}' ';'
-	| IDENT '(' defFunParams ')' (':' type)? '{' (
-		'var' IDENT ':' type ';'
-	)* sentence* '}';
+	| 'struct' IDENT '{' structFields '}' ';'
+	| IDENT '(' defFunParams ')' '{' localVars sentences '}'
+	| IDENT '(' defFunParams ')' ':' type '{' localVars sentences '}';
+
+localVars: | localVars 'var' IDENT ':' type ';';
+
+structFields: | structFields IDENT ':' type ';';
+
+defFunParams: | defFunParamsList;
+
+defFunParamsList:
+	IDENT ':' type
+	| defFunParamsList ',' IDENT ':' type;
 
 type:
 	'int'
@@ -18,22 +28,29 @@ type:
 	| '[' INT_CONSTANT ']' type
 	| IDENT;
 
+sentences: | sentences sentence;
+
 sentence:
-	'print' expression? ';'
-	| 'printsp' expression? ';'
-	| 'println' expression? ';'
+	'print' ';'
+	| 'print' expression ';'
+	| 'printsp' ';'
+	| 'printsp' expression ';'
+	| 'println' ';'
+	| 'println' expression ';'
+	| 'return' ';'
+	| 'return' expression ';'
 	| 'read' varAccess ';'
-	| 'return' expression? ';'
 	| varAccess '=' expression ';'
 	| IDENT '(' callFunParams ')' ';'
-	| 'if' '(' expression ')' '{' sentence* '}'
-	| 'if' '(' expression ')' '{' sentence* '}' 'else' '{' sentence* '}'
-	| 'while' '(' expression ')' '{' sentence* '}';
+	| 'if' '(' expression ')' '{' sentences '}'
+	| 'if' '(' expression ')' '{' sentences '}' 'else' '{' sentences '}'
+	| 'while' '(' expression ')' '{' sentences '}';
 
-defFunParams: (IDENT ':' type (',' IDENT ':' type)*)?;
+callFunParams: | callFunParamsList;
 
-callFunParams: (expression (',' expression)*)?;
-
+callFunParamsList:
+	expression
+	| callFunParamsList ',' expression;
 
 expression:
 	INT_CONSTANT
@@ -51,6 +68,7 @@ expression:
 	| expression '&&' expression
 	| expression '||' expression;
 
+//TODO: no necesario
 varAccess:
 	IDENT
 	| varAccess '.' IDENT

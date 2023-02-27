@@ -9,9 +9,9 @@ REAL_CONSTANT
 	: [0-9]+'.'[0-9]+
 	;
 
-//TODO: \n?
+//TODO: \t?
 CHAR_CONSTANT
-	: '\''. '\''
+	: '\''('\n'|.) '\''
 	;
 
 IDENT
