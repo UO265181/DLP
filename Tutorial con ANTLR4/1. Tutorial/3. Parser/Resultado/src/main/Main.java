@@ -27,7 +27,7 @@ import codegeneration.*;
  * - Para Generación de Código: 'MemoryAllocation.java' y 'CodeSelection.java'.
  */
 public class Main {
-    public static final String INPUT_FILE = "source.txt"; // Fichero de prueba durante el desarrollo
+    public static final String INPUT_FILE = "Tutorial con ANTLR4/1. Tutorial/3. Parser/Resultado/source.txt"; // Fichero de prueba durante el desarrollo
     public static final String OUTPUT_FILE = "output.txt";
 
     public static void main(String[] args) throws Exception {

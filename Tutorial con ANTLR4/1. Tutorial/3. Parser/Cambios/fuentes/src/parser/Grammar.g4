@@ -12,7 +12,7 @@ import Lexicon
 // Solución 1. Versión básica original.
 // - No guarda posiciones de línea.
 // - Usa '$IDENT.text'.
-/*
+
 start returns[Program ast]
 	: 'DATA' variables 'CODE' sentences EOF { $ast = new Program($variables.list, $sentences.list); }
 	;
@@ -91,7 +91,7 @@ expr returns[Expression ast]
 // Solución 3. Elimina reglas usando `+=` (Requiere VGen).
 // Permite eliminar los no-terminales creados únicamente para listas.
 // En este caso, elimina las reglas 'variables' y 'sentences' al usar en la regla 'start' el operador '+='
-
+/* */
 start returns[Program ast]
 	: 'DATA' lv+=variable* 'CODE' ls+=sentence* EOF { $ast = new Program($lv, $ls); }
 	;

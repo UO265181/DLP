@@ -39,8 +39,8 @@ sentence:
 	| 'println' expression ';'
 	| 'return' ';'
 	| 'return' expression ';'
-	| 'read' varAccess ';'
-	| varAccess '=' expression ';'
+	| 'read' expression ';'
+	| expression '=' expression ';'
 	| IDENT '(' callFunParams ')' ';'
 	| 'if' '(' expression ')' '{' sentences '}'
 	| 'if' '(' expression ')' '{' sentences '}' 'else' '{' sentences '}'
@@ -57,7 +57,9 @@ expression:
 	| REAL_CONSTANT
 	| CHAR_CONSTANT
 	| IDENT '(' callFunParams ')'
-	| varAccess
+	| IDENT
+	| expression '.' IDENT
+	| expression '[' expression ']'
 	| '(' expression ')'
 	| '!' expression
 	| '<' type '>' '(' expression ')'
@@ -68,9 +70,5 @@ expression:
 	| expression '&&' expression
 	| expression '||' expression;
 
-//TODO: no necesario
-varAccess:
-	IDENT
-	| varAccess '.' IDENT
-	| varAccess '[' expression ']';
+
 
