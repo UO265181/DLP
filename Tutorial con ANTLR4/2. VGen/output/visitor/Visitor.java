@@ -10,10 +10,7 @@ public interface Visitor {
 	public Object visit(Program node, Object param);
 	public Object visit(DefinitionVariable node, Object param);
 	public Object visit(DefinitionStruct node, Object param);
-	public Object visit(StructField node, Object param);
 	public Object visit(DefinitionFunction node, Object param);
-	public Object visit(DefinitionFunctionParam node, Object param);
-	public Object visit(LocalVariable node, Object param);
 	public Object visit(TypeInt node, Object param);
 	public Object visit(TypeFloat node, Object param);
 	public Object visit(TypeChar node, Object param);
@@ -28,7 +25,6 @@ public interface Visitor {
 	public Object visit(SentenceCallFunction node, Object param);
 	public Object visit(If node, Object param);
 	public Object visit(While node, Object param);
-	public Object visit(CallFunctionParam node, Object param);
 	public Object visit(ConstantInt node, Object param);
 	public Object visit(ConstantFloat node, Object param);
 	public Object visit(ConstantChar node, Object param);
@@ -39,6 +35,6 @@ public interface Visitor {
 	public Object visit(UnaryExpression node, Object param);
 	public Object visit(Cast node, Object param);
 	public Object visit(ArithmeticExpression node, Object param);
-	public Object visit(ComparationExpression node, Object param);
-	public Object visit(LogicExpression node, Object param);
+	public Object visit(RelationalExpression node, Object param);
+	public Object visit(LogicalExpression node, Object param);
 }

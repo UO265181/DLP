@@ -37,8 +37,8 @@ public class Main {
         if (errorManager.errorsCount() == 0)
             System.out.println("El programa se ha compilado correctamente.");
 
-        //TODO: descomentar
-        //ASTPrinter.toHtml(INPUT_FILE, ast, "AST"); // Utilidad generada por VGen (opcional)
+
+        ASTPrinter.toHtml(INPUT_FILE, ast, "AST"); // Utilidad generada por VGen (opcional)
     }
 
     /**
@@ -53,15 +53,15 @@ public class Main {
         AST ast = null;
 
         // IMPORTANTE: Cuando se genere el AST, INTERCAMBIAR las dos líneas siguientes:
-        parser.start();
-        // ast = parser.start().ast;
+        //parser.start();
+        ast = parser.start().ast;
 
         if (parser.getNumberOfSyntaxErrors() > 0 || ast == null) { // Hay errores o el AST no se ha implementado aún
             errorManager.notify("El AST no ha sido creado.");
             return null;
         }
 
-        //TODO: descomentar
+ 
         
         // 2. Fase de Análisis Semántico
         SemanticAnalisys analyzer = new SemanticAnalisys(errorManager);

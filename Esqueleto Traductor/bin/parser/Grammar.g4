@@ -1,74 +1,146 @@
 grammar Grammar;
 import Lexicon;
 
-start: definitions EOF;
+@parser::header {
+    import ast.*;
+}
 
-definitions: | definitions definition;
+start
+	returns[Program ast]:
+	definitions EOF { $ast = new Program($definitions.list); };
 
-definition:
-	'var' IDENT ':' type ';'
-	| 'struct' IDENT '{' structFields '}' ';'
-	| IDENT '(' defFunParams ')' '{' localVars sentences '}'
-	| IDENT '(' defFunParams ')' ':' type '{' localVars sentences '}';
+definitions
+	returns[List<Definition> list = new ArrayList<Definition>()]:
+	(definition { $list.add($definition.ast); })*;
 
-localVars: | localVars 'var' IDENT ':' type ';';
+definition
+	returns[Definition ast]:
+	definitionVariable { $ast = $definitionVariable.ast; }
+	| 'struct' IDENT '{' structFields '}' ';' { $ast = new DefinitionStruct($IDENT, $structFields.list); 
+		}
+	| IDENT '(' definitionFunctionParams ')' '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, null, $definitionVariables.list, $sentences.list); 
+		}
+	| IDENT '(' definitionFunctionParams ')' ':' type '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, $type.ast, $definitionVariables.list, $sentences.list); 
+		};
 
-structFields: | structFields IDENT ':' type ';';
+definitionVariables
+	returns[List<DefinitionVariable> list = new ArrayList<DefinitionVariable>()]: (
+		definitionVariable { $list.add($definitionVariable.ast); }
+	)*;
 
-defFunParams: | defFunParamsList;
+definitionVariable
+	returns[DefinitionVariable ast]:
+	'var' IDENT ':' type ';' { $ast = new DefinitionVariable($IDENT, $type.ast); };
 
-defFunParamsList:
-	IDENT ':' type
-	| defFunParamsList ',' IDENT ':' type;
+structFields
+	returns[List<DefinitionVariable> list = new ArrayList<DefinitionVariable>()]: (
+		structField { $list.add($structField.ast); }
+	)*;
 
-type:
-	'int'
-	| 'float'
-	| 'char'
-	| '[' INT_CONSTANT ']' type
-	| IDENT;
+structField
+	returns[DefinitionVariable ast]:
+	IDENT ':' type ';' { $ast = new DefinitionVariable($IDENT, $type.ast); };
 
-sentences: | sentences sentence;
+definitionFunctionParams
+	returns[List<DefinitionVariable> list = new ArrayList<DefinitionVariable>()]: (
+		definitionFunctionParam { $list.add($definitionFunctionParam.ast); } (
+			',' definitionFunctionParam { $list.add($definitionFunctionParam.ast); }
+		)*
+	)?;
 
-sentence:
-	'print' ';'
-	| 'print' expression ';'
-	| 'printsp' ';'
-	| 'printsp' expression ';'
-	| 'println' ';'
-	| 'println' expression ';'
-	| 'return' ';'
-	| 'return' expression ';'
-	| 'read' expression ';'
-	| expression '=' expression ';'
-	| IDENT '(' callFunParams ')' ';'
-	| 'if' '(' expression ')' '{' sentences '}'
-	| 'if' '(' expression ')' '{' sentences '}' 'else' '{' sentences '}'
-	| 'while' '(' expression ')' '{' sentences '}';
+definitionFunctionParam
+	returns[DefinitionVariable ast]:
+	IDENT ':' type { $ast = new DefinitionVariable($IDENT, $type.ast); };
 
-callFunParams: | callFunParamsList;
+type
+	returns[Type ast]:
+	'int' { $ast = new TypeInt(); }
+	| 'float' { $ast = new TypeFloat(); }
+	| 'char' { $ast = new TypeChar(); }
+	| '[' INT_CONSTANT ']' type { $ast = new TypeArray($INT_CONSTANT, $type.ast); }
+	| IDENT { $ast = new TypeStruct($IDENT); };
 
-callFunParamsList:
-	expression
-	| callFunParamsList ',' expression;
+sentences
+	returns[List<Sentence> list = new ArrayList<Sentence>()]: (
+		sentence { $list.add($sentence.ast); }
+	)*;
 
-expression:
-	INT_CONSTANT
-	| REAL_CONSTANT
-	| CHAR_CONSTANT
-	| IDENT '(' callFunParams ')'
-	| IDENT
-	| expression '.' IDENT
-	| expression '[' expression ']'
-	| '(' expression ')'
-	| '!' expression
-	| '<' type '>' '(' expression ')'
-	| expression ('*' | '/' | '%') expression
-	| expression ('+' | '-') expression
-	| expression ('<' | '>' | '>=' | '<=') expression
-	| expression ('==' | '!=') expression
-	| expression '&&' expression
-	| expression '||' expression;
+sentence
+	returns[Sentence ast]:
+	left = expression '=' right = expression ';' { $ast = new Assignment($left.ast, $right.ast); }
+	| 'return' expression ';' { $ast = new Return($expression.ast); }
+	| 'return' ';' { $ast = new Return(null); }
+	| 'print' expression ';' { $ast = new Print($expression.ast); }
+	| 'print' ';' { $ast = new Print(null); }
+	| 'printsp' expression ';' { $ast = new Printsp($expression.ast); }
+	| 'printsp' ';' { $ast = new Printsp(null); }
+	| 'println' expression ';' { $ast = new Println($expression.ast); }
+	| 'println' ';' { $ast = new Println(null); }
+	| 'read' expression ';' { $ast = new Read($expression.ast); }
+	| 'while' '(' expression ')' '{' sentences '}' { $ast = new While($expression.ast, $sentences.list); 
+		}
+	| 'if' '(' expression ')' '{' sentences '}' { $ast = new If($expression.ast, $sentences.list, null); 
+		}
+	| 'if' '(' expression ')' '{' ifSentences = sentences '}' 'else' '{' elseSentences = sentences
+		'}' { $ast = new If($expression.ast, $ifSentences.list, $elseSentences.list); }
+	| IDENT '(' callFunctionParams ')' ';' { $ast = new SentenceCallFunction($IDENT, $callFunctionParams.list); 
+		};
 
+callFunctionParams
+	returns[List<Expression> list = new ArrayList<Expression>()]: (
+		expression { $list.add($expression.ast); } (
+			',' expression { $list.add($expression.ast); }
+		)*
+	)?;
 
+/* 
+ expression:
+ INT_CONSTANT
+ | REAL_CONSTANT
+ | CHAR_CONSTANT
+ | IDENT '(' callFunctionParams
+ ')'
+ | IDENT
+ | expression '.' IDENT
+ | expression '[' expression ']'
+ | '(' expression ')'
+ | '!'
+ expression
+ | '<' type '>' '(' expression ')'
+ | expression ('*' | '/' | '%') expression
+ |
+ expression ('+' | '-') expression
+ | expression ('<' | '>' | '>=' | '<=') expression
+ | expression
+ ('==' | '!=') expression
+ | expression '&&' expression
+ | expression '||' expression;
+ */
+
+expression
+	returns[Expression ast]:
+	'(' expression ')' { $ast = $expression.ast; }
+	| array = expression '[' index = expression ']' { $ast = new AccessArray($array.ast,$index.ast); 
+		}
+	| struct = expression '.' IDENT { $ast = new AccessStructField($struct.ast,$IDENT); }
+	| '<' type '>' '(' expression ')' { $ast = new Cast($type.ast,$expression.ast); }
+	| left = expression operator = ('*' | '/' | '%') right = expression { $ast = new ArithmeticExpression($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = ('+' | '-') right = expression { $ast = new ArithmeticExpression($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = ('<' | '>' | '<=' | '>=') right = expression { $ast = new RelationalExpression($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = ('==' | '!=') right = expression { $ast = new RelationalExpression($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = '&&' right = expression { $ast = new LogicalExpression($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = '||' right = expression { $ast = new LogicalExpression($left.ast,$operator,$right.ast); 
+		}
+	| operator = '!' expression { $ast = new UnaryExpression($operator,$expression.ast); }
+	| IDENT '(' callFunctionParams ')' { $ast = new ExpressionCallFunction($IDENT,$callFunctionParams.list); 
+		}
+	| IDENT { $ast = new AccessVariable($IDENT); }
+	| INT_CONSTANT { $ast = new ConstantInt($INT_CONSTANT); }
+	| REAL_CONSTANT { $ast = new ConstantFloat($REAL_CONSTANT); }
+	| CHAR_CONSTANT { $ast = new ConstantChar($CHAR_CONSTANT); };
 

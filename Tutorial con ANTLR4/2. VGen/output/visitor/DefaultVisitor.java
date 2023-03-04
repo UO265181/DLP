@@ -27,40 +27,19 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class DefinitionStruct { String name;  List<StructField> structFields; }
+	//	class DefinitionStruct { String name;  List<DefinitionVariable> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
 		visitChildren(node.getStructFields(), param);
 		return null;
 	}
 
-	//	class StructField { String name;  Type type; }
-	public Object visit(StructField node, Object param) {
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-		return null;
-	}
-
-	//	class DefinitionFunction { String name;  List<DefinitionFunctionParam> definitionFunctionParams;  Type type;  List<LocalVariable> localVariables;  List<Sentence> sentences; }
+	//	class DefinitionFunction { String name;  List<DefinitionVariable> definitionFunctionParams;  Type type;  List<DefinitionVariable> localVariables;  List<Sentence> sentences; }
 	public Object visit(DefinitionFunction node, Object param) {
 		visitChildren(node.getDefinitionFunctionParams(), param);
 		if (node.getType() != null)
 			node.getType().accept(this, param);
 		visitChildren(node.getLocalVariables(), param);
 		visitChildren(node.getSentences(), param);
-		return null;
-	}
-
-	//	class DefinitionFunctionParam { String name;  Type type; }
-	public Object visit(DefinitionFunctionParam node, Object param) {
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-		return null;
-	}
-
-	//	class LocalVariable { String name;  Type type; }
-	public Object visit(LocalVariable node, Object param) {
-		if (node.getType() != null)
-			node.getType().accept(this, param);
 		return null;
 	}
 
@@ -135,7 +114,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class SentenceCallFunction { String name;  List<CallFunctionParam> callFunctionParams; }
+	//	class SentenceCallFunction { String name;  List<Expression> callFunctionParams; }
 	public Object visit(SentenceCallFunction node, Object param) {
 		visitChildren(node.getCallFunctionParams(), param);
 		return null;
@@ -158,13 +137,6 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class CallFunctionParam { Expression expression; }
-	public Object visit(CallFunctionParam node, Object param) {
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
-		return null;
-	}
-
 	//	class ConstantInt { String value; }
 	public Object visit(ConstantInt node, Object param) {
 		return null;
@@ -180,7 +152,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class ExpressionCallFunction { String name;  List<CallFunctionParam> callFunctionParams; }
+	//	class ExpressionCallFunction { String name;  List<Expression> callFunctionParams; }
 	public Object visit(ExpressionCallFunction node, Object param) {
 		visitChildren(node.getCallFunctionParams(), param);
 		return null;
@@ -191,17 +163,17 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class AccessStructField { Expression expression;  String name; }
+	//	class AccessStructField { Expression struct;  String name; }
 	public Object visit(AccessStructField node, Object param) {
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
+		if (node.getStruct() != null)
+			node.getStruct().accept(this, param);
 		return null;
 	}
 
-	//	class AccessArray { Expression expression;  Expression index; }
+	//	class AccessArray { Expression array;  Expression index; }
 	public Object visit(AccessArray node, Object param) {
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
+		if (node.getArray() != null)
+			node.getArray().accept(this, param);
 		if (node.getIndex() != null)
 			node.getIndex().accept(this, param);
 		return null;
@@ -232,8 +204,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class ComparationExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(ComparationExpression node, Object param) {
+	//	class RelationalExpression { Expression left;  String operator;  Expression right; }
+	public Object visit(RelationalExpression node, Object param) {
 		if (node.getLeft() != null)
 			node.getLeft().accept(this, param);
 		if (node.getRight() != null)
@@ -241,8 +213,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class LogicExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(LogicExpression node, Object param) {
+	//	class LogicalExpression { Expression left;  String operator;  Expression right; }
+	public Object visit(LogicalExpression node, Object param) {
 		if (node.getLeft() != null)
 			node.getLeft().accept(this, param);
 		if (node.getRight() != null)
