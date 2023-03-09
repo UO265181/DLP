@@ -39,6 +39,14 @@ public class Main {
 
 
         ASTPrinter.toHtml(INPUT_FILE, ast, "AST"); // Utilidad generada por VGen (opcional)
+
+
+
+
+        Printer printer = new Printer();
+        ast.accept(printer, null);
+
+
     }
 
     /**

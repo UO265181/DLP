@@ -93,29 +93,6 @@ callFunctionParams
 		)*
 	)?;
 
-/* 
- expression:
- INT_CONSTANT
- | REAL_CONSTANT
- | CHAR_CONSTANT
- | IDENT '(' callFunctionParams
- ')'
- | IDENT
- | expression '.' IDENT
- | expression '[' expression ']'
- | '(' expression ')'
- | '!'
- expression
- | '<' type '>' '(' expression ')'
- | expression ('*' | '/' | '%') expression
- |
- expression ('+' | '-') expression
- | expression ('<' | '>' | '>=' | '<=') expression
- | expression
- ('==' | '!=') expression
- | expression '&&' expression
- | expression '||' expression;
- */
 
 expression
 	returns[Expression ast]:

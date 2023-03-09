@@ -1,0 +1,56 @@
+//// Printer ----
+
+
+var a:int;
+var b:char;
+var c:[5]float;
+var h:[3][2]float;
+struct Direccion {
+	portal:int;
+	codigoPostal:int;
+};
+var d1:Direccion;
+var d2:Direccion;
+struct Persona {
+	edad:int;
+	direccion:Direccion;
+};
+var f:[6]Persona;
+struct Empresa {
+	cif:[9]char;
+	empleados:[10]Persona;
+};
+var microsoft:Empresa;
+dobleSuma(a:int,b:int,): int {
+9var local:int;
+
+9local = a + b * 2;
+9return local * 2;
+}
+escribeEdad(num:int,) {
+
+9printsp microsoft.empleados[num].edad;
+}
+var z:int;
+main() {
+9var local:int;
+9var pepe:Persona;
+9var v:[10]int;
+
+9pepe.edad = 20;
+9read pepe.direccion.codigoPostal;
+9local = 0;
+9while (local < 10) {
+18v[local] = dobleSuma(<int>(2.0 + h[0][3]),local,);
+18local = local + 1;
+}
+9if (a >= 2 && local < 5) {
+18escribeEdad(a + local,);
+18return ;
+} else {
+18b = 'R';
+}
+9if (z != 2) {
+18escribeEdad(v[local],);
+}
+}
