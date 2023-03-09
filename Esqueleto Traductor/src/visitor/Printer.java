@@ -21,8 +21,6 @@ Solo quedaría añadir a cada método visit aquello adicional que se quiera real
 
 public class Printer extends DefaultVisitor {
 
-
-
     // ---------------------------------------------------------
     // Tareas a realizar en cada método visit:
     //
@@ -57,7 +55,7 @@ public class Printer extends DefaultVisitor {
     // ---------------------------------------------------------
 
     private PrintWriter writer;
-    private int tabCounter;
+    private int tabCounter = 0;
 
     // class Program { List<Definition> definitions; }
     public Object visit(Program node, Object param) {
@@ -68,29 +66,29 @@ public class Printer extends DefaultVisitor {
             writer.print("//// Printer ----");
             writer.println();
             writer.println();
-    
-            if (node.getDefinitions() != null)
-			for (Definition child : node.getDefinitions()) {
 
-                if(child instanceof DefinitionVariable) {
+            if (node.getDefinitions() != null)
+                for (Definition child : node.getDefinitions()) {
                     writer.println();
-                    writer.print("var ");
-                    child.accept(this, param);
-                    writer.print(";");
-                } else {
-                    child.accept(this, param);
+                    if (child instanceof DefinitionVariable) {
+                        writer.println();
+                        writer.print("var ");
+                        child.accept(this, param);
+                        writer.print(";");
+                    } else {
+                        child.accept(this, param);
+                    }
+
                 }
 
-            }
-    
             writer.close();
-                     
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-		return null;
-	}
+        return null;
+    }
 
     // class DefinitionVariable { String name; Type type; }
     public Object visit(DefinitionVariable node, Object param) {
@@ -128,17 +126,21 @@ public class Printer extends DefaultVisitor {
     // List<Sentence> sentences; }
     public Object visit(DefinitionFunction node, Object param) {
 
-        
         tabCounter++;
 
         writer.println();
         writer.print(node.getName() + "(");
 
-        if (node.getDefinitionFunctionParams() != null)
+        if (node.getDefinitionFunctionParams() != null){
+            int counter = 0;
             for (DefinitionVariable child : node.getDefinitionFunctionParams()) {
                 child.accept(this, param);
-                writer.print(",");
+                counter++;
+                if (counter < node.getDefinitionFunctionParams().size())
+                    writer.print(",");
             }
+
+        }
 
         writer.print(")");
 
@@ -154,7 +156,9 @@ public class Printer extends DefaultVisitor {
         if (node.getLocalVariables() != null)
             for (DefinitionVariable child : node.getLocalVariables()) {
                 writer.println();
-                writer.print('\t'*tabCounter);
+                for(int i=0; i<tabCounter; i++) {
+                    writer.print('\t');
+                }
                 writer.print("var ");
 
                 child.accept(this, param);
@@ -162,22 +166,30 @@ public class Printer extends DefaultVisitor {
                 writer.print(";");
             }
 
-
         if (node.getSentences() != null)
-    
+
             writer.println();
 
-            for (Sentence child : node.getSentences()) {
-                writer.println();
-                writer.print('\t'*tabCounter);
-
-                child.accept(this, param);
+        for (Sentence child : node.getSentences()) {
+            writer.println();
+            for(int i=0; i<tabCounter; i++) {
+                writer.print('\t');
             }
 
+            child.accept(this, param);
+        }
+
         writer.println();
-        writer.print("}");
-        
+
         tabCounter--;
+
+        for(int i=0; i<tabCounter; i++) {
+            writer.print('\t');
+        }
+
+        writer.print("}");
+
+
 
         return null;
     }
@@ -206,11 +218,10 @@ public class Printer extends DefaultVisitor {
         return null;
     }
 
-
     // class TypeArray { String size; Type type; }
     public Object visit(TypeArray node, Object param) {
 
-        writer.print("["+node.getSize()+"]");
+        writer.print("[" + node.getSize() + "]");
 
         super.visit(node, param);
 
@@ -264,9 +275,12 @@ public class Printer extends DefaultVisitor {
     // class Return { Expression expression; }
     public Object visit(Return node, Object param) {
 
-        writer.print("return ");
+        writer.print("return");
 
-        super.visit(node, param);
+        if (node.getExpression() != null) {
+            writer.print(" ");
+            node.getExpression().accept(this, param);
+        }
 
         writer.print(";");
 
@@ -307,12 +321,16 @@ public class Printer extends DefaultVisitor {
 
         writer.print(node.getName() + "(");
 
-        if (node.getCallFunctionParams() != null)
+        if (node.getCallFunctionParams() != null) {
+            int counter = 0;
             for (Expression child : node.getCallFunctionParams()) {
                 child.accept(this, param);
-                writer.print(",");
+                counter++;
+                if (counter < node.getCallFunctionParams().size())
+                    writer.print(",");
             }
 
+        }
         writer.print(");");
 
         return null;
@@ -322,7 +340,7 @@ public class Printer extends DefaultVisitor {
     // elseSentences; }
     public Object visit(If node, Object param) {
 
-        tabCounter++;
+
 
         writer.print("if (");
 
@@ -331,28 +349,48 @@ public class Printer extends DefaultVisitor {
 
         writer.print(") {");
 
+        tabCounter++;
+
         if (node.getIfSentences() != null)
             for (Sentence child : node.getIfSentences()) {
                 writer.println();
-                writer.print('\t'*tabCounter);
+                for(int i=0; i<tabCounter; i++) {
+                    writer.print('\t');
+                }
                 child.accept(this, param);
             }
 
         writer.println();
+
+        tabCounter--;
+
+        for(int i=0; i<tabCounter; i++) {
+            writer.print('\t');
+        }
+
         writer.print("}");
 
         if (node.getElseSentences() != null) {
             writer.print(" else {");
+            tabCounter++;
             for (Sentence child : node.getElseSentences()) {
                 writer.println();
-                writer.print('\t'*tabCounter);
+                for(int i=0; i<tabCounter; i++) {
+                    writer.print('\t');
+                }
                 child.accept(this, param);
             }
             writer.println();
+            tabCounter--;
+
+            for(int i=0; i<tabCounter; i++) {
+                writer.print('\t');
+            }
+    
             writer.print("}");
         }
 
-        tabCounter--;
+        
 
         return null;
     }
@@ -360,7 +398,7 @@ public class Printer extends DefaultVisitor {
     // class While { Expression condition; List<Sentence> sentences; }
     public Object visit(While node, Object param) {
 
-        tabCounter++;
+    
 
         writer.print("while (");
 
@@ -369,18 +407,27 @@ public class Printer extends DefaultVisitor {
 
         writer.print(") {");
 
+        tabCounter++;
+
         if (node.getSentences() != null)
             for (Sentence child : node.getSentences()) {
                 writer.println();
-                writer.print('\t'*tabCounter);
+                for(int i=0; i<tabCounter; i++) {
+                    writer.print('\t');
+                }
 
                 child.accept(this, param);
             }
 
         writer.println();
+        tabCounter--;
+
+        for(int i=0; i<tabCounter; i++) {
+            writer.print('\t');
+        }
+
         writer.print("}");
 
-        tabCounter--;
 
         return null;
     }
@@ -417,15 +464,20 @@ public class Printer extends DefaultVisitor {
 
         writer.print(node.getName() + "(");
 
-        if (node.getCallFunctionParams() != null)
+        if (node.getCallFunctionParams() != null) {
+            int counter = 0;
             for (Expression child : node.getCallFunctionParams()) {
                 child.accept(this, param);
-                writer.print(",");
+                counter++;
+                if (counter < node.getCallFunctionParams().size())
+                    writer.print(",");
             }
+        }
 
         writer.print(")");
 
         return null;
+
     }
 
     // class AccessVariable { String name; }
@@ -436,13 +488,12 @@ public class Printer extends DefaultVisitor {
         return null;
     }
 
-
     // class AccessStructField { Expression struct; String name; }
     public Object visit(AccessStructField node, Object param) {
 
         super.visit(node, param);
 
-        writer.print("."+node.getName());
+        writer.print("." + node.getName());
 
         return null;
     }
@@ -456,7 +507,7 @@ public class Printer extends DefaultVisitor {
             node.getArray().accept(this, param);
 
         writer.print("[");
-        
+
         if (node.getIndex() != null)
             node.getIndex().accept(this, param);
 
@@ -499,7 +550,7 @@ public class Printer extends DefaultVisitor {
 
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
-            
+
         writer.print(" ");
         writer.print(node.getOperator());
         writer.print(" ");
@@ -517,9 +568,9 @@ public class Printer extends DefaultVisitor {
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
 
-            writer.print(" ");
-            writer.print(node.getOperator());
-            writer.print(" ");
+        writer.print(" ");
+        writer.print(node.getOperator());
+        writer.print(" ");
 
         if (node.getRight() != null)
             node.getRight().accept(this, param);
@@ -534,9 +585,9 @@ public class Printer extends DefaultVisitor {
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
 
-            writer.print(" ");
-            writer.print(node.getOperator());
-            writer.print(" ");
+        writer.print(" ");
+        writer.print(node.getOperator());
+        writer.print(" ");
 
         if (node.getRight() != null)
             node.getRight().accept(this, param);
