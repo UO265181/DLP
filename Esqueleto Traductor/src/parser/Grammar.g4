@@ -33,13 +33,13 @@ definitionVariable
 	'var' IDENT ':' type ';' { $ast = new DefinitionVariable($IDENT, $type.ast); };
 
 structFields
-	returns[List<DefinitionVariable> list = new ArrayList<DefinitionVariable>()]: (
+	returns[List<StructField> list = new ArrayList<StructField>()]: (
 		structField { $list.add($structField.ast); }
 	)*;
 
 structField
-	returns[DefinitionVariable ast]:
-	IDENT ':' type ';' { $ast = new DefinitionVariable($IDENT, $type.ast); };
+	returns[StructField ast]:
+	IDENT ':' type ';' { $ast = new StructField($IDENT, $type.ast); };
 
 definitionFunctionParams
 	returns[List<DefinitionVariable> list = new ArrayList<DefinitionVariable>()]: (

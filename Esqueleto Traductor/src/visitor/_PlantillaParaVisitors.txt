@@ -61,13 +61,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefinitionStruct { String name;  List<DefinitionVariable> structFields; }
+	//	class DefinitionStruct { String name;  List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
 
 		// super.visit(node, param);
 
 		if (node.getStructFields() != null)
-			for (DefinitionVariable child : node.getStructFields())
+			for (StructField child : node.getStructFields())
 				child.accept(this, param);
 
 		return null;
@@ -92,6 +92,17 @@ public class <nombre clase> extends DefaultVisitor {
 		if (node.getSentences() != null)
 			for (Sentence child : node.getSentences())
 				child.accept(this, param);
+
+		return null;
+	}
+
+	//	class StructField { String name;  Type type; }
+	public Object visit(StructField node, Object param) {
+
+		// super.visit(node, param);
+
+		if (node.getType() != null)
+			node.getType().accept(this, param);
 
 		return null;
 	}

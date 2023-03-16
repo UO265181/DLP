@@ -11,6 +11,7 @@ public interface Visitor {
 	public Object visit(DefinitionVariable node, Object param);
 	public Object visit(DefinitionStruct node, Object param);
 	public Object visit(DefinitionFunction node, Object param);
+	public Object visit(StructField node, Object param);
 	public Object visit(TypeInt node, Object param);
 	public Object visit(TypeFloat node, Object param);
 	public Object visit(TypeChar node, Object param);

@@ -47,10 +47,11 @@
             <td><strong>&nbsp;Reglas&nbsp;Semánticas&nbsp;</strong></td>
         </tr>
 <tr><td><span class="nodo">program</span>&nbsp;&rarr;  <span class="nombreAtt">definitions</span><span class="tipoAtt">:definition*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">structField</span>&nbsp;&rarr;  <span class="nombreAtt">name</span><span class="tipoAtt">:String</span> <span class="nombreAtt">type</span><span class="tipoAtt">:type</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 
 <tr><td><span class="nodo">definitionVariable</span>:<span class="categoria">definition</span>&nbsp;&rarr;  <span class="nombreAtt">name</span><span class="tipoAtt">:String</span> <span class="nombreAtt">type</span><span class="tipoAtt">:type</span></td><td></td><td></td></tr>
-<tr><td><span class="nodo">definitionStruct</span>:<span class="categoria">definition</span>&nbsp;&rarr;  <span class="nombreAtt">name</span><span class="tipoAtt">:String</span> <span class="nombreAtt">structFields</span><span class="tipoAtt">:definitionVariable*</span></td><td></td><td></td></tr>
+<tr><td><span class="nodo">definitionStruct</span>:<span class="categoria">definition</span>&nbsp;&rarr;  <span class="nombreAtt">name</span><span class="tipoAtt">:String</span> <span class="nombreAtt">structFields</span><span class="tipoAtt">:structField*</span></td><td></td><td></td></tr>
 <tr><td><span class="nodo">definitionFunction</span>:<span class="categoria">definition</span>&nbsp;&rarr;  <span class="nombreAtt">name</span><span class="tipoAtt">:String</span> <span class="nombreAtt">definitionFunctionParams</span><span class="tipoAtt">:definitionVariable*</span> <span class="nombreAtt">type</span><span class="tipoAtt">:type</span> <span class="nombreAtt">localVariables</span><span class="tipoAtt">:definitionVariable*</span> <span class="nombreAtt">sentences</span><span class="tipoAtt">:sentence*</span></td><td></td><td></td></tr>
 <tr><td>&nbsp;</td><td></td><td></td></tr>
 

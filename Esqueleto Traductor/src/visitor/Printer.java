@@ -12,47 +12,7 @@ import java.io.PrintWriter;
 
 import ast.*;
 
-/*
-Plantilla para Visitors.
-Para crear un nuevo Visitor cortar y pegar este código y ya se tendría un visitor que compila y
-que al ejecutarlo recorrería todo el árbol (sin hacer nada aún en él).
-Solo quedaría añadir a cada método visit aquello adicional que se quiera realizar sobre su nodo del AST.
-*/
-
 public class Printer extends DefaultVisitor {
-
-    // ---------------------------------------------------------
-    // Tareas a realizar en cada método visit:
-    //
-    // Si en algún método visit NO SE QUIERE HACER NADA más que recorrer los hijos
-    // entonces se puede
-    // borrar (dicho método se heredaría de DefaultVisitor con el código de
-    // recorrido).
-    //
-    // Lo siguiente es para cuando se quiera AÑADIR alguna funcionalidad adicional a
-    // un visit:
-    //
-    // - El código que aparece en cada método visit es aquel que recorre los hijos.
-    // Es el mismo código
-    // que está implementado en el padre (DefaultVisitor). Por tanto la llamada a
-    // 'super.visit' y el
-    // resto del código del método hacen lo mismo (por ello 'super.visit' está
-    // comentado).
-    //
-    // - Lo HABITUAL será borrar todo el código de recorrido dejando solo la llamada
-    // a 'super.visit'. De esta
-    // manera, cada método visit se puede centrar en la tarea que tiene que realizar
-    // sobre su nodo del AST
-    // (dejando que el padre se encargue del recorrido de los hijos).
-    //
-    // - La razón de que aparezca el código de recorrido de los hijos es por si se
-    // necesita realizar alguna
-    // tarea DURANTE el mismo (por ejemplo ir comprobando su tipo). En este caso, ya
-    // se tiene implementado
-    // dicho recorrido y solo habría que incrustar las acciones adicionales en el
-    // mismo. En este caso,
-    // es la llamada a 'super.visit' la que debería ser borrada.
-    // ---------------------------------------------------------
 
     private PrintWriter writer;
     private int tabCounter = 0;
@@ -61,7 +21,7 @@ public class Printer extends DefaultVisitor {
     public Object visit(Program node, Object param) {
 
         try {
-            writer = new PrintWriter(new FileWriter("Printer.txt"));
+            writer = new PrintWriter(new FileWriter("printer.txt"));
 
             writer.print("//// Printer ----");
             writer.println();
@@ -70,15 +30,7 @@ public class Printer extends DefaultVisitor {
             if (node.getDefinitions() != null)
                 for (Definition child : node.getDefinitions()) {
                     writer.println();
-                    if (child instanceof DefinitionVariable) {
-                        writer.println();
-                        writer.print("var ");
-                        child.accept(this, param);
-                        writer.print(";");
-                    } else {
-                        child.accept(this, param);
-                    }
-
+                    child.accept(this, param);
                 }
 
             writer.close();
@@ -93,9 +45,11 @@ public class Printer extends DefaultVisitor {
     // class DefinitionVariable { String name; Type type; }
     public Object visit(DefinitionVariable node, Object param) {
 
-        writer.print(node.getName() + ":");
+        writer.print("var "+node.getName() + ":");
 
         super.visit(node, param);
+
+        writer.print( ";");
 
         return null;
     }
@@ -107,16 +61,23 @@ public class Printer extends DefaultVisitor {
         writer.println();
         writer.print("struct " + node.getName() + " {");
 
-        if (node.getStructFields() != null)
-            for (DefinitionVariable child : node.getStructFields()) {
-                writer.println();
-                writer.print("	");
-                child.accept(this, param);
-                writer.print(";");
-            }
+        super.visit(node, param);
 
         writer.println();
         writer.print("};");
+
+        return null;
+    }
+
+    // class StructField { String name; Type type; }
+    public Object visit(StructField node, Object param) {
+
+        writer.println();
+        writer.print("\t");
+        writer.print(node.getName() + ":");
+        super.visit(node, param);
+
+        writer.print(";");
 
         return null;
     }
@@ -131,7 +92,7 @@ public class Printer extends DefaultVisitor {
         writer.println();
         writer.print(node.getName() + "(");
 
-        if (node.getDefinitionFunctionParams() != null){
+        if (node.getDefinitionFunctionParams() != null) {
             int counter = 0;
             for (DefinitionVariable child : node.getDefinitionFunctionParams()) {
                 child.accept(this, param);
@@ -156,14 +117,10 @@ public class Printer extends DefaultVisitor {
         if (node.getLocalVariables() != null)
             for (DefinitionVariable child : node.getLocalVariables()) {
                 writer.println();
-                for(int i=0; i<tabCounter; i++) {
+                for (int i = 0; i < tabCounter; i++) {
                     writer.print('\t');
                 }
-                writer.print("var ");
-
                 child.accept(this, param);
-
-                writer.print(";");
             }
 
         if (node.getSentences() != null)
@@ -172,7 +129,7 @@ public class Printer extends DefaultVisitor {
 
         for (Sentence child : node.getSentences()) {
             writer.println();
-            for(int i=0; i<tabCounter; i++) {
+            for (int i = 0; i < tabCounter; i++) {
                 writer.print('\t');
             }
 
@@ -183,13 +140,11 @@ public class Printer extends DefaultVisitor {
 
         tabCounter--;
 
-        for(int i=0; i<tabCounter; i++) {
+        for (int i = 0; i < tabCounter; i++) {
             writer.print('\t');
         }
 
         writer.print("}");
-
-
 
         return null;
     }
@@ -340,8 +295,6 @@ public class Printer extends DefaultVisitor {
     // elseSentences; }
     public Object visit(If node, Object param) {
 
-
-
         writer.print("if (");
 
         if (node.getCondition() != null)
@@ -354,7 +307,7 @@ public class Printer extends DefaultVisitor {
         if (node.getIfSentences() != null)
             for (Sentence child : node.getIfSentences()) {
                 writer.println();
-                for(int i=0; i<tabCounter; i++) {
+                for (int i = 0; i < tabCounter; i++) {
                     writer.print('\t');
                 }
                 child.accept(this, param);
@@ -364,7 +317,7 @@ public class Printer extends DefaultVisitor {
 
         tabCounter--;
 
-        for(int i=0; i<tabCounter; i++) {
+        for (int i = 0; i < tabCounter; i++) {
             writer.print('\t');
         }
 
@@ -375,7 +328,7 @@ public class Printer extends DefaultVisitor {
             tabCounter++;
             for (Sentence child : node.getElseSentences()) {
                 writer.println();
-                for(int i=0; i<tabCounter; i++) {
+                for (int i = 0; i < tabCounter; i++) {
                     writer.print('\t');
                 }
                 child.accept(this, param);
@@ -383,22 +336,18 @@ public class Printer extends DefaultVisitor {
             writer.println();
             tabCounter--;
 
-            for(int i=0; i<tabCounter; i++) {
+            for (int i = 0; i < tabCounter; i++) {
                 writer.print('\t');
             }
-    
+
             writer.print("}");
         }
-
-        
 
         return null;
     }
 
     // class While { Expression condition; List<Sentence> sentences; }
     public Object visit(While node, Object param) {
-
-    
 
         writer.print("while (");
 
@@ -412,7 +361,7 @@ public class Printer extends DefaultVisitor {
         if (node.getSentences() != null)
             for (Sentence child : node.getSentences()) {
                 writer.println();
-                for(int i=0; i<tabCounter; i++) {
+                for (int i = 0; i < tabCounter; i++) {
                     writer.print('\t');
                 }
 
@@ -422,12 +371,11 @@ public class Printer extends DefaultVisitor {
         writer.println();
         tabCounter--;
 
-        for(int i=0; i<tabCounter; i++) {
+        for (int i = 0; i < tabCounter; i++) {
             writer.print('\t');
         }
 
         writer.print("}");
-
 
         return null;
     }

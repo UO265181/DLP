@@ -424,7 +424,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class StructFieldsContext extends ParserRuleContext {
-		public List<DefinitionVariable> list = new ArrayList<DefinitionVariable>();
+		public List<StructField> list = new ArrayList<StructField>();
 		public StructFieldContext structField;
 		public List<StructFieldContext> structField() {
 			return getRuleContexts(StructFieldContext.class);
@@ -474,7 +474,7 @@ public class GrammarParser extends Parser {
 	}
 
 	public static class StructFieldContext extends ParserRuleContext {
-		public DefinitionVariable ast;
+		public StructField ast;
 		public Token IDENT;
 		public TypeContext type;
 		public TerminalNode IDENT() { return getToken(GrammarParser.IDENT, 0); }
@@ -501,7 +501,7 @@ public class GrammarParser extends Parser {
 			((StructFieldContext)_localctx).type = type();
 			setState(101);
 			match(T__3);
-			 ((StructFieldContext)_localctx).ast =  new DefinitionVariable(((StructFieldContext)_localctx).IDENT, ((StructFieldContext)_localctx).type.ast); 
+			 ((StructFieldContext)_localctx).ast =  new StructField(((StructFieldContext)_localctx).IDENT, ((StructFieldContext)_localctx).type.ast); 
 			}
 		}
 		catch (RecognitionException re) {

@@ -115,14 +115,14 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class DefinitionStruct { String name;  List<DefinitionVariable> structFields; }
+	//	class DefinitionStruct { String name;  List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "DefinitionStruct", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "structFields", "List<DefinitionVariable>",node.getStructFields());
+		visit(indent + 1, "structFields", "List<StructField>",node.getStructFields());
 		return null;
 	}
 
@@ -137,6 +137,17 @@ public class ASTPrinter extends DefaultVisitor {
 		visit(indent + 1, "type", "Type",node.getType());
 		visit(indent + 1, "localVariables", "List<DefinitionVariable>",node.getLocalVariables());
 		visit(indent + 1, "sentences", "List<Sentence>",node.getSentences());
+		return null;
+	}
+
+	//	class StructField { String name;  Type type; }
+	public Object visit(StructField node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "StructField", node, false);
+
+		print(indent + 1, "name", "String", node.getName());
+		visit(indent + 1, "type", "Type",node.getType());
 		return null;
 	}
 

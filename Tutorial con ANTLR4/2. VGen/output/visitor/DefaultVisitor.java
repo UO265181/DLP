@@ -27,7 +27,7 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class DefinitionStruct { String name;  List<DefinitionVariable> structFields; }
+	//	class DefinitionStruct { String name;  List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
 		visitChildren(node.getStructFields(), param);
 		return null;
@@ -40,6 +40,13 @@ public class DefaultVisitor implements Visitor {
 			node.getType().accept(this, param);
 		visitChildren(node.getLocalVariables(), param);
 		visitChildren(node.getSentences(), param);
+		return null;
+	}
+
+	//	class StructField { String name;  Type type; }
+	public Object visit(StructField node, Object param) {
+		if (node.getType() != null)
+			node.getType().accept(this, param);
 		return null;
 	}
 

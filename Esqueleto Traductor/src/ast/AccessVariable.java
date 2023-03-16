@@ -17,28 +17,39 @@ public class AccessVariable extends AbstractExpression {
 	}
 
 	public AccessVariable(Object name) {
-		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
+		this.name = (name instanceof Token) ? ((Token) name).getText() : (String) name;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(name);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(name);
 	}
 
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
 	private String name;
 
 	public String toString() {
-       return "{name:" + getName() + "}";
-   }
+		return "{name:" + getName() + "}";
+	}
+
+	private DefinitionVariable definition;
+
+	public DefinitionVariable getDefinition() {
+		return definition;
+	}
+
+	public void setDefinition(DefinitionVariable definition) {
+		this.definition = definition;
+	}
 }

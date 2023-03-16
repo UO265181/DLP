@@ -9,11 +9,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	definitionStruct:definition -> name:String  structFields:definitionVariable*
+//	definitionStruct:definition -> name:String  structFields:structField*
 
 public class DefinitionStruct extends AbstractDefinition {
 
-	public DefinitionStruct(String name, List<DefinitionVariable> structFields) {
+	public DefinitionStruct(String name, List<StructField> structFields) {
 		this.name = name;
 		this.structFields = structFields;
 
@@ -24,7 +24,7 @@ public class DefinitionStruct extends AbstractDefinition {
 
 	public DefinitionStruct(Object name, Object structFields) {
 		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
-		this.structFields = this.<DefinitionVariable>getAstFromContexts(structFields);
+		this.structFields = this.<StructField>getAstFromContexts(structFields);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
@@ -38,10 +38,10 @@ public class DefinitionStruct extends AbstractDefinition {
 		this.name = name;
 	}
 
-	public List<DefinitionVariable> getStructFields() {
+	public List<StructField> getStructFields() {
 		return structFields;
 	}
-	public void setStructFields(List<DefinitionVariable> structFields) {
+	public void setStructFields(List<StructField> structFields) {
 		this.structFields = structFields;
 	}
 
@@ -51,7 +51,7 @@ public class DefinitionStruct extends AbstractDefinition {
 	}
 
 	private String name;
-	private List<DefinitionVariable> structFields;
+	private List<StructField> structFields;
 
 	public String toString() {
        return "{name:" + getName() + ", structFields:" + getStructFields() + "}";
