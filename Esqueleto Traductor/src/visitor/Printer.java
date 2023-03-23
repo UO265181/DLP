@@ -176,9 +176,11 @@ public class Printer extends DefaultVisitor {
     // class TypeArray { String size; Type type; }
     public Object visit(TypeArray node, Object param) {
 
-        writer.print("[" + node.getSize() + "]");
+        writer.print("[");
+        node.getSize().accept(this, param);
+        writer.print("]");
 
-        super.visit(node, param);
+        node.getType().accept(this, param);
 
         return null;
     }

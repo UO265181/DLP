@@ -57,7 +57,7 @@ type
 	'int' { $ast = new TypeInt(); }
 	| 'float' { $ast = new TypeFloat(); }
 	| 'char' { $ast = new TypeChar(); }
-	| '[' INT_CONSTANT ']' type { $ast = new TypeArray($INT_CONSTANT, $type.ast); }
+	| '[' INT_CONSTANT ']' type { $ast = new TypeArray(new ConstantInt($INT_CONSTANT), $type.ast); }
 	| IDENT { $ast = new TypeStruct($IDENT); };
 
 sentences

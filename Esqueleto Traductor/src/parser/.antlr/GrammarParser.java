@@ -1,4 +1,4 @@
-// Generated from c:\Users\UO265181\Desktop\DLP\Esqueleto Traductor\src\parser\Grammar.g4 by ANTLR 4.9.2
+// Generated from c:\Users\UO265181\DLP\Esqueleto Traductor\src\parser\Grammar.g4 by ANTLR 4.9.2
 
     import ast.*;
 
@@ -676,7 +676,7 @@ public class GrammarParser extends Parser {
 				match(T__13);
 				setState(131);
 				((TypeContext)_localctx).type = type();
-				 ((TypeContext)_localctx).ast =  new TypeArray(((TypeContext)_localctx).INT_CONSTANT, ((TypeContext)_localctx).type.ast); 
+				 ((TypeContext)_localctx).ast =  new TypeArray(new ConstantInt(((TypeContext)_localctx).INT_CONSTANT), ((TypeContext)_localctx).type.ast); 
 				}
 				break;
 			case IDENT:

@@ -178,13 +178,13 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class TypeArray { String size;  Type type; }
+	//	class TypeArray { ConstantInt size;  Type type; }
 	public Object visit(TypeArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "TypeArray", node, false);
 
-		print(indent + 1, "size", "String", node.getSize());
+		visit(indent + 1, "size", "ConstantInt",node.getSize());
 		visit(indent + 1, "type", "Type",node.getType());
 		return null;
 	}

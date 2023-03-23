@@ -65,8 +65,10 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class TypeArray { String size;  Type type; }
+	//	class TypeArray { ConstantInt size;  Type type; }
 	public Object visit(TypeArray node, Object param) {
+		if (node.getSize() != null)
+			node.getSize().accept(this, param);
 		if (node.getType() != null)
 			node.getType().accept(this, param);
 		return null;

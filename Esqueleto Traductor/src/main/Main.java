@@ -45,8 +45,6 @@ public class Main {
 
         Printer printer = new Printer();
         ast.accept(printer, null);
-
-
     }
 
     /**

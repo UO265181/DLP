@@ -122,10 +122,13 @@ public class <nombre clase> extends DefaultVisitor {
 		return null;
 	}
 
-	//	class TypeArray { String size;  Type type; }
+	//	class TypeArray { ConstantInt size;  Type type; }
 	public Object visit(TypeArray node, Object param) {
 
 		// super.visit(node, param);
+
+		if (node.getSize() != null)
+			node.getSize().accept(this, param);
 
 		if (node.getType() != null)
 			node.getType().accept(this, param);

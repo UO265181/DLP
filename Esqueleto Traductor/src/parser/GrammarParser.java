@@ -677,7 +677,7 @@ public class GrammarParser extends Parser {
 				match(T__13);
 				setState(131);
 				((TypeContext)_localctx).type = type();
-				 ((TypeContext)_localctx).ast =  new TypeArray(((TypeContext)_localctx).INT_CONSTANT, ((TypeContext)_localctx).type.ast); 
+				 ((TypeContext)_localctx).ast =  new TypeArray(new ConstantInt(((TypeContext)_localctx).INT_CONSTANT), ((TypeContext)_localctx).type.ast); 
 				}
 				break;
 			case IDENT:

@@ -13,7 +13,7 @@ structField -> name:string type;
 typeInt:type -> ;
 typeFloat:type -> ;
 typeChar:type -> ;
-typeArray:type -> size:constantInt type;
+typeArray:type -> size:expression type;
 typeStruct:type -> name:string;
 
 print:sentence -> expression;
