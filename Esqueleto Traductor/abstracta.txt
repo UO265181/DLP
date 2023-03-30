@@ -1,5 +1,5 @@
 CATEGORIES
-definition, sentence, expression, type
+definition, sentence, expression, type, access
 
 NODES
 program -> definitions:definition*;
@@ -13,28 +13,31 @@ structField -> name:string type;
 typeInt:type -> ;
 typeFloat:type -> ;
 typeChar:type -> ;
-typeArray:type -> size:constantInt type;
+typeVoid:type -> ;
+typeArray:type -> size:expressionConstantInt type;
 typeStruct:type -> name:string;
 
-print:sentence -> expression;
-printsp:sentence -> expression;
-println:sentence -> expression;
-return:sentence -> expression;
-read:sentence -> expression;
-assignment:sentence -> left:expression right:expression;
+sentencePrint:sentence -> expression;
+sentencePrintsp:sentence -> expression;
+sentencePrintln:sentence -> expression;
+sentenceReturn:sentence -> expression;
+sentenceRead:sentence -> expression;
+sentenceAssignment:sentence -> left:expression right:expression;
 sentenceCallFunction:sentence -> name:string callFunctionParams:expression*;
-if:sentence -> condition:expression ifSentences:sentence* elseSentences:sentence*;
-while:sentence -> condition:expression sentences:sentence*;
+sentenceIf:sentence -> condition:expression ifSentences:sentence* elseSentences:sentence*;
+sentenceWhile:sentence -> condition:expression sentences:sentence*;
 
-constantInt:expression -> value:string;
-constantFloat:expression -> value:string;
-constantChar:expression -> value:string;
+expressionConstantInt:expression -> value:string;
+expressionConstantFloat:expression -> value:string;
+expressionConstantChar:expression -> value:string;
 expressionCallFunction:expression -> name:string callFunctionParams:expression*;
-accessVariable:expression -> name:string;
-accessStructField:expression -> struct:expression name:string;
-accessArray:expression -> array:expression index:expression;
-unaryExpression:expression -> operator:string expression;
-cast:expression -> type expression;
-arithmeticExpression:expression -> left:expression operator:string right:expression;
-relationalExpression:expression -> left:expression operator:string right:expression;
-logicalExpression:expression -> left:expression operator:string right:expression;
+expressionUnary:expression -> operator:string expression;
+expressionCast:expression -> newType:type expression;
+expressionArithmetic:expression -> left:expression operator:string right:expression;
+expressionRelational:expression -> left:expression operator:string right:expression;
+expressionLogical:expression -> left:expression operator:string right:expression;
+expressionAccess:expression -> access;
+
+accessVariable:access -> name:string;
+accessStructField:access -> struct:access name:string;
+accessArray:access -> array:access index:expression;

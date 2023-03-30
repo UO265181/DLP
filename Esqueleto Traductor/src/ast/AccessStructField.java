@@ -8,11 +8,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	accessStructField:expression -> struct:expression  name:String
+//	accessStructField:access -> struct:access  name:String
 
-public class AccessStructField extends AbstractExpression {
+public class AccessStructField extends AbstractAccess {
 
-	public AccessStructField(Expression struct, String name) {
+	public AccessStructField(Access struct, String name) {
 		this.struct = struct;
 		this.name = name;
 
@@ -22,7 +22,7 @@ public class AccessStructField extends AbstractExpression {
 	}
 
 	public AccessStructField(Object struct, Object name) {
-		this.struct = (Expression) getAST(struct);
+		this.struct = (Access) getAST(struct);
 		this.name = (name instanceof Token) ? ((Token)name).getText() : (String) name;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -30,10 +30,10 @@ public class AccessStructField extends AbstractExpression {
        setPositions(struct, name);
 	}
 
-	public Expression getStruct() {
+	public Access getStruct() {
 		return struct;
 	}
-	public void setStruct(Expression struct) {
+	public void setStruct(Access struct) {
 		this.struct = struct;
 	}
 
@@ -49,7 +49,7 @@ public class AccessStructField extends AbstractExpression {
 		return v.visit(this, param);
 	}
 
-	private Expression struct;
+	private Access struct;
 	private String name;
 
 	public String toString() {

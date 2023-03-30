@@ -84,7 +84,7 @@
 <span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">34:1  36:13  </span><span class="sourceText"></span><span class="posText">prueba() {</span><span class="sourceText"> ... </span><span class="posText">print local2</span><span class="sourceText">;	// Error: es local de la función anterior</span>
 <span class="dots">.  .  |  </span>"<span class="value">prueba</span>"  
 <span class="dots">.  .  |  </span>definitionFunctionParams  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
-<span class="dots">.  .  |  </span><span class="null">null</span>  type:<span class="type">Type</span>
+<span class="dots">.  .  |  </span><span class="value">TypeVoid</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>localVariables  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
 <span class="dots">.  .  |  .  </span>Print &rarr;                                         <span class="pos">35:8  35:8   </span><span class="sourceText">print </span><span class="posText">z</span><span class="sourceText">;	// Error: es parámetro de la función anterior</span>
@@ -94,7 +94,7 @@
 <span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">40:1  41:14  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">dobleSuma(5.6</span><span class="sourceText">);	// No es error en esta fase aunque no coincidan parámetros </span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>definitionFunctionParams  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
-<span class="dots">.  .  |  </span><span class="null">null</span>  type:<span class="type">Type</span>
+<span class="dots">.  .  |  </span><span class="value">TypeVoid</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>localVariables  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
 <span class="dots">.  .  |  .  </span>SentenceCallFunction &rarr;                          <span class="pos">41:2  41:14  </span><span class="sourceText"></span><span class="posText">dobleSuma(5.6</span><span class="sourceText">);	// No es error en esta fase aunque no coincidan parámetros </span>

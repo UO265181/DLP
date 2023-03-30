@@ -8,11 +8,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	accessArray:expression -> array:expression  index:expression
+//	accessArray:access -> array:access  index:expression
 
-public class AccessArray extends AbstractExpression {
+public class AccessArray extends AbstractAccess {
 
-	public AccessArray(Expression array, Expression index) {
+	public AccessArray(Access array, Expression index) {
 		this.array = array;
 		this.index = index;
 
@@ -22,7 +22,7 @@ public class AccessArray extends AbstractExpression {
 	}
 
 	public AccessArray(Object array, Object index) {
-		this.array = (Expression) getAST(array);
+		this.array = (Access) getAST(array);
 		this.index = (Expression) getAST(index);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -30,10 +30,10 @@ public class AccessArray extends AbstractExpression {
        setPositions(array, index);
 	}
 
-	public Expression getArray() {
+	public Access getArray() {
 		return array;
 	}
-	public void setArray(Expression array) {
+	public void setArray(Access array) {
 		this.array = array;
 	}
 
@@ -49,7 +49,7 @@ public class AccessArray extends AbstractExpression {
 		return v.visit(this, param);
 	}
 
-	private Expression array;
+	private Access array;
 	private Expression index;
 
 	public String toString() {

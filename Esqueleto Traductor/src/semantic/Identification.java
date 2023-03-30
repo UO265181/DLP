@@ -133,6 +133,8 @@ public class Identification extends DefaultVisitor {
         return null;
     }
 
+    //TODO: acceso a arrays
+
     // # --------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------
 

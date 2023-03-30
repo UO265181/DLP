@@ -104,7 +104,7 @@ public class Printer extends DefaultVisitor {
         }
 
         writer.print(")");
-
+//TODO: singelton tipos
         if (node.getType() != null) {
 
             writer.print(": ");
@@ -194,7 +194,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Print { Expression expression; }
-    public Object visit(Print node, Object param) {
+    public Object visit(SentencePrint node, Object param) {
 
         writer.print("print ");
 
@@ -206,7 +206,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Printsp { Expression expression; }
-    public Object visit(Printsp node, Object param) {
+    public Object visit(SentencePrintsp node, Object param) {
 
         writer.print("printsp ");
 
@@ -218,7 +218,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Println { Expression expression; }
-    public Object visit(Println node, Object param) {
+    public Object visit(SentencePrintln node, Object param) {
 
         writer.print("println ");
 
@@ -230,7 +230,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Return { Expression expression; }
-    public Object visit(Return node, Object param) {
+    public Object visit(SentenceReturn node, Object param) {
 
         writer.print("return");
 
@@ -245,7 +245,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Read { Expression expression; }
-    public Object visit(Read node, Object param) {
+    public Object visit(SentenceRead node, Object param) {
 
         writer.print("read ");
 
@@ -257,7 +257,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class Assignment { Expression left; Expression right; }
-    public Object visit(Assignment node, Object param) {
+    public Object visit(SentenceAssignment node, Object param) {
 
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
@@ -295,7 +295,7 @@ public class Printer extends DefaultVisitor {
 
     // class If { Expression condition; List<Sentence> ifSentences; List<Sentence>
     // elseSentences; }
-    public Object visit(If node, Object param) {
+    public Object visit(SentenceIf node, Object param) {
 
         writer.print("if (");
 
@@ -349,7 +349,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class While { Expression condition; List<Sentence> sentences; }
-    public Object visit(While node, Object param) {
+    public Object visit(SentenceWhile node, Object param) {
 
         writer.print("while (");
 
@@ -383,7 +383,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class ConstantInt { String value; }
-    public Object visit(ConstantInt node, Object param) {
+    public Object visit(ExpressionConstantInt node, Object param) {
 
         writer.print(node.getValue());
 
@@ -391,7 +391,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class ConstantFloat { String value; }
-    public Object visit(ConstantFloat node, Object param) {
+    public Object visit(ExpressionConstantFloat node, Object param) {
 
         writer.print(node.getValue());
 
@@ -399,7 +399,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class ConstantChar { String value; }
-    public Object visit(ConstantChar node, Object param) {
+    public Object visit(ExpressionConstantChar node, Object param) {
 
         writer.print(node.getValue());
 
@@ -467,7 +467,7 @@ public class Printer extends DefaultVisitor {
     }
 
     // class UnaryExpression { String operator; Expression expression; }
-    public Object visit(UnaryExpression node, Object param) {
+    public Object visit(ExpressionUnary node, Object param) {
 
         writer.print(node.getExpression());
 
@@ -476,13 +476,13 @@ public class Printer extends DefaultVisitor {
         return null;
     }
 
-    // class Cast { Type type; Expression expression; }
-    public Object visit(Cast node, Object param) {
+    // class Cast { Type newType; Expression expression; }
+    public Object visit(ExpressionCast node, Object param) {
 
         writer.print("<");
 
-        if (node.getType() != null)
-            node.getType().accept(this, param);
+        if (node.getNewType() != null)
+            node.getNewType().accept(this, param);
 
         writer.print(">(");
 
@@ -496,7 +496,7 @@ public class Printer extends DefaultVisitor {
 
     // class ArithmeticExpression { Expression left; String operator; Expression
     // right; }
-    public Object visit(ArithmeticExpression node, Object param) {
+    public Object visit(ExpressionArithmetic node, Object param) {
 
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
@@ -513,7 +513,7 @@ public class Printer extends DefaultVisitor {
 
     // class RelationalExpression { Expression left; String operator; Expression
     // right; }
-    public Object visit(RelationalExpression node, Object param) {
+    public Object visit(ExpressionRelational node, Object param) {
 
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
@@ -530,7 +530,7 @@ public class Printer extends DefaultVisitor {
 
     // class LogicalExpression { Expression left; String operator; Expression right;
     // }
-    public Object visit(LogicalExpression node, Object param) {
+    public Object visit(ExpressionLogical node, Object param) {
 
         if (node.getLeft() != null)
             node.getLeft().accept(this, param);
@@ -544,4 +544,6 @@ public class Printer extends DefaultVisitor {
 
         return null;
     }
+
+    //TODO:access
 }

@@ -178,13 +178,22 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class TypeArray { ConstantInt size;  Type type; }
+	//	class TypeVoid {  }
+	public Object visit(TypeVoid node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "TypeVoid", node, true);
+
+		return null;
+	}
+
+	//	class TypeArray { ExpressionConstantInt size;  Type type; }
 	public Object visit(TypeArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "TypeArray", node, false);
 
-		visit(indent + 1, "size", "ConstantInt",node.getSize());
+		visit(indent + 1, "size", "ExpressionConstantInt",node.getSize());
 		visit(indent + 1, "type", "Type",node.getType());
 		return null;
 	}
@@ -197,61 +206,61 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class Print { Expression expression; }
-	public Object visit(Print node, Object param) {
+	//	class SentencePrint { Expression expression; }
+	public Object visit(SentencePrint node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Print", node, false);
+		printName(indent, "SentencePrint", node, false);
 
 		visit(indent + 1, "expression", "Expression",node.getExpression());
 		return null;
 	}
 
-	//	class Printsp { Expression expression; }
-	public Object visit(Printsp node, Object param) {
+	//	class SentencePrintsp { Expression expression; }
+	public Object visit(SentencePrintsp node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Printsp", node, false);
+		printName(indent, "SentencePrintsp", node, false);
 
 		visit(indent + 1, "expression", "Expression",node.getExpression());
 		return null;
 	}
 
-	//	class Println { Expression expression; }
-	public Object visit(Println node, Object param) {
+	//	class SentencePrintln { Expression expression; }
+	public Object visit(SentencePrintln node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Println", node, false);
+		printName(indent, "SentencePrintln", node, false);
 
 		visit(indent + 1, "expression", "Expression",node.getExpression());
 		return null;
 	}
 
-	//	class Return { Expression expression; }
-	public Object visit(Return node, Object param) {
+	//	class SentenceReturn { Expression expression; }
+	public Object visit(SentenceReturn node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Return", node, false);
+		printName(indent, "SentenceReturn", node, false);
 
 		visit(indent + 1, "expression", "Expression",node.getExpression());
 		return null;
 	}
 
-	//	class Read { Expression expression; }
-	public Object visit(Read node, Object param) {
+	//	class SentenceRead { Expression expression; }
+	public Object visit(SentenceRead node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Read", node, false);
+		printName(indent, "SentenceRead", node, false);
 
 		visit(indent + 1, "expression", "Expression",node.getExpression());
 		return null;
 	}
 
-	//	class Assignment { Expression left;  Expression right; }
-	public Object visit(Assignment node, Object param) {
+	//	class SentenceAssignment { Expression left;  Expression right; }
+	public Object visit(SentenceAssignment node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "Assignment", node, false);
+		printName(indent, "SentenceAssignment", node, false);
 
 		visit(indent + 1, "left", "Expression",node.getLeft());
 		visit(indent + 1, "right", "Expression",node.getRight());
@@ -269,11 +278,11 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class If { Expression condition;  List<Sentence> ifSentences;  List<Sentence> elseSentences; }
-	public Object visit(If node, Object param) {
+	//	class SentenceIf { Expression condition;  List<Sentence> ifSentences;  List<Sentence> elseSentences; }
+	public Object visit(SentenceIf node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "If", node, false);
+		printName(indent, "SentenceIf", node, false);
 
 		visit(indent + 1, "condition", "Expression",node.getCondition());
 		visit(indent + 1, "ifSentences", "List<Sentence>",node.getIfSentences());
@@ -281,38 +290,38 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class While { Expression condition;  List<Sentence> sentences; }
-	public Object visit(While node, Object param) {
+	//	class SentenceWhile { Expression condition;  List<Sentence> sentences; }
+	public Object visit(SentenceWhile node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "While", node, false);
+		printName(indent, "SentenceWhile", node, false);
 
 		visit(indent + 1, "condition", "Expression",node.getCondition());
 		visit(indent + 1, "sentences", "List<Sentence>",node.getSentences());
 		return null;
 	}
 
-	//	class ConstantInt { String value; }
-	public Object visit(ConstantInt node, Object param) {
+	//	class ExpressionConstantInt { String value; }
+	public Object visit(ExpressionConstantInt node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "ConstantInt", node, "value", node.getValue());
+		printCompact(indent, "ExpressionConstantInt", node, "value", node.getValue());
 		return null;
 	}
 
-	//	class ConstantFloat { String value; }
-	public Object visit(ConstantFloat node, Object param) {
+	//	class ExpressionConstantFloat { String value; }
+	public Object visit(ExpressionConstantFloat node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "ConstantFloat", node, "value", node.getValue());
+		printCompact(indent, "ExpressionConstantFloat", node, "value", node.getValue());
 		return null;
 	}
 
-	//	class ConstantChar { String value; }
-	public Object visit(ConstantChar node, Object param) {
+	//	class ExpressionConstantChar { String value; }
+	public Object visit(ExpressionConstantChar node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "ConstantChar", node, "value", node.getValue());
+		printCompact(indent, "ExpressionConstantChar", node, "value", node.getValue());
 		return null;
 	}
 
@@ -327,6 +336,74 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	//	class ExpressionUnary { String operator;  Expression expression; }
+	public Object visit(ExpressionUnary node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionUnary", node, false);
+
+		print(indent + 1, "operator", "String", node.getOperator());
+		visit(indent + 1, "expression", "Expression",node.getExpression());
+		return null;
+	}
+
+	//	class ExpressionCast { Type newType;  Expression expression; }
+	public Object visit(ExpressionCast node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionCast", node, false);
+
+		visit(indent + 1, "newType", "Type",node.getNewType());
+		visit(indent + 1, "expression", "Expression",node.getExpression());
+		return null;
+	}
+
+	//	class ExpressionArithmetic { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionArithmetic node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionArithmetic", node, false);
+
+		visit(indent + 1, "left", "Expression",node.getLeft());
+		print(indent + 1, "operator", "String", node.getOperator());
+		visit(indent + 1, "right", "Expression",node.getRight());
+		return null;
+	}
+
+	//	class ExpressionRelational { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionRelational node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionRelational", node, false);
+
+		visit(indent + 1, "left", "Expression",node.getLeft());
+		print(indent + 1, "operator", "String", node.getOperator());
+		visit(indent + 1, "right", "Expression",node.getRight());
+		return null;
+	}
+
+	//	class ExpressionLogical { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionLogical node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionLogical", node, false);
+
+		visit(indent + 1, "left", "Expression",node.getLeft());
+		print(indent + 1, "operator", "String", node.getOperator());
+		visit(indent + 1, "right", "Expression",node.getRight());
+		return null;
+	}
+
+	//	class ExpressionAccess { Access access; }
+	public Object visit(ExpressionAccess node, Object param) {
+		int indent = ((Integer)param).intValue();
+
+		printName(indent, "ExpressionAccess", node, false);
+
+		visit(indent + 1, "access", "Access",node.getAccess());
+		return null;
+	}
+
 	//	class AccessVariable { String name; }
 	public Object visit(AccessVariable node, Object param) {
 		int indent = ((Integer)param).intValue();
@@ -335,83 +412,25 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class AccessStructField { Expression struct;  String name; }
+	//	class AccessStructField { Access struct;  String name; }
 	public Object visit(AccessStructField node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "AccessStructField", node, false);
 
-		visit(indent + 1, "struct", "Expression",node.getStruct());
+		visit(indent + 1, "struct", "Access",node.getStruct());
 		print(indent + 1, "name", "String", node.getName());
 		return null;
 	}
 
-	//	class AccessArray { Expression array;  Expression index; }
+	//	class AccessArray { Access array;  Expression index; }
 	public Object visit(AccessArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
 		printName(indent, "AccessArray", node, false);
 
-		visit(indent + 1, "array", "Expression",node.getArray());
+		visit(indent + 1, "array", "Access",node.getArray());
 		visit(indent + 1, "index", "Expression",node.getIndex());
-		return null;
-	}
-
-	//	class UnaryExpression { String operator;  Expression expression; }
-	public Object visit(UnaryExpression node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "UnaryExpression", node, false);
-
-		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "expression", "Expression",node.getExpression());
-		return null;
-	}
-
-	//	class Cast { Type type;  Expression expression; }
-	public Object visit(Cast node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "Cast", node, false);
-
-		visit(indent + 1, "type", "Type",node.getType());
-		visit(indent + 1, "expression", "Expression",node.getExpression());
-		return null;
-	}
-
-	//	class ArithmeticExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(ArithmeticExpression node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "ArithmeticExpression", node, false);
-
-		visit(indent + 1, "left", "Expression",node.getLeft());
-		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
-		return null;
-	}
-
-	//	class RelationalExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(RelationalExpression node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "RelationalExpression", node, false);
-
-		visit(indent + 1, "left", "Expression",node.getLeft());
-		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
-		return null;
-	}
-
-	//	class LogicalExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(LogicalExpression node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "LogicalExpression", node, false);
-
-		visit(indent + 1, "left", "Expression",node.getLeft());
-		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
 		return null;
 	}
 

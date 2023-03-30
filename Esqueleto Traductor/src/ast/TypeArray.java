@@ -8,11 +8,11 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	typeArray:type -> size:constantInt  type:type
+//	typeArray:type -> size:expressionConstantInt  type:type
 
 public class TypeArray extends AbstractType {
 
-	public TypeArray(ConstantInt size, Type type) {
+	public TypeArray(ExpressionConstantInt size, Type type) {
 		this.size = size;
 		this.type = type;
 
@@ -22,7 +22,7 @@ public class TypeArray extends AbstractType {
 	}
 
 	public TypeArray(Object size, Object type) {
-		this.size = (ConstantInt) getAST(size);
+		this.size = (ExpressionConstantInt) getAST(size);
 		this.type = (Type) getAST(type);
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -30,10 +30,10 @@ public class TypeArray extends AbstractType {
        setPositions(size, type);
 	}
 
-	public ConstantInt getSize() {
+	public ExpressionConstantInt getSize() {
 		return size;
 	}
-	public void setSize(ConstantInt size) {
+	public void setSize(ExpressionConstantInt size) {
 		this.size = size;
 	}
 
@@ -49,7 +49,7 @@ public class TypeArray extends AbstractType {
 		return v.visit(this, param);
 	}
 
-	private ConstantInt size;
+	private ExpressionConstantInt size;
 	private Type type;
 
 	public String toString() {

@@ -8,9 +8,9 @@ import org.antlr.v4.runtime.*;
 
 import visitor.*;
 
-//	accessVariable:expression -> name:String
+//	accessVariable:access -> name:String
 
-public class AccessVariable extends AbstractExpression {
+public class AccessVariable extends AbstractAccess {
 
 	public AccessVariable(String name) {
 		this.name = name;

@@ -21,13 +21,13 @@ dobleSuma(var z:int;,var b:int;,var z:float;): int {
 	print local2;
 }
 
-prueba() {
+prueba():  {
 
 	print z;
 	print local2;
 }
 
-main() {
+main():  {
 
 	dobleSuma(5.6);
 }

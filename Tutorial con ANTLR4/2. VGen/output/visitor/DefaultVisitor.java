@@ -65,7 +65,12 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class TypeArray { ConstantInt size;  Type type; }
+	//	class TypeVoid {  }
+	public Object visit(TypeVoid node, Object param) {
+		return null;
+	}
+
+	//	class TypeArray { ExpressionConstantInt size;  Type type; }
 	public Object visit(TypeArray node, Object param) {
 		if (node.getSize() != null)
 			node.getSize().accept(this, param);
@@ -79,43 +84,43 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class Print { Expression expression; }
-	public Object visit(Print node, Object param) {
+	//	class SentencePrint { Expression expression; }
+	public Object visit(SentencePrint node, Object param) {
 		if (node.getExpression() != null)
 			node.getExpression().accept(this, param);
 		return null;
 	}
 
-	//	class Printsp { Expression expression; }
-	public Object visit(Printsp node, Object param) {
+	//	class SentencePrintsp { Expression expression; }
+	public Object visit(SentencePrintsp node, Object param) {
 		if (node.getExpression() != null)
 			node.getExpression().accept(this, param);
 		return null;
 	}
 
-	//	class Println { Expression expression; }
-	public Object visit(Println node, Object param) {
+	//	class SentencePrintln { Expression expression; }
+	public Object visit(SentencePrintln node, Object param) {
 		if (node.getExpression() != null)
 			node.getExpression().accept(this, param);
 		return null;
 	}
 
-	//	class Return { Expression expression; }
-	public Object visit(Return node, Object param) {
+	//	class SentenceReturn { Expression expression; }
+	public Object visit(SentenceReturn node, Object param) {
 		if (node.getExpression() != null)
 			node.getExpression().accept(this, param);
 		return null;
 	}
 
-	//	class Read { Expression expression; }
-	public Object visit(Read node, Object param) {
+	//	class SentenceRead { Expression expression; }
+	public Object visit(SentenceRead node, Object param) {
 		if (node.getExpression() != null)
 			node.getExpression().accept(this, param);
 		return null;
 	}
 
-	//	class Assignment { Expression left;  Expression right; }
-	public Object visit(Assignment node, Object param) {
+	//	class SentenceAssignment { Expression left;  Expression right; }
+	public Object visit(SentenceAssignment node, Object param) {
 		if (node.getLeft() != null)
 			node.getLeft().accept(this, param);
 		if (node.getRight() != null)
@@ -129,8 +134,8 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class If { Expression condition;  List<Sentence> ifSentences;  List<Sentence> elseSentences; }
-	public Object visit(If node, Object param) {
+	//	class SentenceIf { Expression condition;  List<Sentence> ifSentences;  List<Sentence> elseSentences; }
+	public Object visit(SentenceIf node, Object param) {
 		if (node.getCondition() != null)
 			node.getCondition().accept(this, param);
 		visitChildren(node.getIfSentences(), param);
@@ -138,26 +143,26 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class While { Expression condition;  List<Sentence> sentences; }
-	public Object visit(While node, Object param) {
+	//	class SentenceWhile { Expression condition;  List<Sentence> sentences; }
+	public Object visit(SentenceWhile node, Object param) {
 		if (node.getCondition() != null)
 			node.getCondition().accept(this, param);
 		visitChildren(node.getSentences(), param);
 		return null;
 	}
 
-	//	class ConstantInt { String value; }
-	public Object visit(ConstantInt node, Object param) {
+	//	class ExpressionConstantInt { String value; }
+	public Object visit(ExpressionConstantInt node, Object param) {
 		return null;
 	}
 
-	//	class ConstantFloat { String value; }
-	public Object visit(ConstantFloat node, Object param) {
+	//	class ExpressionConstantFloat { String value; }
+	public Object visit(ExpressionConstantFloat node, Object param) {
 		return null;
 	}
 
-	//	class ConstantChar { String value; }
-	public Object visit(ConstantChar node, Object param) {
+	//	class ExpressionConstantChar { String value; }
+	public Object visit(ExpressionConstantChar node, Object param) {
 		return null;
 	}
 
@@ -167,67 +172,74 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class ExpressionUnary { String operator;  Expression expression; }
+	public Object visit(ExpressionUnary node, Object param) {
+		if (node.getExpression() != null)
+			node.getExpression().accept(this, param);
+		return null;
+	}
+
+	//	class ExpressionCast { Type newType;  Expression expression; }
+	public Object visit(ExpressionCast node, Object param) {
+		if (node.getNewType() != null)
+			node.getNewType().accept(this, param);
+		if (node.getExpression() != null)
+			node.getExpression().accept(this, param);
+		return null;
+	}
+
+	//	class ExpressionArithmetic { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionArithmetic node, Object param) {
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
+	//	class ExpressionRelational { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionRelational node, Object param) {
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
+	//	class ExpressionLogical { Expression left;  String operator;  Expression right; }
+	public Object visit(ExpressionLogical node, Object param) {
+		if (node.getLeft() != null)
+			node.getLeft().accept(this, param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
+	//	class ExpressionAccess { Access access; }
+	public Object visit(ExpressionAccess node, Object param) {
+		if (node.getAccess() != null)
+			node.getAccess().accept(this, param);
+		return null;
+	}
+
 	//	class AccessVariable { String name; }
 	public Object visit(AccessVariable node, Object param) {
 		return null;
 	}
 
-	//	class AccessStructField { Expression struct;  String name; }
+	//	class AccessStructField { Access struct;  String name; }
 	public Object visit(AccessStructField node, Object param) {
 		if (node.getStruct() != null)
 			node.getStruct().accept(this, param);
 		return null;
 	}
 
-	//	class AccessArray { Expression array;  Expression index; }
+	//	class AccessArray { Access array;  Expression index; }
 	public Object visit(AccessArray node, Object param) {
 		if (node.getArray() != null)
 			node.getArray().accept(this, param);
 		if (node.getIndex() != null)
 			node.getIndex().accept(this, param);
-		return null;
-	}
-
-	//	class UnaryExpression { String operator;  Expression expression; }
-	public Object visit(UnaryExpression node, Object param) {
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
-		return null;
-	}
-
-	//	class Cast { Type type;  Expression expression; }
-	public Object visit(Cast node, Object param) {
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
-		return null;
-	}
-
-	//	class ArithmeticExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(ArithmeticExpression node, Object param) {
-		if (node.getLeft() != null)
-			node.getLeft().accept(this, param);
-		if (node.getRight() != null)
-			node.getRight().accept(this, param);
-		return null;
-	}
-
-	//	class RelationalExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(RelationalExpression node, Object param) {
-		if (node.getLeft() != null)
-			node.getLeft().accept(this, param);
-		if (node.getRight() != null)
-			node.getRight().accept(this, param);
-		return null;
-	}
-
-	//	class LogicalExpression { Expression left;  String operator;  Expression right; }
-	public Object visit(LogicalExpression node, Object param) {
-		if (node.getLeft() != null)
-			node.getLeft().accept(this, param);
-		if (node.getRight() != null)
-			node.getRight().accept(this, param);
 		return null;
 	}
 

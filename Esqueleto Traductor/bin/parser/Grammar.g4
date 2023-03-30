@@ -18,7 +18,7 @@ definition
 	definitionVariable { $ast = $definitionVariable.ast; }
 	| 'struct' IDENT '{' structFields '}' ';' { $ast = new DefinitionStruct($IDENT, $structFields.list); 
 		}
-	| IDENT '(' definitionFunctionParams ')' '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, null, $definitionVariables.list, $sentences.list); 
+	| IDENT '(' definitionFunctionParams ')' '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, new TypeVoid(), $definitionVariables.list, $sentences.list); 
 		}
 	| IDENT '(' definitionFunctionParams ')' ':' type '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, $type.ast, $definitionVariables.list, $sentences.list); 
 		};
@@ -67,22 +67,23 @@ sentences
 
 sentence
 	returns[Sentence ast]:
-	left = expression '=' right = expression ';' { $ast = new Assignment($left.ast, $right.ast); }
-	| 'return' expression ';' { $ast = new Return($expression.ast); }
-	| 'return' ';' { $ast = new Return(null); }
-	| 'print' expression ';' { $ast = new Print($expression.ast); }
-	| 'print' ';' { $ast = new Print(null); }
-	| 'printsp' expression ';' { $ast = new Printsp($expression.ast); }
-	| 'printsp' ';' { $ast = new Printsp(null); }
-	| 'println' expression ';' { $ast = new Println($expression.ast); }
-	| 'println' ';' { $ast = new Println(null); }
-	| 'read' expression ';' { $ast = new Read($expression.ast); }
-	| 'while' '(' expression ')' '{' sentences '}' { $ast = new While($expression.ast, $sentences.list); 
+	left = expression '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
 		}
-	| 'if' '(' expression ')' '{' sentences '}' { $ast = new If($expression.ast, $sentences.list, null); 
+	| 'return' expression ';' { $ast = new SentenceReturn($expression.ast); }
+	| 'return' ';' { $ast = new SentenceReturn(null); }
+	| 'print' expression ';' { $ast = new SentencePrint($expression.ast); }
+	| 'print' ';' { $ast = new SentencePrint(null); }
+	| 'printsp' expression ';' { $ast = new SentencePrintsp($expression.ast); }
+	| 'printsp' ';' { $ast = new SentencePrintsp(null); }
+	| 'println' expression ';' { $ast = new SentencePrintln($expression.ast); }
+	| 'println' ';' { $ast = new SentencePrintln(null); }
+	| 'read' expression ';' { $ast = new SentenceRead($expression.ast); }
+	| 'while' '(' expression ')' '{' sentences '}' { $ast = new SentenceWhile($expression.ast, $sentences.list); 
+		}
+	| 'if' '(' expression ')' '{' sentences '}' { $ast = new SentenceIf($expression.ast, $sentences.list, null); 
 		}
 	| 'if' '(' expression ')' '{' ifSentences = sentences '}' 'else' '{' elseSentences = sentences
-		'}' { $ast = new If($expression.ast, $ifSentences.list, $elseSentences.list); }
+		'}' { $ast = new SentenceIf($expression.ast, $ifSentences.list, $elseSentences.list); }
 	| IDENT '(' callFunctionParams ')' ';' { $ast = new SentenceCallFunction($IDENT, $callFunctionParams.list); 
 		};
 
@@ -93,31 +94,34 @@ callFunctionParams
 		)*
 	)?;
 
-
 expression
 	returns[Expression ast]:
 	'(' expression ')' { $ast = $expression.ast; }
-	| array = expression '[' index = expression ']' { $ast = new AccessArray($array.ast,$index.ast); 
+	| access { $ast = new ExpressionAccess($access.ast);}
+	| '<' type '>' '(' expression ')' { $ast = new ExpressionCast($type.ast,$expression.ast); }
+	| left = expression operator = ('*' | '/' | '%') right = expression { $ast = new ExpressionArithmetic($left.ast,$operator,$right.ast); 
 		}
-	| struct = expression '.' IDENT { $ast = new AccessStructField($struct.ast,$IDENT); }
-	| '<' type '>' '(' expression ')' { $ast = new Cast($type.ast,$expression.ast); }
-	| left = expression operator = ('*' | '/' | '%') right = expression { $ast = new ArithmeticExpression($left.ast,$operator,$right.ast); 
+	| left = expression operator = ('+' | '-') right = expression { $ast = new ExpressionArithmetic($left.ast,$operator,$right.ast); 
 		}
-	| left = expression operator = ('+' | '-') right = expression { $ast = new ArithmeticExpression($left.ast,$operator,$right.ast); 
+	| left = expression operator = ('<' | '>' | '<=' | '>=') right = expression { $ast = new ExpressionRelational($left.ast,$operator,$right.ast); 
 		}
-	| left = expression operator = ('<' | '>' | '<=' | '>=') right = expression { $ast = new RelationalExpression($left.ast,$operator,$right.ast); 
+	| left = expression operator = ('==' | '!=') right = expression { $ast = new ExpressionRelational($left.ast,$operator,$right.ast); 
 		}
-	| left = expression operator = ('==' | '!=') right = expression { $ast = new RelationalExpression($left.ast,$operator,$right.ast); 
+	| left = expression operator = '&&' right = expression { $ast = new ExpressionLogical($left.ast,$operator,$right.ast); 
 		}
-	| left = expression operator = '&&' right = expression { $ast = new LogicalExpression($left.ast,$operator,$right.ast); 
+	| left = expression operator = '||' right = expression { $ast = new ExpressionLogical($left.ast,$operator,$right.ast); 
 		}
-	| left = expression operator = '||' right = expression { $ast = new LogicalExpression($left.ast,$operator,$right.ast); 
-		}
-	| operator = '!' expression { $ast = new UnaryExpression($operator,$expression.ast); }
+	| operator = '!' expression { $ast = new ExpressionUnary($operator,$expression.ast); }
 	| IDENT '(' callFunctionParams ')' { $ast = new ExpressionCallFunction($IDENT,$callFunctionParams.list); 
 		}
-	| IDENT { $ast = new AccessVariable($IDENT); }
-	| INT_CONSTANT { $ast = new ConstantInt($INT_CONSTANT); }
-	| REAL_CONSTANT { $ast = new ConstantFloat($REAL_CONSTANT); }
-	| CHAR_CONSTANT { $ast = new ConstantChar($CHAR_CONSTANT); };
+	| INT_CONSTANT { $ast = new ExpressionConstantInt($INT_CONSTANT); }
+	| REAL_CONSTANT { $ast = new ExpressionConstantFloat($REAL_CONSTANT); }
+	| CHAR_CONSTANT { $ast = new ExpressionConstantChar($CHAR_CONSTANT); };
+
+access
+	returns[Access ast]:
+	array = access '[' index = expression ']' { $ast = new AccessArray($array.ast,$index.ast); 
+		}
+	| struct = access '.' IDENT { $ast = new AccessStructField($struct.ast,$IDENT); }
+	| IDENT { $ast = new AccessVariable($IDENT); };
 
