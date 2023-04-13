@@ -48,66 +48,11 @@ public class TypeChecking extends DefaultVisitor {
         this.errorManager = errorManager;
     }
 
-    // # ----------------------------------------------------------
-    /*
-    * Poner aquí los visit.
-    *
-    * Si se ha usado VGen, solo hay que copiarlos de la clase 'visitor/_PlantillaParaVisitors.txt'.
-    */
-
-    // public Object visit(Program prog, Object param) {
-    //      ...
-    // }
-
-    // ...
-    // ...
-    // ...
-
-    // # ----------------------------------------------------------
-    // Métodos auxiliares recomendados (opcionales) -------------
-
-    /**
-     * predicado. Método auxiliar para implementar los predicados. Borrar si no se quiere usar.
-     *
-     * Ejemplos de uso (suponiendo que existe un método "esPrimitivo(expr)"):
-     *
-     *      1. predicado(esPrimitivo(expr.tipo), "La expresión debe ser de un tipo primitivo", expr.getStart());
-     *      2. predicado(esPrimitivo(expr.tipo), "La expresión debe ser de un tipo primitivo", expr); // Se asume getStart()
-     *      3. predicado(esPrimitivo(expr.tipo), "La expresión debe ser de un tipo primitivo");
-     *
-     * NOTA: El método getStart() (ejemplo 1) indica la linea/columna del fichero fuente donde estaba el nodo
-     * (y así poder dar información más detallada de la posición del error). Si se usa VGen, dicho método
-     * habrá sido generado en todos los nodos del AST.
-     * No es obligatorio llamar a getStart() (ejemplo 2), ya que si se pasa el nodo, se usará por defecto dicha
-     * posición.
-     * Si no se quiere imprimir la posición del fichero, se puede omitir el tercer argumento (ejemplo 3).
-     *
-     * @param condition     Debe cumplirse para que no se produzca un error
-     * @param errorMessage  Se imprime si no se cumple la condición
-     * @param posicionError Fila y columna del fichero donde se ha producido el error.
-     */
-
-    
-
 	//	class DefinitionVariable { String name;  Type type; }
 	public Object visit(DefinitionVariable node, Object param) {
+		super.visit(node, param);
 
-		// super.visit(node, param);
-
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-
-		return null;
-	}
-
-	//	class DefinitionStruct { String name;  List<StructField> structFields; }
-	public Object visit(DefinitionStruct node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getStructFields() != null)
-			for (StructField child : node.getStructFields())
-				child.accept(this, param);
+		predicado(node.getType()!=TypeVoid.getInstance(), "No se puede definir una variable de tipo void: " + node.getName(), node);
 
 		return null;
 	}
@@ -115,22 +60,25 @@ public class TypeChecking extends DefaultVisitor {
 	//	class DefinitionFunction { String name;  List<DefinitionVariable> definitionFunctionParams;  Type type;  List<DefinitionVariable> localVariables;  List<Sentence> sentences; }
 	public Object visit(DefinitionFunction node, Object param) {
 
-		// super.visit(node, param);
+		for (DefinitionVariable child : node.getDefinitionFunctionParams()) {
+			child.accept(this, param);
+			predicado(child.getType().isPrimitive(), "El tipo de las variables de una función ha de ser primitivo: " + node.getName(), node);
+		}
+			
+		node.getType().accept(this, param);
 
-		if (node.getDefinitionFunctionParams() != null)
-			for (DefinitionVariable child : node.getDefinitionFunctionParams())
-				child.accept(this, param);
+		if(node.getType() != TypeVoid.getInstance()) {
+			predicado(node.getType().isPrimitive(), "El tipo de retorno de una función ha de ser primitivo: " + node.getName(), node);
+		}	
 
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-
-		if (node.getLocalVariables() != null)
-			for (DefinitionVariable child : node.getLocalVariables())
-				child.accept(this, param);
-
-		if (node.getSentences() != null)
-			for (Sentence child : node.getSentences())
-				child.accept(this, param);
+        for (DefinitionVariable child : node.getLocalVariables()) {
+			child.accept(this, param);
+		}
+				
+		for (Sentence child : node.getSentences()) {
+			child.setFatherFunction(node);
+			child.accept(this, param);
+		}
 
 		return null;
 	}

@@ -41,10 +41,10 @@
 <span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">8:5  8:17    </span><span class="sourceText">var </span><span class="posText">anton:Persona</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span>"<span class="value">anton</span>"  
 <span class="dots">.  .  |  </span>"Persona"  <span class="type">TypeStruct.name</span>                         <span class="pos">8:11  8:17   </span><span class="sourceText">var anton:</span><span class="posText">Persona</span><span class="sourceText">;</span>
-<span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">10:1  10:11  </span><span class="sourceText"></span><span class="posText">g():Persona</span><span class="sourceText"> {	// Error: Retorno de tipo no simple</span>
+<span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">10:1  10:11  </span><span class="sourceText"></span><span class="posText">g():Persona</span><span class="sourceText"> {	//XX-- Error: Retorno de tipo no simple</span>
 <span class="dots">.  .  |  </span>"<span class="value">g</span>"  
 <span class="dots">.  .  |  </span>definitionFunctionParams  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
-<span class="dots">.  .  |  </span>"Persona"  <span class="type">TypeStruct.name</span>                         <span class="pos">10:5  10:11  </span><span class="sourceText">g():</span><span class="posText">Persona</span><span class="sourceText"> {	// Error: Retorno de tipo no simple</span>
+<span class="dots">.  .  |  </span>"Persona"  <span class="type">TypeStruct.name</span>                         <span class="pos">10:5  10:11  </span><span class="sourceText">g():</span><span class="posText">Persona</span><span class="sourceText"> {	//XX-- Error: Retorno de tipo no simple</span>
 <span class="dots">.  .  |  </span>localVariables  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
 <span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">14:1  15:10  </span><span class="sourceText"></span><span class="posText">f(a:[10] int) {	// Los parámetros deben de ser tipos primitivos</span><span class="sourceText"> ... </span><span class="posText">return 25</span><span class="sourceText">;	// El return no debe tener expresión en funciones void</span>
