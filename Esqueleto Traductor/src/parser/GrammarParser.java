@@ -321,7 +321,7 @@ public class GrammarParser extends Parser {
 				((DefinitionContext)_localctx).sentences = sentences();
 				setState(58);
 				match(T__2);
-				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list, new TypeVoid(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
+				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list, TypeVoid.getInstance(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
 						
 				}
 				break;
@@ -682,7 +682,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(122);
 				match(T__9);
-				 ((TypeContext)_localctx).ast =  new TypeInt(); 
+				 ((TypeContext)_localctx).ast = TypeInt.getInstance(); 
 				}
 				break;
 			case T__10:
@@ -690,7 +690,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(124);
 				match(T__10);
-				 ((TypeContext)_localctx).ast =  new TypeFloat(); 
+				 ((TypeContext)_localctx).ast =  TypeFloat.getInstance(); 
 				}
 				break;
 			case T__11:
@@ -698,7 +698,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(126);
 				match(T__11);
-				 ((TypeContext)_localctx).ast =  new TypeChar(); 
+				 ((TypeContext)_localctx).ast =  TypeChar.getInstance(); 
 				}
 				break;
 			case T__12:

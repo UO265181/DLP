@@ -13,12 +13,12 @@ import visitor.*;
  * Clase encargada de asignar direcciones a las variables.
  */
 public class MemoryAllocation extends DefaultVisitor {
-
+     /*
+   
     // class Programa { List<DefVariable> definiciones; List<Sentencia> sentencias; }
     public Object visit(Program node, Object param) {
     	
         int currentAddress = 0;
-        
         for (Definition definition : node.getDefinitions()) {
         	
         	int size = definition.getSize();
@@ -49,5 +49,5 @@ public class MemoryAllocation extends DefaultVisitor {
 
 		return null;
 	}
-
+ */
 }
