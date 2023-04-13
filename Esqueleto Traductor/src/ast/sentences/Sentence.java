@@ -5,8 +5,12 @@
 package ast.sentences;
 
 import ast.AST;
+import ast.definitions.DefinitionFunction;
 
 public interface Sentence extends AST {
+
+    DefinitionFunction getFatherFunction();
+    void setFatherFunction(DefinitionFunction fatherFunction);
 
 
 
