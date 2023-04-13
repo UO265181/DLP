@@ -36,8 +36,7 @@ public interface Visitor {
 	public Object visit(ExpressionArithmetic node, Object param);
 	public Object visit(ExpressionRelational node, Object param);
 	public Object visit(ExpressionLogical node, Object param);
-	public Object visit(ExpressionAccess node, Object param);
-	public Object visit(AccessVariable node, Object param);
-	public Object visit(AccessStructField node, Object param);
-	public Object visit(AccessArray node, Object param);
+	public Object visit(ExpressionVariable node, Object param);
+	public Object visit(ExpressionStructField node, Object param);
+	public Object visit(ExpressionArray node, Object param);
 }

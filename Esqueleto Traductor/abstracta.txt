@@ -36,8 +36,6 @@ expressionCast:expression -> newType:type expression;
 expressionArithmetic:expression -> left:expression operator:string right:expression;
 expressionRelational:expression -> left:expression operator:string right:expression;
 expressionLogical:expression -> left:expression operator:string right:expression;
-expressionAccess:expression -> access;
-
-accessVariable:access -> name:string;
-accessStructField:access -> struct:access name:string;
-accessArray:access -> array:access index:expression;
+expressionVariable:expression -> name:string;
+expressionStructField:expression -> struct:expression name:string;
+expressionArray:expression -> array:expression index:expression;

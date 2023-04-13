@@ -70,7 +70,7 @@ public class Identification extends DefaultVisitor {
 
         return null;
     }
-
+/*
     // class TypeStruct { String name; }
     public Object visit(TypeStruct node, Object param) {
 
@@ -80,7 +80,7 @@ public class Identification extends DefaultVisitor {
 
         return null;
     }
-
+ */
     // # --------------------------------------------------------
 
     // class Program { List<Definition> definitions; }
@@ -119,8 +119,8 @@ public class Identification extends DefaultVisitor {
         return null;
     }
 
-    // class AccessVariable { String name; }
-    public Object visit(AccessVariable node, Object param) {
+    // class ExpressionVariable { String name; }
+    public Object visit(ExpressionVariable node, Object param) {
 
         DefinitionVariable variable = variables.getFromTop(node.getName());
         if (variable == null) {

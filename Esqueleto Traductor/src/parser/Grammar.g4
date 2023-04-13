@@ -57,7 +57,8 @@ type
 	'int' { $ast = new TypeInt(); }
 	| 'float' { $ast = new TypeFloat(); }
 	| 'char' { $ast = new TypeChar(); }
-	| '[' INT_CONSTANT ']' type { $ast = new TypeArray(new ConstantInt($INT_CONSTANT), $type.ast); }
+	| '[' INT_CONSTANT ']' type { $ast = new TypeArray(new ExpressionConstantInt($INT_CONSTANT), $type.ast); 
+		}
 	| IDENT { $ast = new TypeStruct($IDENT); };
 
 sentences
@@ -97,7 +98,10 @@ callFunctionParams
 expression
 	returns[Expression ast]:
 	'(' expression ')' { $ast = $expression.ast; }
-	| access { $ast = new ExpressionAccess($access.ast);}
+	| array = expression '[' index = expression ']' { $ast = new ExpressionArray($array.ast,$index.ast); 
+		}
+	| struct = expression '.' IDENT { $ast = new ExpressionStructField($struct.ast,$IDENT); }
+	| IDENT { $ast = new ExpressionVariable($IDENT); }
 	| '<' type '>' '(' expression ')' { $ast = new ExpressionCast($type.ast,$expression.ast); }
 	| left = expression operator = ('*' | '/' | '%') right = expression { $ast = new ExpressionArithmetic($left.ast,$operator,$right.ast); 
 		}
@@ -117,11 +121,4 @@ expression
 	| INT_CONSTANT { $ast = new ExpressionConstantInt($INT_CONSTANT); }
 	| REAL_CONSTANT { $ast = new ExpressionConstantFloat($REAL_CONSTANT); }
 	| CHAR_CONSTANT { $ast = new ExpressionConstantChar($CHAR_CONSTANT); };
-
-access
-	returns[Access ast]:
-	array = access '[' index = expression ']' { $ast = new AccessArray($array.ast,$index.ast); 
-		}
-	| struct = access '.' IDENT { $ast = new AccessStructField($struct.ast,$IDENT); }
-	| IDENT { $ast = new AccessVariable($IDENT); };
 

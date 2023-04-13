@@ -1,33 +1,85 @@
 //// Printer ----
 
 
-var a:int;
-var b:char;
-var d:float;
-var e:float;
-var a:[20]int;
 
-dobleSuma(var z:int;,var b:int;,var z:float;): int {
-	var local1:int;
-	var local2:int;
-	var local1:int;
-	var b:float;
-	var d:int;
+struct Persona {
+	edad:int;
+	meses:[12]int;
+};
+var juan:Persona;
+var anton:Persona;
 
-	print a;
-	print d;
-	print b;
-	print c;
-	print local2;
+g(): Persona {
+
 }
 
-prueba():  {
+f(a:[10]int):  {
 
-	print z;
-	print local2;
+	return 25;
+}
+
+h(a:int, b:int): int {
+
+	if (a > 10) {
+		return 5.6;
+	}
+	return 'a';
+}
+
+j(a:int, b:float): float {
+
+	h(2);
+	return;
 }
 
 main():  {
+	var i:int;
+	var f:float;
+	var v:[10]int;
 
-	dobleSuma(5.6);
+	if (2.5) {
+	}
+	if (i) {
+	}
+	while (juan) {
+	}
+	while (i) {
+	}
+	5 = 6;
+	i = f;
+	juan = anton;
+	read juan;
+	read 35;
+	read i;
+	print juan;
+	print f / 2.5;
+	j(12,12.5);
+	j(12,12);
+	j(12);
+	j(12,12.5,4);
+	print main();
+	print j(12,12.5);
+	print j(12,12);
+	print j(12);
+	print j(12,12.5,4);
+	print juan + anton;
+	print 2.5 * 2;
+	print i - 2;
+	print 2.5 && f;
+	print 2 || i;
+	print {value:2.5}2.5;
+	print juan > anton;
+	print 2.5 < 2;
+	print i == 2;
+	print <int>(2.5) + i;
+	print <Persona>(2.5);
+	print <int>(juan);
+	print <float>(2.5);
+	print juan[5];
+	print 2[5];
+	print v[5.0];
+	print v[i + 2];
+	print juan.edad;
+	print 5.edad;
+	print juan.nombre;
 }

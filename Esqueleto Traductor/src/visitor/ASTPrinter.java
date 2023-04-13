@@ -394,42 +394,32 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
-	//	class ExpressionAccess { Access access; }
-	public Object visit(ExpressionAccess node, Object param) {
+	//	class ExpressionVariable { String name; }
+	public Object visit(ExpressionVariable node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "ExpressionAccess", node, false);
-
-		visit(indent + 1, "access", "Access",node.getAccess());
+		printCompact(indent, "ExpressionVariable", node, "name", node.getName());
 		return null;
 	}
 
-	//	class AccessVariable { String name; }
-	public Object visit(AccessVariable node, Object param) {
+	//	class ExpressionStructField { Expression struct;  String name; }
+	public Object visit(ExpressionStructField node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printCompact(indent, "AccessVariable", node, "name", node.getName());
-		return null;
-	}
+		printName(indent, "ExpressionStructField", node, false);
 
-	//	class AccessStructField { Access struct;  String name; }
-	public Object visit(AccessStructField node, Object param) {
-		int indent = ((Integer)param).intValue();
-
-		printName(indent, "AccessStructField", node, false);
-
-		visit(indent + 1, "struct", "Access",node.getStruct());
+		visit(indent + 1, "struct", "Expression",node.getStruct());
 		print(indent + 1, "name", "String", node.getName());
 		return null;
 	}
 
-	//	class AccessArray { Access array;  Expression index; }
-	public Object visit(AccessArray node, Object param) {
+	//	class ExpressionArray { Expression array;  Expression index; }
+	public Object visit(ExpressionArray node, Object param) {
 		int indent = ((Integer)param).intValue();
 
-		printName(indent, "AccessArray", node, false);
+		printName(indent, "ExpressionArray", node, false);
 
-		visit(indent + 1, "array", "Access",node.getArray());
+		visit(indent + 1, "array", "Expression",node.getArray());
 		visit(indent + 1, "index", "Expression",node.getIndex());
 		return null;
 	}

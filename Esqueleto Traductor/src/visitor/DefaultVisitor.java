@@ -215,27 +215,20 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
-	//	class ExpressionAccess { Access access; }
-	public Object visit(ExpressionAccess node, Object param) {
-		if (node.getAccess() != null)
-			node.getAccess().accept(this, param);
+	//	class ExpressionVariable { String name; }
+	public Object visit(ExpressionVariable node, Object param) {
 		return null;
 	}
 
-	//	class AccessVariable { String name; }
-	public Object visit(AccessVariable node, Object param) {
-		return null;
-	}
-
-	//	class AccessStructField { Access struct;  String name; }
-	public Object visit(AccessStructField node, Object param) {
+	//	class ExpressionStructField { Expression struct;  String name; }
+	public Object visit(ExpressionStructField node, Object param) {
 		if (node.getStruct() != null)
 			node.getStruct().accept(this, param);
 		return null;
 	}
 
-	//	class AccessArray { Access array;  Expression index; }
-	public Object visit(AccessArray node, Object param) {
+	//	class ExpressionArray { Expression array;  Expression index; }
+	public Object visit(ExpressionArray node, Object param) {
 		if (node.getArray() != null)
 			node.getArray().accept(this, param);
 		if (node.getIndex() != null)

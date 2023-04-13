@@ -95,10 +95,12 @@ public class Printer extends DefaultVisitor {
         if (node.getDefinitionFunctionParams() != null) {
             int counter = 0;
             for (DefinitionVariable child : node.getDefinitionFunctionParams()) {
-                child.accept(this, param);
+                writer.print(child.getName() + ":");
+                if (child.getType() != null)
+                    child.getType().accept(this, param);
                 counter++;
                 if (counter < node.getDefinitionFunctionParams().size())
-                    writer.print(",");
+                    writer.print(", ");
             }
 
         }
@@ -430,16 +432,16 @@ public class Printer extends DefaultVisitor {
 
     }
 
-    // class AccessVariable { String name; }
-    public Object visit(AccessVariable node, Object param) {
+    // class ExpressionVariable { String name; }
+    public Object visit(ExpressionVariable node, Object param) {
 
         writer.print(node.getName());
 
         return null;
     }
 
-    // class AccessStructField { Expression struct; String name; }
-    public Object visit(AccessStructField node, Object param) {
+    // class ExpressionStructField { Expression struct; String name; }
+    public Object visit(ExpressionStructField node, Object param) {
 
         super.visit(node, param);
 
@@ -448,8 +450,8 @@ public class Printer extends DefaultVisitor {
         return null;
     }
 
-    // class AccessArray { Expression array; Expression index; }
-    public Object visit(AccessArray node, Object param) {
+    // class ExpressionArray { Expression array; Expression index; }
+    public Object visit(ExpressionArray node, Object param) {
 
         // super.visit(node, param);
 

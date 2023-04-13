@@ -56,4 +56,14 @@ public class ExpressionCallFunction extends AbstractExpression {
 	public String toString() {
        return "{name:" + getName() + ", callFunctionParams:" + getCallFunctionParams() + "}";
    }
+
+   private DefinitionFunction definition;
+
+   public DefinitionFunction getDefinition() {
+	   return definition;
+   }
+
+   public void setDefinition(DefinitionFunction definition) {
+	   this.definition = definition;
+   }
 }
