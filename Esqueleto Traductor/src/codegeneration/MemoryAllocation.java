@@ -6,6 +6,7 @@
 package codegeneration;
 
 import ast.*;
+import ast.definitions.Definition;
 import visitor.*;
 
 /**
@@ -13,14 +14,40 @@ import visitor.*;
  */
 public class MemoryAllocation extends DefaultVisitor {
 
-    /*
-    * Poner aquí los visit.
-    *
-    * Si se ha usado VGen, solo hay que copiarlos de la clase 'visitor/_PlantillaParaVisitors.txt'.
-    */
+    // class Programa { List<DefVariable> definiciones; List<Sentencia> sentencias; }
+    public Object visit(Program node, Object param) {
+    	
+        int currentAddress = 0;
+        
+        for (Definition definition : node.getDefinitions()) {
+        	
+        	int size = definition.getSize();
+        	
+        	if(size!=-1) {
+        		definition.setAddress(currentAddress);
+        		currentAddress += size;
+        	}
+        }
+        
+        
+        super.visit(node, param);
+        
+        return null;
+    }
+    
+    
+    //	class StructDef { String name;  List<Record> record; }
+	public Object visit(StructDef node, Object param) {
+		
+		int currentAddress = 0;
+		
+		if (node.getRecord() != null)
+			for (Record child : node.getRecord()) {
+				child.setAddress(currentAddress);
+				currentAddress += child.getType().getSize();
+			}
 
-    // public Object visit(Program prog, Object param) {
-    //      ...
-    // }
+		return null;
+	}
 
 }

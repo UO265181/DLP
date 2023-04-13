@@ -11,6 +11,39 @@ import java.io.PrintWriter;
 // package <nombre paquete>;
 
 import ast.*;
+import ast.definitions.Definition;
+import ast.definitions.DefinitionFunction;
+import ast.definitions.DefinitionStruct;
+import ast.definitions.DefinitionVariable;
+import ast.definitions.StructField;
+import ast.expressions.Expression;
+import ast.expressions.ExpressionArithmetic;
+import ast.expressions.ExpressionArray;
+import ast.expressions.ExpressionCallFunction;
+import ast.expressions.ExpressionCast;
+import ast.expressions.ExpressionConstantChar;
+import ast.expressions.ExpressionConstantFloat;
+import ast.expressions.ExpressionConstantInt;
+import ast.expressions.ExpressionLogical;
+import ast.expressions.ExpressionRelational;
+import ast.expressions.ExpressionStructField;
+import ast.expressions.ExpressionUnary;
+import ast.expressions.ExpressionVariable;
+import ast.sentences.Sentence;
+import ast.sentences.SentenceAssignment;
+import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceIf;
+import ast.sentences.SentencePrint;
+import ast.sentences.SentencePrintln;
+import ast.sentences.SentencePrintsp;
+import ast.sentences.SentenceRead;
+import ast.sentences.SentenceReturn;
+import ast.sentences.SentenceWhile;
+import ast.types.TypeArray;
+import ast.types.TypeStruct;
+import ast.types.primitives.TypeChar;
+import ast.types.primitives.TypeFloat;
+import ast.types.primitives.TypeInt;
 
 public class Printer extends DefaultVisitor {
 

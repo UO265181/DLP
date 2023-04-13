@@ -9,6 +9,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ast.*;
+import ast.definitions.DefinitionFunction;
+import ast.definitions.DefinitionStruct;
+import ast.definitions.DefinitionVariable;
+import ast.definitions.StructField;
+import ast.expressions.ExpressionCallFunction;
+import ast.expressions.ExpressionVariable;
+import ast.sentences.SentenceCallFunction;
+import ast.types.TypeStruct;
 import main.*;
 import visitor.*;
 
@@ -20,13 +28,12 @@ public class Identification extends DefaultVisitor {
 
     // class SentenceCallFunction { String name; List<Expression>
     // callFunctionParams; }
-    public Object visit(SentenceCallFunction node, Object param) {
+    public Object visit(SentenceCallFunction node, Object param) {        
+        super.visit(node, param);
 
         DefinitionFunction function = functions.get(node.getName());
         predicado(function != null, "Procedimiento no definida: " + node.getName(), node);
         node.setDefinition(function); // Enlazar referencia con definición
-
-        super.visit(node, param);
 
         return null;
     }
@@ -34,12 +41,11 @@ public class Identification extends DefaultVisitor {
     // class ExpressionCallFunction { String name; List<Expression>
     // callFunctionParams; }
     public Object visit(ExpressionCallFunction node, Object param) {
+        super.visit(node, param);
 
         DefinitionFunction function = functions.get(node.getName());
         predicado(function != null, "Función no definida: " + node.getName(), node);
         node.setDefinition(function); // Enlazar referencia con definición
-
-        super.visit(node, param);
 
         return null;
     }
@@ -49,30 +55,31 @@ public class Identification extends DefaultVisitor {
     // class DefinitionStruct { String name; List<DefinitionVariable> structFields;
     // }
     public Object visit(DefinitionStruct node, Object param) {
+    	super.visit(node, param);
 
         DefinitionStruct struct = structs.get(node.getName());
         predicado(struct == null, "Estructura ya definida: " + node.getName(), node);
         structs.put(node.getName(), node);
 
-        super.visit(node, param);
+        structFields.clear();
 
         return null;
     }
 
     // class StructField { String name; Type type; }
     public Object visit(StructField node, Object param) {
+        super.visit(node, param);
 
         StructField structField = structFields.get(node.getName());
         predicado(structField == null, "Campo de estructura ya definido: " + node.getName(), node);
         structFields.put(node.getName(), node);
 
-        super.visit(node, param);
-
         return null;
     }
-/*
+
     // class TypeStruct { String name; }
     public Object visit(TypeStruct node, Object param) {
+    	super.visit(node, param);
 
         DefinitionStruct struct = structs.get(node.getName());
         predicado(struct != null, "Estructura no definida: " + node.getName(), node);
@@ -80,7 +87,7 @@ public class Identification extends DefaultVisitor {
 
         return null;
     }
- */
+ 
     // # --------------------------------------------------------
 
     // class Program { List<Definition> definitions; }
@@ -101,9 +108,7 @@ public class Identification extends DefaultVisitor {
         functions.put(node.getName(), node);
 
         variables.set();
-
         super.visit(node, param);
-
         variables.reset();
 
         return null;
@@ -111,6 +116,7 @@ public class Identification extends DefaultVisitor {
 
     // class DefinitionVariable { String name; Type type; }
     public Object visit(DefinitionVariable node, Object param) {
+    	super.visit(node, param);
 
         DefinitionVariable variable = variables.getFromTop(node.getName());
         predicado(variable == null, "Variable ya definida: " + node.getName(), node);
@@ -121,7 +127,13 @@ public class Identification extends DefaultVisitor {
 
     // class ExpressionVariable { String name; }
     public Object visit(ExpressionVariable node, Object param) {
+    	super.visit(node, param);
 
+        //TODO: revisar 
+        DefinitionVariable variable = variables.getFromAny(node.getName());
+        predicado(variable != null, "Variable no definida: " + node.getName(), node);
+        node.setDefinition(variable);
+        /*
         DefinitionVariable variable = variables.getFromTop(node.getName());
         if (variable == null) {
             // No pertenece al contexto actual
@@ -129,11 +141,12 @@ public class Identification extends DefaultVisitor {
             predicado(variable != null, "Variable no definida: " + node.getName(), node);
         }
         node.setDefinition(variable);
-
+        */
         return null;
     }
 
-    //TODO: acceso a arrays
+    //TODO:  arraystype?? paece q no hase falta
+    //TODO: expStructfield?
 
     // # --------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------

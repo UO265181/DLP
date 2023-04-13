@@ -1,0 +1,13 @@
+dobleSuma(a:int, b:int): int {
+	var local:int;
+
+	local = 'a';
+	caas = '3';
+	sisi = '.';
+	wat = ';';
+	barra = '\n';
+	
+}
+
+
+' \n ';
