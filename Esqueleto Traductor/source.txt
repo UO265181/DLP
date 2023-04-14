@@ -1,4 +1,5 @@
 
+
 struct Persona {
 	edad:int;
 	meses:[12] int;
@@ -7,11 +8,11 @@ struct Persona {
 var juan:Persona;
 var anton:Persona;
 
-g():Persona {	// detectado
+g():Persona {	// Error: Retorno de tipo no simple
 
 }
 
-f(a:[10] int) {	// detectado
+f(a:[10] int) {	// Los parámetros deben de ser tipos primitivos
 	return 25;	// El return no debe tener expresión en funciones void
 }
 
@@ -24,7 +25,7 @@ h(a:int, b:int):int {
 
 j(a:int, b:float):float {
 	h(2);	// Numero de argumentos incorrecto
-	return; // Debe haber un valor de retorno
+	
 }
 
 main() {
@@ -87,3 +88,4 @@ main() {
 	print juan.nombre; // Campo no definido
 	
 }
+

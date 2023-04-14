@@ -29,7 +29,6 @@ h(a:int, b:int): int {
 j(a:int, b:float): float {
 
 	h(2);
-	return;
 }
 
 main():  {

@@ -1,0 +1,22 @@
+arrays no forzar tipos en sintático
+usar genéricos en vez de object
+ga modo miguel
+type funfionc?? error type??
+
+
+
+------
+comprobar los returns??
+
+f():int {
+    if(true) {
+
+    }
+    return a;
+}
+
+f():int {
+    if(false) {
+        return a;
+    }
+}
