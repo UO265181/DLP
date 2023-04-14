@@ -3,7 +3,7 @@ usar genéricos en vez de object
 ga modo miguel
 type funfionc?? error type??
 
-
+METER EN EL WORD QUE READ PARA LVALUES
 
 ------
 comprobar los returns??

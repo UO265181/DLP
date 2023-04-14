@@ -66,7 +66,7 @@ public class TypeChecking extends DefaultVisitor {
 		for (DefinitionVariable child : node.getDefinitionFunctionParams()) {
 			child.accept(this, param);
 			predicado(child.getType().isPrimitive(),
-					"El tipo de las variables de una función ha de ser primitivo: " + node.getName(), node);
+					"Los parámetros de una función han de ser primitivos: " + node.getName(), node);
 		}
 
 		node.getType().accept(this, param);
@@ -141,10 +141,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class SentencePrint { Expression expression; }
 	public Object visit(SentencePrint node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getExpression() != null)
+		if (node.getExpression() != null) {
 			node.getExpression().accept(this, param);
+
+			predicado(node.getExpression().getType().isPrimitive(),
+					"El tipo de la expresión a imprimir ha de ser primitivo", node);
+		}
 
 		return null;
 	}
@@ -152,10 +154,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class SentencePrintsp { Expression expression; }
 	public Object visit(SentencePrintsp node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getExpression() != null)
+		if (node.getExpression() != null) {
 			node.getExpression().accept(this, param);
+
+			predicado(node.getExpression().getType().isPrimitive(),
+					"El tipo de la expresión a imprimir ha de ser primitivo", node);
+		}
 
 		return null;
 	}
@@ -163,10 +167,12 @@ public class TypeChecking extends DefaultVisitor {
 	// class SentencePrintln { Expression expression; }
 	public Object visit(SentencePrintln node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getExpression() != null)
+		if (node.getExpression() != null) {
 			node.getExpression().accept(this, param);
+
+			predicado(node.getExpression().getType().isPrimitive(),
+					"El tipo de la expresión a imprimir ha de ser primitivo", node);
+		}
 
 		return null;
 	}
@@ -177,17 +183,20 @@ public class TypeChecking extends DefaultVisitor {
 
 		if (node.getExpression() == null) {
 			predicado(node.getFatherFunction().getType() == TypeVoid.getInstance(),
-					"Esta función tiene tipo de retorno y ha de devolver un valor: " + node.getFatherFunction().getName(),
+					"Esta función tiene tipo de retorno y ha de devolver un valor: "
+							+ node.getFatherFunction().getName(),
 					node.getFatherFunction());
 		} else {
 
-			predicado(node.getFatherFunction().getType() != TypeVoid.getInstance(),
-					"El retorno de una función void no puede devolver un valor: " + node.getFatherFunction().getName(),
-					node);
-			predicado(node.getExpression().getType() == node.getFatherFunction().getType(),
-					"El tipo de retorno ha de coincidir con el tipo de la función: "
-							+ node.getFatherFunction().getName(),
-					node);
+			if (node.getFatherFunction().getType() == TypeVoid.getInstance()) {
+				errorManager.notify("Type Checking", "El retorno de una función void no puede devolver un valor: "
+						+ node.getFatherFunction().getName(), node.getStart());
+			} else {
+				predicado(node.getExpression().getType() == node.getFatherFunction().getType(),
+						"El tipo de retorno ha de coincidir con el tipo de la función: "
+								+ node.getFatherFunction().getName(),
+						node);
+			}
 		}
 
 		return null;
@@ -195,11 +204,11 @@ public class TypeChecking extends DefaultVisitor {
 
 	// class SentenceRead { Expression expression; }
 	public Object visit(SentenceRead node, Object param) {
+		super.visit(node, param);
 
-		// super.visit(node, param);
-
-		if (node.getExpression() != null)
-			node.getExpression().accept(this, param);
+		predicado(node.getExpression().getType().isPrimitive(), "El tipo de la expresión a leer ha de ser primitivo",
+				node);
+		predicado(node.getExpression().isModifiable(), "La expresión a leer ha de ser modificable", node);
 
 		return null;
 	}
@@ -209,11 +218,24 @@ public class TypeChecking extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getLeft() != null)
+		if (node.getLeft() != null) {
 			node.getLeft().accept(this, param);
 
-		if (node.getRight() != null)
+			predicado(node.getLeft().isModifiable(), "La expresión izquierda de una asignación ha de ser modificable",
+					node);
+			predicado(node.getLeft().getType().isPrimitive(),
+					"La expresión izquierda de una asignación ha de ser de tipo primitivo", node);
+		}
+
+		if (node.getRight() != null) {
 			node.getRight().accept(this, param);
+
+			predicado(node.getRight().getType().isPrimitive(),
+					"La expresión derecha de una asignación ha de ser de tipo primitivo", node);
+		}
+
+		predicado(node.getLeft().getType() == node.getRight().getType(), "La asignación ha de ser del mismo tipo",
+				node);
 
 		return null;
 	}
@@ -222,11 +244,27 @@ public class TypeChecking extends DefaultVisitor {
 	// callFunctionParams; }
 	public Object visit(SentenceCallFunction node, Object param) {
 
-		// super.visit(node, param);
+		if (node.getCallFunctionParams().size() != node.getDefinition().getDefinitionFunctionParams()
+				.size()) {
+			errorManager.notify("Type Checking",
+					"El número de parámetros de la función ha de coincidir con el de su definición: "
+							+ node.getName(),
+					node.getStart());
+		} else {
+			for (int i = 0; i < node.getCallFunctionParams().size(); i++) {
 
-		if (node.getCallFunctionParams() != null)
-			for (Expression child : node.getCallFunctionParams())
-				child.accept(this, param);
+				node.getCallFunctionParams().get(i).accept(this, param);
+
+				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
+						"Los parámetros de una función han de ser primitivos: " + node.getName(), node);
+				predicado(
+						node.getCallFunctionParams().get(i).getType() == node.getDefinition()
+								.getDefinitionFunctionParams().get(i).getType(),
+						"El tipo de los parámetros de la función ha de coincidir con el de su definición: "
+								+ node.getName(),
+						node);
+			}
+		}
 
 		return null;
 	}
@@ -237,8 +275,12 @@ public class TypeChecking extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getCondition() != null)
+		if (node.getCondition() != null) {
 			node.getCondition().accept(this, param);
+
+			predicado(node.getCondition().getType() == TypeInt.getInstance(),
+					"La condición de una sentencia if ha de ser de tipo entero", node);
+		}
 
 		if (node.getIfSentences() != null)
 			for (Sentence child : node.getIfSentences()) {
@@ -260,9 +302,12 @@ public class TypeChecking extends DefaultVisitor {
 
 		// super.visit(node, param);
 
-		if (node.getCondition() != null)
+		if (node.getCondition() != null) {
 			node.getCondition().accept(this, param);
 
+			predicado(node.getCondition().getType() == TypeInt.getInstance(),
+					"La condición de una sentencia while ha de ser de tipo entero", node);
+		}
 		if (node.getSentences() != null)
 			for (Sentence child : node.getSentences()) {
 				child.setFatherFunction(node.getFatherFunction());
@@ -306,18 +351,34 @@ public class TypeChecking extends DefaultVisitor {
 	// callFunctionParams; }
 	public Object visit(ExpressionCallFunction node, Object param) {
 
-		
-		// super.visit(node, param);
+		if (node.getCallFunctionParams().size() != node.getDefinition().getDefinitionFunctionParams()
+				.size()) {
+			errorManager.notify("Type Checking",
+					"El número de parámetros de la función ha de coincidir con el de su definición: "
+							+ node.getName(),
+					node.getStart());
+		} else {
+			for (int i = 0; i < node.getCallFunctionParams().size(); i++) {
 
-		if (node.getCallFunctionParams() != null)
-			for (Expression child : node.getCallFunctionParams())
-				child.accept(this, param);
+				node.getCallFunctionParams().get(i).accept(this, param);
+
+				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
+						"Los parámetros de una función han de ser primitivos: " + node.getName(), node);
+				predicado(
+						node.getCallFunctionParams().get(i).getType() == node.getDefinition()
+								.getDefinitionFunctionParams().get(i).getType(),
+						"El tipo de los parámetros de la función ha de coincidir con el de su definición: "
+								+ node.getName(),
+						node);
+			}
+		}
+
+		predicado(node.getDefinition().getType() != TypeVoid.getInstance(),
+				"La función invocada como expresión ha de tener valor de retorno: " + node.getName(), node);
 
 		node.setType(node.getDefinition().getType());
 
 		node.setModifiable(false);
-
-
 
 		return null;
 	}
@@ -332,8 +393,6 @@ public class TypeChecking extends DefaultVisitor {
 		node.setType(TypeInt.getInstance());
 
 		node.setModifiable(false);
-
-
 
 		return null;
 	}
@@ -369,8 +428,6 @@ public class TypeChecking extends DefaultVisitor {
 		node.setType(node.getLeft().getType());
 
 		node.setModifiable(false);
-
-
 
 		return null;
 	}
@@ -434,7 +491,6 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setModifiable(true);
 
-
 		return null;
 	}
 
@@ -448,12 +504,11 @@ public class TypeChecking extends DefaultVisitor {
 		if (node.getIndex() != null)
 			node.getIndex().accept(this, param);
 
-		//TODO:type=array.type.type
-		//IO??¿
+		// TODO:type=array.type.type
+		// IO??¿
 		node.setType(node.getArray().getType());
 
 		node.setModifiable(true);
-
 
 		return null;
 	}
