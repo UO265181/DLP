@@ -1,62 +1,85 @@
 //// Printer ----
 
 
-var a:int;
-var b:char;
-var c:[5]float;
-var h:[3][2]float;
-
-struct Direccion {
-	portal:int;
-	codigoPostal:int;
-};
-var d1:Direccion;
-var d2:Direccion;
 
 struct Persona {
 	edad:int;
-	direccion:Direccion;
+	meses:[12]int;
 };
-var f:[6]Persona;
+var juan:Persona;
+var anton:Persona;
 
-struct Empresa {
-	cif:[9]char;
-	empleados:[10]Persona;
-};
-var microsoft:Empresa;
+g(): Persona {
 
-dobleSuma(a:int, b:int): int {
-	var local:int;
-
-	local = a + b * 2;
-	return local * 2;
 }
 
-escribeEdad(num:int):  {
+f(a:[10]int) {
 
-	printsp microsoft.empleados[num].edad;
+	return 25;
 }
-var z:int;
 
-main():  {
-	var local:int;
-	var pepe:Persona;
+h(a:int, b:int): int {
+
+	if (a > 10) {
+		return 5.6;
+	}
+	return 'a';
+}
+
+j(a:int, b:float): float {
+
+	h(juan,anton);
+	return;
+}
+
+main() {
+	var i:int;
+	var f:float;
 	var v:[10]int;
 
-	pepe.edad = 20;
-	read pepe.direccion.codigoPostal;
-	local = 0;
-	while (local < 10) {
-		v[local] = dobleSuma(<int>(2.0 + h[0][3]),local);
-		local = local + 1;
+	if (2.5) {
 	}
-	if (a >= 2 && local < 5) {
-		escribeEdad(a + local);
-		return;
-	} else {
-		b = 'R';
+	if (i) {
 	}
-	if (z != 2) {
-		escribeEdad(v[local]);
+	while (juan) {
 	}
+	while (i) {
+	}
+	5 = 6;
+	i = f;
+	juan = anton;
+	read juan;
+	read 35;
+	read i;
+	print juan;
+	print f / 2.5;
+	j(12,12.5);
+	j(12,12);
+	j(12);
+	j(12,12.5,4);
+	print main();
+	print j(12,12.5);
+	print j(12,12);
+	print j(12);
+	print j(12,12.5,4);
+	print juan + anton;
+	print 2.5 * 2;
+	print i - 2;
+	print 2.5 && f;
+	print 2 || i;
+	print {value:2.5}2.5;
+	print juan > anton;
+	print 2.5 < 2;
+	print i == 2;
+	print <int>(2.5) + i;
+	print <Persona>(2.5);
+	print <int>(juan);
+	print <float>(2.5);
+	print juan[5];
+	print 2[5];
+	print v[5.0];
+	print v[i + 2];
+	print juan.edad;
+	print 5.edad;
+	print juan.nombre;
 }

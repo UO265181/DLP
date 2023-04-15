@@ -73,10 +73,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.getType().accept(this, param);
 
-		if (!node.getType().isSameType(TypeVoid.getInstance())) {
-			predicado(node.getType().isPrimitive(),
-					"El tipo de retorno de una función ha de ser primitivo: " + node.getName(), node);
-		}
+		predicado(node.getType().isPrimitive() || node.getType().isSameType(TypeVoid.getInstance()),
+				"El tipo de retorno de una función ha de ser primitivo: " + node.getName(), node);
 
 		for (DefinitionVariable child : node.getLocalVariables()) {
 			child.accept(this, param);
@@ -98,45 +96,6 @@ public class TypeChecking extends DefaultVisitor {
 		if (node.getType() != null)
 			node.getType().accept(this, param);
 
-		return null;
-	}
-
-	// class TypeInt { }
-	public Object visit(TypeInt node, Object param) {
-		return null;
-	}
-
-	// class TypeFloat { }
-	public Object visit(TypeFloat node, Object param) {
-		return null;
-	}
-
-	// class TypeChar { }
-	public Object visit(TypeChar node, Object param) {
-		return null;
-	}
-
-	// class TypeVoid { }
-	public Object visit(TypeVoid node, Object param) {
-		return null;
-	}
-
-	// class TypeArray { ExpressionConstantInt size; Type type; }
-	public Object visit(TypeArray node, Object param) {
-
-		// super.visit(node, param);
-
-		if (node.getSize() != null)
-			node.getSize().accept(this, param);
-
-		if (node.getType() != null)
-			node.getType().accept(this, param);
-
-		return null;
-	}
-
-	// class TypeStruct { String name; }
-	public Object visit(TypeStruct node, Object param) {
 		return null;
 	}
 
@@ -248,11 +207,12 @@ public class TypeChecking extends DefaultVisitor {
 				node.getCallFunctionParams().get(i).accept(this, param);
 
 				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
-						"Los parámetros de una función han de ser primitivos: " + node.getName(), node);
+						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de ser primitivo: " + node.getName(),
+						node);
 				predicado(
 						node.getCallFunctionParams().get(i).getType().isSameType(node.getDefinition()
 								.getDefinitionFunctionParams().get(i).getType()),
-						"El tipo de los parámetros de la función ha de coincidir con el de su definición: "
+						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de coincidir con el de su definición: "
 								+ node.getName(),
 						node);
 			}
@@ -347,11 +307,12 @@ public class TypeChecking extends DefaultVisitor {
 				node.getCallFunctionParams().get(i).accept(this, param);
 
 				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
-						"Los parámetros de una función han de ser primitivos: " + node.getName(), node);
+						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de ser primitivo: " + node.getName(),
+						node);
 				predicado(
 						node.getCallFunctionParams().get(i).getType().isSameType(node.getDefinition()
 								.getDefinitionFunctionParams().get(i).getType()),
-						"El tipo de los parámetros de la función ha de coincidir con el de su definición: "
+						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de coincidir con el de su definición: "
 								+ node.getName(),
 						node);
 			}
