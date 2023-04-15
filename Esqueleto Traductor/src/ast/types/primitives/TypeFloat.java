@@ -36,4 +36,11 @@ public class TypeFloat extends AbstractTypePrimitive {
 	public boolean isSameType(Type type) {
 		return type == getInstance();
 	}
+
+	private static final int DEFAULT_FLOAT_SIZE = 4;
+
+	@Override
+	public int getMemorySize() {
+		return DEFAULT_FLOAT_SIZE;
+	}
 }

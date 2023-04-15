@@ -35,4 +35,9 @@ public class TypeVoid extends AbstractType {
 	public boolean isSameType(Type type) {
 		return type == getInstance();
 	}
+
+	@Override
+	public int getMemorySize() {
+		return 0;
+	}
 }

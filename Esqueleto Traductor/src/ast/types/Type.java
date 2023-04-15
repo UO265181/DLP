@@ -13,5 +13,6 @@ public interface Type extends AST {
     boolean isSameType(Type type);
     Type getType();
     DefinitionStruct getDefinitionStruct();
+    int getMemorySize();
 
 }

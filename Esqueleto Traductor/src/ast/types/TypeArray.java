@@ -63,4 +63,10 @@ public class TypeArray extends AbstractType {
 		return type.getType()==getType();
 	}
 
+	@Override
+	public int getMemorySize() {
+		//TODO: valueOf en otro lao?
+		return getType().getMemorySize()* Integer.valueOf(getSize().getValue());
+	}
+
 }

@@ -8,4 +8,5 @@ import ast.AbstractAST;
 
 public abstract class AbstractDefinition extends AbstractAST implements Definition {
 
+
 }

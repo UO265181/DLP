@@ -1,85 +1,26 @@
 //// Printer ----
 
 
+var a:char;
 
 struct Persona {
 	edad:int;
 	meses:[12]int;
+	a:float;
 };
-var juan:Persona;
-var anton:Persona;
+var b:float;
 
-g(): Persona {
+struct Prueba {
+	campo1:int;
+	campo2:int;
+};
+var c:[2]Persona;
+var d:int;
 
-}
-
-f(a:[10]int) {
-
-	return 25;
-}
-
-h(a:int, b:int): int {
-
-	if (a > 10) {
-		return 5.6;
-	}
-	return 'a';
-}
-
-j(a:int, b:float): float {
-
-	h(juan,anton);
-	return;
-}
-
-main() {
-	var i:int;
+f(a:int, b:float, h:char) {
+	var c:char;
+	var d:int;
+	var e:[2]Persona;
 	var f:float;
-	var v:[10]int;
 
-	if (2.5) {
-	}
-	if (i) {
-	}
-	while (juan) {
-	}
-	while (i) {
-	}
-	5 = 6;
-	i = f;
-	juan = anton;
-	read juan;
-	read 35;
-	read i;
-	print juan;
-	print f / 2.5;
-	j(12,12.5);
-	j(12,12);
-	j(12);
-	j(12,12.5,4);
-	print main();
-	print j(12,12.5);
-	print j(12,12);
-	print j(12);
-	print j(12,12.5,4);
-	print juan + anton;
-	print 2.5 * 2;
-	print i - 2;
-	print 2.5 && f;
-	print 2 || i;
-	print {value:2.5}2.5;
-	print juan > anton;
-	print 2.5 < 2;
-	print i == 2;
-	print <int>(2.5) + i;
-	print <Persona>(2.5);
-	print <int>(juan);
-	print <float>(2.5);
-	print juan[5];
-	print 2[5];
-	print v[5.0];
-	print v[i + 2];
-	print juan.edad;
-	print 5.edad;
-	print juan.nombre;
 }

@@ -36,4 +36,11 @@ public class TypeInt extends AbstractTypePrimitive {
 	public boolean isSameType(Type type) {
 		return type == getInstance();
 	}
+
+	private static final int DEFAULT_INT_SIZE = 2;
+
+	@Override
+	public int getMemorySize() {
+		return DEFAULT_INT_SIZE;
+	}
 }

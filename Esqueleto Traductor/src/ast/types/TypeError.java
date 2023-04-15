@@ -31,5 +31,10 @@
     public Object accept(Visitor visitor, Object param) {
         return null;
     }
+
+    @Override
+	public int getMemorySize() {
+		return 0;
+	}
  }
  

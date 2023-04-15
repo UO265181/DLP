@@ -46,416 +46,435 @@ import java.util.*;
  * - Muestra la estructura del árbol en HTML.
  * - Destaca los hijos/propiedades a null.
  * - Muestra a qué texto apuntan las posiciones de cada nodo (linea/columna)
- *      ayudando a decidir cual de ellas usar en los errores y generación de código.
+ * ayudando a decidir cual de ellas usar en los errores y generación de código.
  *
- * Esta clase se genera con VGen. El uso de esta clase es opcional (puede eliminarse del proyecto).
+ * Esta clase se genera con VGen. El uso de esta clase es opcional (puede
+ * eliminarse del proyecto).
  *
  */
 public class ASTPrinter extends DefaultVisitor {
 
-    /**
-     * toHtml. Muestra la estructura del AST indicando qué hay en las posiciones
-     * (línea y columna) de cada nodo.
-     *
-     * @param sourceFile El fichero del cual se ha obtenido el AST
-     * @param raiz       El AST creado a partir de sourceFile
-     * @param filename   Nombre del fichero HMTL a crear con la traza del AST
-     */
+	/**
+	 * toHtml. Muestra la estructura del AST indicando qué hay en las posiciones
+	 * (línea y columna) de cada nodo.
+	 *
+	 * @param sourceFile El fichero del cual se ha obtenido el AST
+	 * @param raiz       El AST creado a partir de sourceFile
+	 * @param filename   Nombre del fichero HMTL a crear con la traza del AST
+	 */
 
-    public static void toHtml(String sourceFile, AST raiz, String filename) {
-        toHtml(sourceFile, raiz, filename, 4);
-    }
+	public static void toHtml(String sourceFile, AST raiz, String filename) {
+		toHtml(sourceFile, raiz, filename, 4);
+	}
 
-    public static void toHtml(AST raiz, String filename) {
-        toHtml(null, raiz, filename);
-    }
+	public static void toHtml(AST raiz, String filename) {
+		toHtml(null, raiz, filename);
+	}
 
-    // tabWidth deberían ser los espacios correspondientes a un tabulador en eclipse.
-    // Normalmente no sería necesario especificarlo. Usar mejor los dos métodos anteriores.
+	// tabWidth deberían ser los espacios correspondientes a un tabulador en
+	// eclipse.
+	// Normalmente no sería necesario especificarlo. Usar mejor los dos métodos
+	// anteriores.
 
-    public static void toHtml(String sourceFile, AST raiz, String filename, int tabWidth) {
-        try {
-            PrintWriter writer = new PrintWriter(
-                    new FileWriter(filename.endsWith(".html") ? filename : filename + ".html"));
-            generateHeader(writer);
-            writer.println("[ASTPrinter] -------------------------------- line:col  line:col");
-            if (raiz != null) {
-                ASTPrinter tracer = new ASTPrinter(writer, loadLines(sourceFile, tabWidth));
-                raiz.accept(tracer, Integer.valueOf(0));
-            } else
-                writer.println("raiz == null");
-            writer.println(ls + ls + "[ASTPrinter] --------------------------------");
-            generateFooter(writer);
-            writer.close();
-            System.out.println(ls + "ASTPrinter: Fichero '" + filename
-                    + ".html' generado. Abra dicho fichero para validar el AST generado.");
-        } catch (IOException e) {
-            System.out.println(ls + "ASTPrinter: No se ha podido crear el fichero " + filename);
-            e.printStackTrace();
-        }
-    }
+	public static void toHtml(String sourceFile, AST raiz, String filename, int tabWidth) {
+		try {
+			PrintWriter writer = new PrintWriter(
+					new FileWriter(filename.endsWith(".html") ? filename : filename + ".html"));
+			generateHeader(writer);
+			writer.println("[ASTPrinter] -------------------------------- line:col  line:col");
+			if (raiz != null) {
+				ASTPrinter tracer = new ASTPrinter(writer, loadLines(sourceFile, tabWidth));
+				raiz.accept(tracer, Integer.valueOf(0));
+			} else
+				writer.println("raiz == null");
+			writer.println(ls + ls + "[ASTPrinter] --------------------------------");
+			generateFooter(writer);
+			writer.close();
+			System.out.println(ls + "ASTPrinter: Fichero '" + filename
+					+ ".html' generado. Abra dicho fichero para validar el AST generado.");
+		} catch (IOException e) {
+			System.out.println(ls + "ASTPrinter: No se ha podido crear el fichero " + filename);
+			e.printStackTrace();
+		}
+	}
 
-    private static void generateHeader(PrintWriter writer) {
-        writer.println("<html>\r\n"
-            + "<head>\r\n"
-            + "<meta charset=\"utf-8\" />\r\n"
-            + "<style type=\"text/css\">\r\n"
-            + ".value { font-weight: bold; }\r\n"
-            + ".dots { color: #bebdbd; }\r\n"
-            + ".type { color: #BBBBBB; }\r\n"
-            + ".pos { color: #CCCCCC; }\r\n"
-            + ".sourceText { color: #BBBBBB; }\r\n"
-            + ".posText {\r\n" + "	color: #BBBBBB;\r\n"
-            + "	text-decoration: underline; font-weight: bold;\r\n"
-            + "}\r\n"
-            + ".null {\r\n"
-            + "	color: #FF0000;\r\n"
-            + "	font-weight: bold;\r\n"
-            + "	font-style: italic;\r\n" + "}\r\n"
-            + "</style>\r\n" + "</head>\r\n" + "\r\n"
-            + "<body><pre>");
-    }
+	private static void generateHeader(PrintWriter writer) {
+		writer.println("<html>\r\n"
+				+ "<head>\r\n"
+				+ "<meta charset=\"utf-8\" />\r\n"
+				+ "<style type=\"text/css\">\r\n"
+				+ ".value { font-weight: bold; }\r\n"
+				+ ".dots { color: #bebdbd; }\r\n"
+				+ ".type { color: #BBBBBB; }\r\n"
+				+ ".pos { color: #CCCCCC; }\r\n"
+				+ ".sourceText { color: #BBBBBB; }\r\n"
+				+ ".posText {\r\n" + "	color: #BBBBBB;\r\n"
+				+ "	text-decoration: underline; font-weight: bold;\r\n"
+				+ "}\r\n"
+				+ ".null {\r\n"
+				+ "	color: #FF0000;\r\n"
+				+ "	font-weight: bold;\r\n"
+				+ "	font-style: italic;\r\n" + "}\r\n"
+				+ "</style>\r\n" + "</head>\r\n" + "\r\n"
+				+ "<body><pre>");
+	}
 
-    private static void generateFooter(PrintWriter writer) {
-        writer.println("</pre>\r\n" + "</body>\r\n" + "</html>");
-    }
+	private static void generateFooter(PrintWriter writer) {
+		writer.println("</pre>\r\n" + "</body>\r\n" + "</html>");
+	}
 
-    private ASTPrinter(PrintWriter writer, List<String> sourceLines) {
-        this.writer = writer;
-        this.sourceLines = sourceLines;
-    }
+	private ASTPrinter(PrintWriter writer, List<String> sourceLines) {
+		this.writer = writer;
+		this.sourceLines = sourceLines;
+	}
 
-    // ----------------------------------------------
-	//	class Program { List<Definition> definitions; }
+	// ----------------------------------------------
+	// class Program { List<Definition> definitions; }
 	public Object visit(Program node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "Program", node, false);
 
-		visit(indent + 1, "definitions", "List<Definition>",node.getDefinitions());
+		visit(indent + 1, "definitions", "List<Definition>", node.getDefinitions());
 		return null;
 	}
 
-	//	class DefinitionVariable { String name;  Type type; }
+	// class DefinitionVariable { String name; Type type; }
 	public Object visit(DefinitionVariable node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "DefinitionVariable", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "type", "Type",node.getType());
+		visit(indent + 1, "type", "Type", node.getType());
+
+		// ESTA ES LA LINEA NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		print(indent + 1, "address", "int", node.getAddress());
+
 		return null;
 	}
 
-	//	class DefinitionStruct { String name;  List<StructField> structFields; }
+	// class DefinitionStruct { String name; List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "DefinitionStruct", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "structFields", "List<StructField>",node.getStructFields());
+		visit(indent + 1, "structFields", "List<StructField>", node.getStructFields());
+
 		return null;
 	}
 
-	//	class DefinitionFunction { String name;  List<DefinitionVariable> definitionFunctionParams;  Type type;  List<DefinitionVariable> localVariables;  List<Sentence> sentences; }
+	// class DefinitionFunction { String name; List<DefinitionVariable>
+	// definitionFunctionParams; Type type; List<DefinitionVariable> localVariables;
+	// List<Sentence> sentences; }
 	public Object visit(DefinitionFunction node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "DefinitionFunction", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "definitionFunctionParams", "List<DefinitionVariable>",node.getDefinitionFunctionParams());
-		visit(indent + 1, "type", "Type",node.getType());
-		visit(indent + 1, "localVariables", "List<DefinitionVariable>",node.getLocalVariables());
-		visit(indent + 1, "sentences", "List<Sentence>",node.getSentences());
+		visit(indent + 1, "definitionFunctionParams", "List<DefinitionVariable>", node.getDefinitionFunctionParams());
+		visit(indent + 1, "type", "Type", node.getType());
+		visit(indent + 1, "localVariables", "List<DefinitionVariable>", node.getLocalVariables());
+		visit(indent + 1, "sentences", "List<Sentence>", node.getSentences());
 		return null;
 	}
 
-	//	class StructField { String name;  Type type; }
+	// class StructField { String name; Type type; }
 	public Object visit(StructField node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "StructField", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "type", "Type",node.getType());
+		visit(indent + 1, "type", "Type", node.getType());
+
+		// ESTA ES LA LINEA NUEVA <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+		print(indent + 1, "address", "int", node.getAddress());
+
 		return null;
 	}
 
-	//	class TypeInt {  }
+	// class TypeInt { }
 	public Object visit(TypeInt node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "TypeInt", node, true);
 
 		return null;
 	}
 
-	//	class TypeFloat {  }
+	// class TypeFloat { }
 	public Object visit(TypeFloat node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "TypeFloat", node, true);
 
 		return null;
 	}
 
-	//	class TypeChar {  }
+	// class TypeChar { }
 	public Object visit(TypeChar node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "TypeChar", node, true);
 
 		return null;
 	}
 
-	//	class TypeVoid {  }
+	// class TypeVoid { }
 	public Object visit(TypeVoid node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "TypeVoid", node, true);
 
 		return null;
 	}
 
-	//	class TypeArray { ExpressionConstantInt size;  Type type; }
+	// class TypeArray { ExpressionConstantInt size; Type type; }
 	public Object visit(TypeArray node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "TypeArray", node, false);
 
-		visit(indent + 1, "size", "ExpressionConstantInt",node.getSize());
-		visit(indent + 1, "type", "Type",node.getType());
+		visit(indent + 1, "size", "ExpressionConstantInt", node.getSize());
+		visit(indent + 1, "type", "Type", node.getType());
 		return null;
 	}
 
-	//	class TypeStruct { String name; }
+	// class TypeStruct { String name; }
 	public Object visit(TypeStruct node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printCompact(indent, "TypeStruct", node, "name", node.getName());
 		return null;
 	}
 
-	//	class SentencePrint { Expression expression; }
+	// class SentencePrint { Expression expression; }
 	public Object visit(SentencePrint node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentencePrint", node, false);
 
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class SentencePrintsp { Expression expression; }
+	// class SentencePrintsp { Expression expression; }
 	public Object visit(SentencePrintsp node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentencePrintsp", node, false);
 
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class SentencePrintln { Expression expression; }
+	// class SentencePrintln { Expression expression; }
 	public Object visit(SentencePrintln node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentencePrintln", node, false);
 
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class SentenceReturn { Expression expression; }
+	// class SentenceReturn { Expression expression; }
 	public Object visit(SentenceReturn node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceReturn", node, false);
 
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class SentenceRead { Expression expression; }
+	// class SentenceRead { Expression expression; }
 	public Object visit(SentenceRead node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceRead", node, false);
 
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class SentenceAssignment { Expression left;  Expression right; }
+	// class SentenceAssignment { Expression left; Expression right; }
 	public Object visit(SentenceAssignment node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceAssignment", node, false);
 
-		visit(indent + 1, "left", "Expression",node.getLeft());
-		visit(indent + 1, "right", "Expression",node.getRight());
+		visit(indent + 1, "left", "Expression", node.getLeft());
+		visit(indent + 1, "right", "Expression", node.getRight());
 		return null;
 	}
 
-	//	class SentenceCallFunction { String name;  List<Expression> callFunctionParams; }
+	// class SentenceCallFunction { String name; List<Expression>
+	// callFunctionParams; }
 	public Object visit(SentenceCallFunction node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceCallFunction", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "callFunctionParams", "List<Expression>",node.getCallFunctionParams());
+		visit(indent + 1, "callFunctionParams", "List<Expression>", node.getCallFunctionParams());
 		return null;
 	}
 
-	//	class SentenceIf { Expression condition;  List<Sentence> ifSentences;  List<Sentence> elseSentences; }
+	// class SentenceIf { Expression condition; List<Sentence> ifSentences;
+	// List<Sentence> elseSentences; }
 	public Object visit(SentenceIf node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceIf", node, false);
 
-		visit(indent + 1, "condition", "Expression",node.getCondition());
-		visit(indent + 1, "ifSentences", "List<Sentence>",node.getIfSentences());
-		visit(indent + 1, "elseSentences", "List<Sentence>",node.getElseSentences());
+		visit(indent + 1, "condition", "Expression", node.getCondition());
+		visit(indent + 1, "ifSentences", "List<Sentence>", node.getIfSentences());
+		visit(indent + 1, "elseSentences", "List<Sentence>", node.getElseSentences());
 		return null;
 	}
 
-	//	class SentenceWhile { Expression condition;  List<Sentence> sentences; }
+	// class SentenceWhile { Expression condition; List<Sentence> sentences; }
 	public Object visit(SentenceWhile node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "SentenceWhile", node, false);
 
-		visit(indent + 1, "condition", "Expression",node.getCondition());
-		visit(indent + 1, "sentences", "List<Sentence>",node.getSentences());
+		visit(indent + 1, "condition", "Expression", node.getCondition());
+		visit(indent + 1, "sentences", "List<Sentence>", node.getSentences());
 		return null;
 	}
 
-	//	class ExpressionConstantInt { String value; }
+	// class ExpressionConstantInt { String value; }
 	public Object visit(ExpressionConstantInt node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printCompact(indent, "ExpressionConstantInt", node, "value", node.getValue());
 		return null;
 	}
 
-	//	class ExpressionConstantFloat { String value; }
+	// class ExpressionConstantFloat { String value; }
 	public Object visit(ExpressionConstantFloat node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printCompact(indent, "ExpressionConstantFloat", node, "value", node.getValue());
 		return null;
 	}
 
-	//	class ExpressionConstantChar { String value; }
+	// class ExpressionConstantChar { String value; }
 	public Object visit(ExpressionConstantChar node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printCompact(indent, "ExpressionConstantChar", node, "value", node.getValue());
 		return null;
 	}
 
-	//	class ExpressionCallFunction { String name;  List<Expression> callFunctionParams; }
+	// class ExpressionCallFunction { String name; List<Expression>
+	// callFunctionParams; }
 	public Object visit(ExpressionCallFunction node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionCallFunction", node, false);
 
 		print(indent + 1, "name", "String", node.getName());
-		visit(indent + 1, "callFunctionParams", "List<Expression>",node.getCallFunctionParams());
+		visit(indent + 1, "callFunctionParams", "List<Expression>", node.getCallFunctionParams());
 		return null;
 	}
 
-	//	class ExpressionUnary { String operator;  Expression expression; }
+	// class ExpressionUnary { String operator; Expression expression; }
 	public Object visit(ExpressionUnary node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionUnary", node, false);
 
 		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class ExpressionCast { Type newType;  Expression expression; }
+	// class ExpressionCast { Type newType; Expression expression; }
 	public Object visit(ExpressionCast node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionCast", node, false);
 
-		visit(indent + 1, "newType", "Type",node.getNewType());
-		visit(indent + 1, "expression", "Expression",node.getExpression());
+		visit(indent + 1, "newType", "Type", node.getNewType());
+		visit(indent + 1, "expression", "Expression", node.getExpression());
 		return null;
 	}
 
-	//	class ExpressionArithmetic { Expression left;  String operator;  Expression right; }
+	// class ExpressionArithmetic { Expression left; String operator; Expression
+	// right; }
 	public Object visit(ExpressionArithmetic node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionArithmetic", node, false);
 
-		visit(indent + 1, "left", "Expression",node.getLeft());
+		visit(indent + 1, "left", "Expression", node.getLeft());
 		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
+		visit(indent + 1, "right", "Expression", node.getRight());
 		return null;
 	}
 
-	//	class ExpressionRelational { Expression left;  String operator;  Expression right; }
+	// class ExpressionRelational { Expression left; String operator; Expression
+	// right; }
 	public Object visit(ExpressionRelational node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionRelational", node, false);
 
-		visit(indent + 1, "left", "Expression",node.getLeft());
+		visit(indent + 1, "left", "Expression", node.getLeft());
 		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
+		visit(indent + 1, "right", "Expression", node.getRight());
 		return null;
 	}
 
-	//	class ExpressionLogical { Expression left;  String operator;  Expression right; }
+	// class ExpressionLogical { Expression left; String operator; Expression right;
+	// }
 	public Object visit(ExpressionLogical node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionLogical", node, false);
 
-		visit(indent + 1, "left", "Expression",node.getLeft());
+		visit(indent + 1, "left", "Expression", node.getLeft());
 		print(indent + 1, "operator", "String", node.getOperator());
-		visit(indent + 1, "right", "Expression",node.getRight());
+		visit(indent + 1, "right", "Expression", node.getRight());
 		return null;
 	}
 
-	//	class ExpressionVariable { String name; }
+	// class ExpressionVariable { String name; }
 	public Object visit(ExpressionVariable node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printCompact(indent, "ExpressionVariable", node, "name", node.getName());
 		return null;
 	}
 
-	//	class ExpressionStructField { Expression struct;  String name; }
+	// class ExpressionStructField { Expression struct; String name; }
 	public Object visit(ExpressionStructField node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionStructField", node, false);
 
-		visit(indent + 1, "struct", "Expression",node.getStruct());
+		visit(indent + 1, "struct", "Expression", node.getStruct());
 		print(indent + 1, "name", "String", node.getName());
 		return null;
 	}
 
-	//	class ExpressionArray { Expression array;  Expression index; }
+	// class ExpressionArray { Expression array; Expression index; }
 	public Object visit(ExpressionArray node, Object param) {
-		int indent = ((Integer)param).intValue();
+		int indent = ((Integer) param).intValue();
 
 		printName(indent, "ExpressionArray", node, false);
 
-		visit(indent + 1, "array", "Expression",node.getArray());
-		visit(indent + 1, "index", "Expression",node.getIndex());
+		visit(indent + 1, "array", "Expression", node.getArray());
+		visit(indent + 1, "index", "Expression", node.getIndex());
 		return null;
 	}
-
 
 	// -----------------------------------------------------------------
 	// Métodos invocados desde los métodos visit -----------------------
@@ -540,7 +559,6 @@ public class ASTPrinter extends DefaultVisitor {
 		return text;
 	}
 
-
 	// -----------------------------------------------------------------
 	// Métodos para mostrar las Posiciones -----------------------------
 
@@ -596,20 +614,21 @@ public class ASTPrinter extends DefaultVisitor {
 			BufferedReader br = new BufferedReader(new FileReader(sourceFile));
 			String line;
 			while ((line = br.readLine()) != null) {
-			//	lines.add(line.replace("\t", spaces)); // Si tab = 4 espaces (Eclipse)
+				// lines.add(line.replace("\t", spaces)); // Si tab = 4 espaces (Eclipse)
 				lines.add(line);
-            }
+			}
 			br.close();
 			return lines;
 		} catch (FileNotFoundException e) {
-			System.out.println("Warning. No se pudo encontrar el fichero fuente '" + sourceFile + "'. No se mostrará informaicón de posición.");
+			System.out.println("Warning. No se pudo encontrar el fichero fuente '" + sourceFile
+					+ "'. No se mostrará informaicón de posición.");
 			return null;
 		} catch (IOException e) {
-			System.out.println("Warning. Error al leer del fichero fuente '" + sourceFile + "'. No se mostrará informaicón de posición.");
+			System.out.println("Warning. Error al leer del fichero fuente '" + sourceFile
+					+ "'. No se mostrará informaicón de posición.");
 			return null;
 		}
 	}
-
 
 	private List<String> sourceLines;
 	private static String ls = System.getProperty("line.separator");

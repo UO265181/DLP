@@ -36,4 +36,11 @@ public class TypeChar extends AbstractTypePrimitive {
 	public boolean isSameType(Type type) {
 		return type == getInstance();
 	}
+
+	private static final int DEFAULT_CHAR_SIZE = 1;
+
+	@Override
+	public int getMemorySize() {
+		return DEFAULT_CHAR_SIZE;
+	}
 }
