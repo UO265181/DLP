@@ -4,7 +4,7 @@
 
 package ast.types.primitives;
 
-
+import ast.types.Type;
 import visitor.*;
 
 //	typeFloat:type -> 
@@ -12,23 +12,28 @@ import visitor.*;
 public class TypeFloat extends AbstractTypePrimitive {
 
 	private static TypeFloat typeFloat;
-	
-	private TypeFloat() {}
-	
+
+	private TypeFloat() {
+	}
+
 	public static TypeFloat getInstance() {
-		if (typeFloat == null){
+		if (typeFloat == null) {
 			typeFloat = new TypeFloat();
-        }
+		}
 		return typeFloat;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{TypeFloat}";
-   }
+		return "{TypeFloat}";
+	}
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type == getInstance();
+	}
 }

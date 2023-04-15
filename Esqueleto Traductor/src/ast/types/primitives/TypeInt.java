@@ -4,7 +4,7 @@
 
 package ast.types.primitives;
 
-
+import ast.types.Type;
 import visitor.*;
 
 //	typeInt:type -> 
@@ -12,23 +12,28 @@ import visitor.*;
 public class TypeInt extends AbstractTypePrimitive {
 
 	private static TypeInt typeInt;
-	
-	private TypeInt() {}
-	
+
+	private TypeInt() {
+	}
+
 	public static TypeInt getInstance() {
-		if (typeInt == null){
+		if (typeInt == null) {
 			typeInt = new TypeInt();
-        }
+		}
 		return typeInt;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{TypeInt}";
-   }
+		return "{TypeInt}";
+	}
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type == getInstance();
+	}
 }

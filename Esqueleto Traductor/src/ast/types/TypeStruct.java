@@ -53,4 +53,14 @@ public class TypeStruct extends AbstractType {
 	public void setDefinition(DefinitionStruct definition) {
 		this.definition = definition;
 	}
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type.getDefinitionStruct() == null ? false : type.getDefinitionStruct().getName().equals(getName());
+	}
+
+	@Override
+	public DefinitionStruct getDefinitionStruct() {
+		return getDefinition();
+	}
 }

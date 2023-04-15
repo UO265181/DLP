@@ -5,17 +5,21 @@
 package ast.types;
 
 import ast.AbstractAST;
+import ast.definitions.DefinitionStruct;
 
 public abstract class AbstractType extends AbstractAST implements Type {
-
-    private boolean primitive;
 
     public boolean isPrimitive() {
         return false;
     }
 
-    public void setPrimitive(boolean primitive) {
-        this.primitive=primitive;
+    public Type getType() {
+        return TypeError.getInstance();
+    }
+
+    public DefinitionStruct getDefinitionStruct() {
+        //TODO: mejor?
+        return null;
     }
 
 }

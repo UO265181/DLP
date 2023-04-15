@@ -4,7 +4,7 @@
 
 package ast.types.primitives;
 
-
+import ast.types.Type;
 import visitor.*;
 
 //	typeChar:type -> 
@@ -12,23 +12,28 @@ import visitor.*;
 public class TypeChar extends AbstractTypePrimitive {
 
 	private static TypeChar typeChar;
-	
-	private TypeChar() {}
-	
+
+	private TypeChar() {
+	}
+
 	public static TypeChar getInstance() {
-		if (typeChar == null){
+		if (typeChar == null) {
 			typeChar = new TypeChar();
-        }
+		}
 		return typeChar;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{TypeChar}";
-   }
+		return "{TypeChar}";
+	}
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type == getInstance();
+	}
 }

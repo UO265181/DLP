@@ -5,9 +5,13 @@
 package ast.types;
 
 import ast.AST;
+import ast.definitions.DefinitionStruct;
 
 public interface Type extends AST {
 
     boolean isPrimitive();
+    boolean isSameType(Type type);
+    Type getType();
+    DefinitionStruct getDefinitionStruct();
 
 }

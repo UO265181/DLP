@@ -38,6 +38,7 @@ public class TypeArray extends AbstractType {
 		this.size = size;
 	}
 
+	@Override
 	public Type getType() {
 		return type;
 	}
@@ -56,4 +57,10 @@ public class TypeArray extends AbstractType {
 	public String toString() {
        return "{size:" + getSize() + ", type:" + getType() + "}";
    }
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type.getType()==getType();
+	}
+
 }

@@ -41,6 +41,7 @@ import ast.sentences.SentenceReturn;
 import ast.sentences.SentenceWhile;
 import ast.types.TypeArray;
 import ast.types.TypeStruct;
+import ast.types.TypeVoid;
 import ast.types.primitives.TypeChar;
 import ast.types.primitives.TypeFloat;
 import ast.types.primitives.TypeInt;
@@ -139,8 +140,8 @@ public class Printer extends DefaultVisitor {
         }
 
         writer.print(")");
-//TODO: singelton tipos
-        if (node.getType() != null) {
+        
+        if (!node.getType().isSameType(TypeVoid.getInstance())) {
 
             writer.print(": ");
 

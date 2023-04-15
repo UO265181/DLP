@@ -129,24 +129,12 @@ public class Identification extends DefaultVisitor {
     public Object visit(ExpressionVariable node, Object param) {
     	super.visit(node, param);
 
-        //TODO: revisar 
         DefinitionVariable variable = variables.getFromAny(node.getName());
         predicado(variable != null, "Variable no definida: " + node.getName(), node);
         node.setDefinition(variable);
-        /*
-        DefinitionVariable variable = variables.getFromTop(node.getName());
-        if (variable == null) {
-            // No pertenece al contexto actual
-            variable = variables.getFromAny(node.getName());
-            predicado(variable != null, "Variable no definida: " + node.getName(), node);
-        }
-        node.setDefinition(variable);
-        */
+
         return null;
     }
-
-    //TODO:  arraystype?? paece q no hase falta
-    //TODO: expStructfield?
 
     // # --------------------------------------------------------
     // Métodos auxiliares recomendados (opcionales) -------------

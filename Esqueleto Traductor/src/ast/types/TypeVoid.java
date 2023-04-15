@@ -10,25 +10,29 @@ import visitor.*;
 
 public class TypeVoid extends AbstractType {
 
-
 	private static TypeVoid typeVoid;
-	
-	private TypeVoid() {}
-	
+
+	private TypeVoid() {
+	}
+
 	public static TypeVoid getInstance() {
-		if (typeVoid == null){
+		if (typeVoid == null) {
 			typeVoid = new TypeVoid();
-        }
+		}
 		return typeVoid;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
-
 	public String toString() {
-       return "{TypeVoid}";
-   }
+		return "{TypeVoid}";
+	}
+
+	@Override
+	public boolean isSameType(Type type) {
+		return type == getInstance();
+	}
 }
