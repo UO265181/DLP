@@ -2,9 +2,7 @@ arrays no forzar tipos en sintático
 usar genéricos en vez de object
 ga modo miguel
 type funfionc?? error type??
-las condiciones en if while son obligatorias?
 
-METER EN EL WORD QUE READ PARA LVALUES
 
 ------
 comprobar los returns??
@@ -21,3 +19,14 @@ f():int {
         return a;
     }
 }
+
+
+-------
+#source "source.txt"
+#GLOBAL f:float
+#GLOBAL i:int
+
+#line
+pusha 4
+CAP 3 del TUTO de MAPL
+-------

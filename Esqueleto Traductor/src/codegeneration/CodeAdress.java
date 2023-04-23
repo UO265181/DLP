@@ -10,9 +10,9 @@ import java.io.*;
 import ast.*;
 import visitor.*;
 
-public class CodeSelection extends DefaultVisitor {
+public class CodeAdress extends DefaultVisitor {
 
-    public CodeSelection(Writer writer, String sourceFile) {
+    public CodeAdress(Writer writer, String sourceFile) {
         this.writer = new PrintWriter(writer);
         this.sourceFile = sourceFile;
     }

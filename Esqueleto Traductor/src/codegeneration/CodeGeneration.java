@@ -23,8 +23,10 @@ public class CodeGeneration {
         MemoryAllocation allocator = new MemoryAllocation();
         ast.accept(allocator, null);
 
-        CodeSelection selector = new CodeSelection(out, sourceFile);
-        ast.accept(selector, null);
+        CodeWriter codeWriter = new CodeWriter(out, sourceFile);
+
+        CodeGeneratorRun cgRun = new CodeGeneratorRun(codeWriter);
+        ast.accept(cgRun, null);
     }
 
 }
