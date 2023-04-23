@@ -47,6 +47,16 @@ public class DefaultCodeGeneratorVisitor implements Visitor {
 	private ErrorManager errorManager;
 	private String functionName;
 
+	public DefaultCodeGeneratorVisitor(CodeWriter codeWriter, ErrorManager errorManager) {
+		this.codeWriter=codeWriter;
+		this.errorManager=errorManager;
+	}
+
+	public DefaultCodeGeneratorVisitor(CodeWriter codeWriter, ErrorManager errorManager, String functionName) {
+		this(codeWriter, errorManager);
+		this.functionName = functionName;
+	}
+
 	public CodeWriter getCodeWriter() {
 		return codeWriter;
 	}
@@ -65,7 +75,7 @@ public class DefaultCodeGeneratorVisitor implements Visitor {
 
 	private void throwError(AST node) {
 		errorManager.notify("Code Generation",
-				"No se ha definido la función" + getFunctionName() + "para el nodo " + node.toString(),
+				"No se ha definido la función " + getFunctionName() + " para el nodo " + node.toString(),
 				node.getStart());
 	}
 

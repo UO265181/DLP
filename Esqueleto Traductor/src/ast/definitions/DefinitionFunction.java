@@ -114,5 +114,4 @@ public class DefinitionFunction extends AbstractDefinition {
 		}
 
 	}
-
 }

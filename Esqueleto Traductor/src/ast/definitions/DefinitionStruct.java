@@ -75,4 +75,5 @@ public class DefinitionStruct extends AbstractDefinition {
 		return getStructFields().stream().mapToInt(field -> field.getMemorySize()).sum();
 	}
 
+
 }

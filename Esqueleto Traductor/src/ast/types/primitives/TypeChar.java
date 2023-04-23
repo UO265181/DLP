@@ -43,4 +43,9 @@ public class TypeChar extends AbstractTypePrimitive {
 	public int getMemorySize() {
 		return DEFAULT_CHAR_SIZE;
 	}
+
+	@Override
+	public String toStringMAPL() {
+		return "char";
+	}
 }

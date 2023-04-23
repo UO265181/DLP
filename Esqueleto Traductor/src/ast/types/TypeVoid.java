@@ -40,4 +40,9 @@ public class TypeVoid extends AbstractType {
 	public int getMemorySize() {
 		return 0;
 	}
+
+	@Override
+	public String toStringMAPL() {
+		return "void";
+	}
 }

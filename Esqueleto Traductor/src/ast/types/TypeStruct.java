@@ -68,4 +68,9 @@ public class TypeStruct extends AbstractType {
 	public int getMemorySize() {
 		return getDefinition().getStructFields().stream().mapToInt(field -> field.getType().getMemorySize()).sum();
 	}
+
+	@Override
+	public String toStringMAPL() {
+		return getName();
+	}
 }

@@ -1,0 +1,16 @@
+#source "source.txt"
+
+#global a:int
+
+#global b:float
+
+#type Punto : {
+	x:float
+	y:float
+}
+
+#global v:5*int
+
+#global p:Punto
+
+halt

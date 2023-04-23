@@ -5,6 +5,9 @@ import java.io.Writer;
 
 import ast.AST;
 import ast.Position;
+import ast.definitions.Definition;
+import ast.definitions.DefinitionStruct;
+import ast.types.Type;
 
 public class CodeWriter {
 
@@ -15,6 +18,18 @@ public class CodeWriter {
 
     public void out(String instruction) {
         writer.println(instruction);
+    }
+
+	public void insert(String instruction) {
+        writer.print(instruction);
+    }
+
+	public void insertTab() {
+        insert("\t");
+    }
+
+	public void insertNewLine() {
+        insert("\n");
     }
 
     public void line(AST node) {
@@ -28,7 +43,7 @@ public class CodeWriter {
             System.out.println("#line no generado. Se ha pasado una Position null. Falta información en el AST");
     }
 
-    public void source() {
+    public void metaSource() {
 		out("#source \"" + sourceFile + "\"\n");
 	}
 
@@ -82,4 +97,6 @@ public class CodeWriter {
 
     private PrintWriter writer;
     private String sourceFile;
+
+
 }

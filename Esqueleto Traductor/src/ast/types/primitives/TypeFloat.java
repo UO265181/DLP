@@ -43,4 +43,9 @@ public class TypeFloat extends AbstractTypePrimitive {
 	public int getMemorySize() {
 		return DEFAULT_FLOAT_SIZE;
 	}
+
+	@Override
+	public String toStringMAPL() {
+		return "float";
+	}
 }

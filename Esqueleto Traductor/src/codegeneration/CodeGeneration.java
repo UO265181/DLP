@@ -8,6 +8,7 @@ package codegeneration;
 import java.io.*;
 
 import ast.*;
+import main.ErrorManager;
 
 /**
  * Esta clase coordina las dos fases principales de la Generación de Código:
@@ -19,13 +20,19 @@ import ast.*;
  */
 public class CodeGeneration {
 
+    private ErrorManager errorManager;
+
+    public CodeGeneration(ErrorManager errorManager) {
+        this.errorManager = errorManager;
+    }
+
     public void generate(String sourceFile, AST ast, Writer out) {
         MemoryAllocation allocator = new MemoryAllocation();
         ast.accept(allocator, null);
 
         CodeWriter codeWriter = new CodeWriter(out, sourceFile);
 
-        CodeGeneratorRun cgRun = new CodeGeneratorRun(codeWriter);
+        CodeGeneratorRun cgRun = new CodeGeneratorRun(codeWriter, errorManager);
         ast.accept(cgRun, null);
     }
 

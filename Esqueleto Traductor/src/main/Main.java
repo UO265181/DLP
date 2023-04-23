@@ -79,7 +79,7 @@ public class Main {
         File sourceFile = new File(sourceName);
         Writer out = new FileWriter(new File(sourceFile.getParent(), OUTPUT_FILE));
 
-        CodeGeneration generator = new CodeGeneration();
+        CodeGeneration generator = new CodeGeneration(errorManager);
         generator.generate(sourceFile.getName(), ast, out);
         out.close();
         

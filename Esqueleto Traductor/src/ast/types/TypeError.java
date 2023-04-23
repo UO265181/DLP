@@ -36,5 +36,10 @@
 	public int getMemorySize() {
 		return 0;
 	}
+
+    @Override
+    public String toStringMAPL() {
+        throw new UnsupportedOperationException("Unimplemented method 'toStringMAPL'");
+    }
  }
  

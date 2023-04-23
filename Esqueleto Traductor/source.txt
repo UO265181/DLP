@@ -1,38 +1,41 @@
 /*
-Test para probar la Fase de Gestión de Memoria.
+Test para probar la Fase de Generación de Código
 
-Una vez acabada esta fase, las direcciones asignadas a cada nodo deben coincidir con la dirección del comentario de cada definición.
+COMPROBACION: Al ejecutarlo la salida debería ser la que indican los comentarios.
 
-CONSEJO: Para poder validar más cómodamente este ejercicio, se aconseja añadir a 'visitor/ASTPrinter.java' la siguiente sentencia:
+CONSEJO: No limitarse a comprobar el resultado de la ejecución. Se recomienda además abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
+Para facilitar esta tarea es de gran utilidad que el alumno haya generado directivas '#line' en el fichero de salida.
+Para información sobre la función de dicha directiva se debe abrir con GVM el siguiente tutorial: 
+Tutorial\3 Uso básico del depurador\4 Fusión Alto Nivel.txt
 
-	print(indent + 1, "direccion", "int", node.getDireccion());
-
-Esta llamada debería añadirse en los métodos visit de los nodos a los que se les haya asignado un atributo 'direccion' (habitualmente, aquellos que representen definiciones de variables globales, locales, parámetros y/o campos de estructuras)
-
-NOTA: Es posible que el alumno deba cambiar la sintaxis de este ejemplo si no coincide con el lenguaje de su práctica.
+NOTA: Es posible que el alumno deba cambiar ligeramente este ejemplo para que coincida con la sintaxis de la práctica del alumno.
 */
 
-var a:char;	// Dir 0
+var a:int;
+var b:float;
 
-struct Persona {
-	edad:int;	// Dir 0
-	meses:[12] int;	// Dir 2
-	a:float;	// Dir 26
+struct Punto {
+	x:float;
+	y:float;
 };
 
-var b:float;	// Dir 1
+var v:[5]int;
+var p:Punto;
 
-struct Prueba {
-	campo1: int; // Dir 0
-	campo2: int; // Dir 2
-};
+main() {
+	a = 1111;
+	b = 2222.2;
+	v[3] = 3333;
+	p.y = 4444.4;
+		
+	printsp a;		    // 1111
+	printsp b + p.y;	// 6666.6
+	println v[3];		// 3333
 
-var c:[2]Persona;	// Dir 5
-var d:int;		// Dir 65
+	print a > 0 && b < 3333.3;	// 1
+	print <int>(b);			// 2222
 
-f(a:int, b:float, h:char) { // a = BP+9, b = BP+5, h = BP+4
-	var c:char;	// BP-1
-	var d:int;	// BP-3
-	var e:[2]Persona; // BP-63
-	var f:float; 	// BP-67
+    // Al final debería salir:
+    // 1111 6666.6 3333
+    // 12222
 }

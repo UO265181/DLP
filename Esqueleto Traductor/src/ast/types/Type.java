@@ -14,5 +14,6 @@ public interface Type extends AST {
     Type getType();
     DefinitionStruct getDefinitionStruct();
     int getMemorySize();
+    String toStringMAPL();
 
 }

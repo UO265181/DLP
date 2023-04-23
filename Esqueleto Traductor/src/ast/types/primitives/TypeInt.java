@@ -12,6 +12,7 @@ import visitor.*;
 public class TypeInt extends AbstractTypePrimitive {
 
 	private static TypeInt typeInt;
+	private static final int DEFAULT_INT_SIZE = 2;
 
 	private TypeInt() {
 	}
@@ -37,10 +38,15 @@ public class TypeInt extends AbstractTypePrimitive {
 		return type == getInstance();
 	}
 
-	private static final int DEFAULT_INT_SIZE = 2;
+	
 
 	@Override
 	public int getMemorySize() {
 		return DEFAULT_INT_SIZE;
+	}
+
+	@Override
+	public String toStringMAPL() {
+		return "int";
 	}
 }

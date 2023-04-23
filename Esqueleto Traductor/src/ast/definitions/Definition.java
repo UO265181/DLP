@@ -8,6 +8,4 @@ import ast.AST;
 
 public interface Definition extends AST {
 
-
-
 }

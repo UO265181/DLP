@@ -69,4 +69,9 @@ public class TypeArray extends AbstractType {
 		return getType().getMemorySize()* Integer.valueOf(getSize().getValue());
 	}
 
+	@Override
+	public String toStringMAPL() {
+		return size.getValue() + "*" + type.toStringMAPL();
+	}
+
 }
