@@ -3,20 +3,29 @@
  * @author Raúl Izquierdo
  */
 
-package codegeneration;
+package codegeneration.generator;
 
 import ast.definitions.DefinitionFunction;
 import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
+import ast.sentences.Sentence;
+import codegeneration.CodeWriter;
 import main.ErrorManager;
 
-public class CodeGenerationDefine extends DefaultCodeGeneratorVisitor {
+public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
     private final static String FUNCTION_NAME = "define";
 
-    public CodeGenerationDefine(CodeWriter codeWriter, ErrorManager errorManager) {
+	private CodeGeneratorExecute cgDefineParam;
+	private CodeGeneratorDefineLocalVariable cgDefineLocalVariable;
+	private CodeGeneratorExecute cgExecute;
+	
+    public CodeGeneratorDefine(CodeWriter codeWriter, ErrorManager errorManager) {
         super(codeWriter, errorManager, FUNCTION_NAME);
+        this.cgDefineParam = new CodeGeneratorExecute(codeWriter, errorManager);
+        this.cgDefineLocalVariable = new CodeGeneratorDefineLocalVariable(codeWriter, errorManager);
+        this.cgExecute = new CodeGeneratorExecute(codeWriter, errorManager);
     }
 
     //define[[definitionVariable  →  name:String  type:type ]] = 
@@ -25,7 +34,7 @@ public class CodeGenerationDefine extends DefaultCodeGeneratorVisitor {
     // class DefinitionVariable { String name; Type type; }
     @Override
 	public Object visit(DefinitionVariable node, Object param) {
-		getCodeWriter().out("#global " + node.getName() + ":" + node.getType().toStringMAPL() + "\n");
+		getCodeWriter().out("#GLOBAL " + node.getName() + ":" + node.getType().toStringMAPL() + "\n");
 
 		return null;
 	}
@@ -36,7 +45,7 @@ public class CodeGenerationDefine extends DefaultCodeGeneratorVisitor {
 	//  }
     // class DefinitionStruct { String name; List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
-		getCodeWriter().out("#type " + node.getName() + " : {");
+		getCodeWriter().out("#TYPE " + node.getName() + " : {");
 
         for(StructField field : node.getStructFields()) {
             getCodeWriter().insertTab();
@@ -54,7 +63,22 @@ public class CodeGenerationDefine extends DefaultCodeGeneratorVisitor {
 	// definitionFunctionParams; Type type; List<DefinitionVariable> localVariables;
 	// List<Sentence> sentences; }
 	public Object visit(DefinitionFunction node, Object param) {
-		//throwError(node);
+		
+		/*
+		getCodeWriter().out("#FUNC "+ node.getName());
+		for(DefinitionVariable varParam : node.getDefinitionFunctionParams())
+			varParam.accept(cgDefineParam, param);
+		getCodeWriter().out("#RET "+ node.getType().toStringMAPL());
+		for(DefinitionVariable localVar : node.getLocalVariables())
+			localVar.accept(cgDefineLocalVariable, param);
+
+			 */
+
+			 //TODO: temporal
+		for(Sentence sentence : node.getSentences())
+			sentence.accept(cgExecute, param);
+		
+
 		return null;
 	}
 

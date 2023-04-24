@@ -44,7 +44,7 @@ public class CodeWriter {
     }
 
     public void metaSource() {
-		out("#source \"" + sourceFile + "\"\n");
+		out("#SOURCE \"" + sourceFile + "\"\n");
 	}
 
     public void comment(String comment) {
@@ -52,11 +52,15 @@ public class CodeWriter {
 	}
 
     public void halt() {
-		out("halt");
+		out("HALT");
 	}
 
 	public void ret(int ret, int localVar, int param) {
 		out("ret " + ret + ", " + localVar + ", " + param);
+	}
+
+	public void push(Type type) {
+		out("push" + type.getSuffix());
 	}
 
 	public void enter(int size) {

@@ -65,6 +65,7 @@ public class DefinitionVariable extends AbstractDefinition {
 		return type.getMemorySize();
 	}
 
+	//TODO: mejorar
 	private Integer address = null;
 
 	public void setAddress(int address) {

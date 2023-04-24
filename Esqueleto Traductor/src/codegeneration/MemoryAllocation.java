@@ -6,7 +6,6 @@
 package codegeneration;
 
 import ast.*;
-import ast.definitions.Definition;
 import ast.definitions.DefinitionFunction;
 import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;

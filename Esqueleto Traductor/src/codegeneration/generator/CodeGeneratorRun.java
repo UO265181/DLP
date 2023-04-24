@@ -3,20 +3,21 @@
  * @author Raúl Izquierdo
  */
 
-package codegeneration;
+package codegeneration.generator;
 import ast.*;
 import ast.definitions.Definition;
+import codegeneration.CodeWriter;
 import main.ErrorManager;
 
 public class CodeGeneratorRun extends DefaultCodeGeneratorVisitor {
 
-    private CodeGenerationDefine cgDefine;
+    private CodeGeneratorDefine cgDefine;
 
     private final static String FUNCTION_NAME = "run";
 
     public CodeGeneratorRun(CodeWriter codeWriter, ErrorManager errorManager) {
         super(codeWriter, errorManager, FUNCTION_NAME);
-        this.cgDefine = new CodeGenerationDefine(codeWriter, errorManager);
+        this.cgDefine = new CodeGeneratorDefine(codeWriter, errorManager);
     }
 
     /*

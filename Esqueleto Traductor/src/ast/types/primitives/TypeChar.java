@@ -48,4 +48,9 @@ public class TypeChar extends AbstractTypePrimitive {
 	public String toStringMAPL() {
 		return "char";
 	}
+
+	@Override
+	public String getSuffix() {
+		return "b";
+	}
 }

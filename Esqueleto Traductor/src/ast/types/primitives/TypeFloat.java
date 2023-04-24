@@ -48,4 +48,9 @@ public class TypeFloat extends AbstractTypePrimitive {
 	public String toStringMAPL() {
 		return "float";
 	}
+
+	@Override
+	public String getSuffix() {
+		return "f";
+	}
 }

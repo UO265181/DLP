@@ -2,7 +2,7 @@
  * @generated VGen (for ANTLR) 1.7.2
  */
 
-package codegeneration;
+package codegeneration.generator;
 
 import ast.*;
 import ast.definitions.DefinitionFunction;
@@ -36,6 +36,7 @@ import ast.types.TypeVoid;
 import ast.types.primitives.TypeChar;
 import ast.types.primitives.TypeFloat;
 import ast.types.primitives.TypeInt;
+import codegeneration.CodeWriter;
 import main.ErrorManager;
 import visitor.Visitor;
 

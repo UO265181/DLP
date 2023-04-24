@@ -49,4 +49,9 @@ public class TypeInt extends AbstractTypePrimitive {
 	public String toStringMAPL() {
 		return "int";
 	}
+
+	@Override
+	public String getSuffix() {
+		return "i";
+	}
 }

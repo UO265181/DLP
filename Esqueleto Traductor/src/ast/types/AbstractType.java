@@ -22,4 +22,9 @@ public abstract class AbstractType extends AbstractAST implements Type {
         return null;
     }
 
+    public String getSuffix() {
+        //TODO: mejorar
+        return null;
+    }
+
 }
