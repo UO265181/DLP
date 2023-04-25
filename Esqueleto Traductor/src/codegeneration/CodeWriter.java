@@ -11,87 +11,121 @@ import ast.types.Type;
 
 public class CodeWriter {
 
-    public CodeWriter(Writer writer, String sourceFile) {
-        this.writer = new PrintWriter(writer);
-        this.sourceFile = sourceFile;
-    }
+	public CodeWriter(Writer writer, String sourceFile) {
+		this.writer = new PrintWriter(writer);
+		this.sourceFile = sourceFile;
+	}
 
-    public void out(String instruction) {
-        writer.println(instruction);
-    }
+	public void write(String instruction) {
+		writer.println(instruction);
+	}
 
 	public void insert(String instruction) {
-        writer.print(instruction);
-    }
+		writer.print(instruction);
+	}
 
 	public void insertTab() {
-        insert("\t");
-    }
+		insert("\t");
+	}
 
 	public void insertNewLine() {
-        insert("\n");
-    }
-
-    public void line(AST node) {
-        line(node.getEnd());
-    }
-
-    public void line(Position pos) {
-        if (pos != null)
-            out("\n#line " + pos.getLine());
-        else
-            System.out.println("#line no generado. Se ha pasado una Position null. Falta información en el AST");
-    }
-
-    public void metaSource() {
-		out("#SOURCE \"" + sourceFile + "\"\n");
+		insert("\n");
 	}
 
-    public void comment(String comment) {
-		out("'" + comment);
+	public void line(AST node) {
+		line(node.getEnd());
 	}
 
-    public void halt() {
-		out("HALT");
+	public void line(Position pos) {
+		if (pos != null)
+			write("\n#line " + pos.getLine());
+		else
+			System.out.println("#line no generado. Se ha pasado una Position null. Falta información en el AST");
+	}
+
+	public void metaSource() {
+		write("#SOURCE \"" + sourceFile + "\"\n");
+	}
+
+	public void comment(String comment) {
+		write("'" + comment);
+	}
+
+	public void halt() {
+		write("HALT");
 	}
 
 	public void ret(int ret, int localVar, int param) {
-		out("ret " + ret + ", " + localVar + ", " + param);
+		write("ret " + ret + ", " + localVar + ", " + param);
 	}
 
-	public void push(Type type) {
-		out("push" + type.getSuffix());
+	public void pushf(String value) {
+		write("pushf " + value);
+	}
+
+	public void pushi(String value) {
+		write("pushi " + value);
+	}
+
+	public void pushb(int value) {
+		write("pushb " + value);
+	}
+
+	public void out(Type type) {
+		write("out" + type.getSuffix());
+	}
+
+	public void pusha(int address) {
+		write("pusha " + address);
+	}
+
+	public void load(Type type) {
+		write("load" + type.getSuffix());
+	}
+
+	public void store(Type type) {
+		write("store" + type.getSuffix());
+	}
+
+	public void pushOutNewLine() {
+		write("pushb 10");
+		write("outb");
+	}
+
+	public void pushOutSpace() {
+		write("pushb 32");
+		write("outb");
 	}
 
 	public void enter(int size) {
-		out("enter " + size);
+		write("enter " + size);
 	}
 
 	public void call(String function) {
-		out("call " + function);
+		write("call " + function);
 	}
 
 	public void jmp(String label) {
-		out("jmp " + label);
+		write("jmp " + label);
 	}
 
 	public void jz(String label) {
-		out("jz " + label);
+		write("jz " + label);
 	}
 
 	public void jnz(String label) {
-		out("jnz " + label);
+		write("jnz " + label);
 	}
 
 	public void callMain() {
 		comment("Llamada a main");
-		out("call main");
+		write("call main");
 	}
 
-    private int labels;
+	private int labels;
 
 	public void label(String name) {
-		out("\t" + name + ":");
+		write("\t" + name + ":");
 	}
 
 	public int getLabel() {
@@ -99,8 +133,7 @@ public class CodeWriter {
 		return labels - 1;
 	}
 
-    private PrintWriter writer;
-    private String sourceFile;
-
+	private PrintWriter writer;
+	private String sourceFile;
 
 }

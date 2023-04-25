@@ -21,7 +21,7 @@ public class CodeGeneratorDefineLocalVariable extends DefaultCodeGeneratorVisito
     // #LOCAL {name} : {type}
     @Override
     public Object visit(DefinitionVariable node, Object param) {
-        getCodeWriter().out("#LOCAL " + node.getName() + ":" + node.getType().toStringMAPL());
+        getCodeWriter().write("#LOCAL " + node.getName() + ":" + node.getType().toStringMAPL());
         return null;
     }
 

@@ -2,21 +2,22 @@
  * @generated VGen (for ANTLR) 1.7.2
  */
 
-package ast.expressions;
+package ast.expressions.constant;
 
 import org.antlr.v4.runtime.*;
 
+import ast.expressions.AbstractExpression;
 import visitor.*;
 
-//	expressionConstantInt:expression -> value:String
+//	expressionConstantChar:expression -> value:String
 
-public class ExpressionConstantInt extends AbstractExpression {
+public class ExpressionConstantChar extends AbstractExpression {
 
-	public ExpressionConstantInt(String value) {
+	public ExpressionConstantChar(String value) {
 		this.value = value;
 	}
 
-	public ExpressionConstantInt(Object value) {
+	public ExpressionConstantChar(Object value) {
 		this.value = (value instanceof Token) ? ((Token)value).getText() : (String) value;
 
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
@@ -40,5 +41,9 @@ public class ExpressionConstantInt extends AbstractExpression {
 
 	public String toString() {
        return "{value:" + getValue() + "}";
+   }
+
+   public int getASCII() {
+		return value.toCharArray()[0];
    }
 }

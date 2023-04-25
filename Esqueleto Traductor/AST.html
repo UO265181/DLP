@@ -22,7 +22,7 @@
 <body><pre>
 [ASTPrinter] -------------------------------- line:col  line:col
 
-<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  36:14  </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">print <int>(b</span><span class="sourceText">);			// 2222</span>
+<span class="dots"></span>Program &rarr;                                                   <span class="pos">14:5  33:8   </span><span class="sourceText">var </span><span class="posText">a:int;</span><span class="sourceText"> ... </span><span class="posText">print b</span><span class="sourceText">;	</span>
 <span class="dots">.  </span>definitions  <span class="type">List&lt;Definition&gt;</span> = 
 <span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">14:5  14:5   </span><span class="sourceText">var </span><span class="posText">a</span><span class="sourceText">:int;</span>
 <span class="dots">.  .  |  </span>"<span class="value">a</span>"  
@@ -32,77 +32,52 @@
 <span class="dots">.  .  |  </span>"<span class="value">b</span>"  
 <span class="dots">.  .  |  </span><span class="value">TypeFloat</span> &rarr;                                        <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span><span class="value">2</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>DefinitionStruct &rarr;                                    <span class="pos">17:8  19:2   </span><span class="sourceText">struct </span><span class="posText">Punto {</span><span class="sourceText"> ... </span><span class="posText">y</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">16:5  16:5   </span><span class="sourceText">var </span><span class="posText">c</span><span class="sourceText">:char;</span>
+<span class="dots">.  .  |  </span>"<span class="value">c</span>"  
+<span class="dots">.  .  |  </span><span class="value">TypeChar</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  </span><span class="value">6</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>DefinitionStruct &rarr;                                    <span class="pos">18:8  20:2   </span><span class="sourceText">struct </span><span class="posText">Punto {</span><span class="sourceText"> ... </span><span class="posText">y</span><span class="sourceText">:float;</span>
 <span class="dots">.  .  |  </span>"<span class="value">Punto</span>"  
 <span class="dots">.  .  |  </span>structFields  <span class="type">List&lt;StructField&gt;</span> = 
-<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">18:2  18:2   </span><span class="sourceText"></span><span class="posText">x</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">19:2  19:2   </span><span class="sourceText"></span><span class="posText">x</span><span class="sourceText">:float;</span>
 <span class="dots">.  .  |  .  |  </span>"<span class="value">x</span>"  
 <span class="dots">.  .  |  .  |  </span><span class="value">TypeFloat</span> &rarr;                                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
-<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">19:2  19:2   </span><span class="sourceText"></span><span class="posText">y</span><span class="sourceText">:float;</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">20:2  20:2   </span><span class="sourceText"></span><span class="posText">y</span><span class="sourceText">:float;</span>
 <span class="dots">.  .  |  .  |  </span>"<span class="value">y</span>"  
 <span class="dots">.  .  |  .  |  </span><span class="value">TypeFloat</span> &rarr;                                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">22:5  22:8   </span><span class="sourceText">var </span><span class="posText">v:[5</span><span class="sourceText">]int;</span>
+<span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">23:5  23:8   </span><span class="sourceText">var </span><span class="posText">v:[5</span><span class="sourceText">]int;</span>
 <span class="dots">.  .  |  </span>"<span class="value">v</span>"  
-<span class="dots">.  .  |  </span>TypeArray &rarr;                                        <span class="pos">22:8  22:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
-<span class="dots">.  .  |  .  </span>"5"  <span class="type">ExpressionConstantInt.value</span>                <span class="pos">22:8  22:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
+<span class="dots">.  .  |  </span>TypeArray &rarr;                                        <span class="pos">23:8  23:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
+<span class="dots">.  .  |  .  </span>"5"  <span class="type">ExpressionConstantInt.value</span>                <span class="pos">23:8  23:8   </span><span class="sourceText">var v:[</span><span class="posText">5</span><span class="sourceText">]int;</span>
 <span class="dots">.  .  |  .  </span><span class="value">TypeInt</span> &rarr;                                       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  </span><span class="value">6</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">23:5  23:11  </span><span class="sourceText">var </span><span class="posText">p:Punto</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">7</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">24:5  24:11  </span><span class="sourceText">var </span><span class="posText">p:Punto</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span>"<span class="value">p</span>"  
-<span class="dots">.  .  |  </span>"Punto"  <span class="type">TypeStruct.name</span>                           <span class="pos">23:7  23:11  </span><span class="sourceText">var p:</span><span class="posText">Punto</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  </span><span class="value">16</span>  <span class="type">int</span>
-<span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">25:1  36:14  </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print <int>(b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  |  </span>"Punto"  <span class="type">TypeStruct.name</span>                           <span class="pos">24:7  24:11  </span><span class="sourceText">var p:</span><span class="posText">Punto</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  </span><span class="value">17</span>  <span class="type">int</span>
+<span class="dots">.  .  </span>DefinitionFunction &rarr;                                  <span class="pos">26:1  33:8   </span><span class="sourceText"></span><span class="posText">main() {</span><span class="sourceText"> ... </span><span class="posText">print b</span><span class="sourceText">;	</span>
 <span class="dots">.  .  |  </span>"<span class="value">main</span>"  
 <span class="dots">.  .  |  </span>definitionFunctionParams  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span><span class="value">TypeVoid</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>localVariables  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
-<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">26:2  26:9   </span><span class="sourceText"></span><span class="posText">a = 1111</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">26:2  26:2   </span><span class="sourceText"></span><span class="posText">a</span><span class="sourceText"> = 1111;</span>
-<span class="dots">.  .  |  .  |  </span>"1111"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">26:6  26:9   </span><span class="sourceText">a = </span><span class="posText">1111</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">27:2  27:11  </span><span class="sourceText"></span><span class="posText">b = 2222.2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">27:2  27:2   </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2222.2;</span>
-<span class="dots">.  .  |  .  |  </span>"2222.2"  <span class="type">ExpressionConstantFloat.value</span>      <span class="pos">27:6  27:11  </span><span class="sourceText">b = </span><span class="posText">2222.2</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">28:2  28:12  </span><span class="sourceText"></span><span class="posText">v[3] = 3333</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionArray &rarr;                            <span class="pos">28:2  28:4   </span><span class="sourceText"></span><span class="posText">v[3</span><span class="sourceText">] = 3333;</span>
-<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">ExpressionVariable.name</span>              <span class="pos">28:2  28:2   </span><span class="sourceText"></span><span class="posText">v</span><span class="sourceText">[3] = 3333;</span>
-<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">28:4  28:4   </span><span class="sourceText">v[</span><span class="posText">3</span><span class="sourceText">] = 3333;</span>
-<span class="dots">.  .  |  .  |  </span>"3333"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">28:9  28:12  </span><span class="sourceText">v[3] = </span><span class="posText">3333</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">29:2  29:13  </span><span class="sourceText"></span><span class="posText">p.y = 4444.4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionStructField &rarr;                      <span class="pos">29:2  29:4   </span><span class="sourceText"></span><span class="posText">p.y</span><span class="sourceText"> = 4444.4;</span>
-<span class="dots">.  .  |  .  |  .  </span>"p"  <span class="type">ExpressionVariable.name</span>              <span class="pos">29:2  29:2   </span><span class="sourceText"></span><span class="posText">p</span><span class="sourceText">.y = 4444.4;</span>
-<span class="dots">.  .  |  .  |  .  </span>"<span class="value">y</span>"  
-<span class="dots">.  .  |  .  |  </span>"4444.4"  <span class="type">ExpressionConstantFloat.value</span>      <span class="pos">29:8  29:13  </span><span class="sourceText">p.y = </span><span class="posText">4444.4</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  </span>SentencePrintsp &rarr;                               <span class="pos">31:10  31:10 </span><span class="sourceText">printsp </span><span class="posText">a</span><span class="sourceText">;		    // 1111</span>
-<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">31:10  31:10 </span><span class="sourceText">printsp </span><span class="posText">a</span><span class="sourceText">;		    // 1111</span>
-<span class="dots">.  .  |  .  </span>SentencePrintsp &rarr;                               <span class="pos">32:10  32:16 </span><span class="sourceText">printsp </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionArithmetic &rarr;                       <span class="pos">32:10  32:16 </span><span class="sourceText">printsp </span><span class="posText">b + p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">ExpressionVariable.name</span>              <span class="pos">32:10  32:10 </span><span class="sourceText">printsp </span><span class="posText">b</span><span class="sourceText"> + p.y;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  </span>"<span class="value">+</span>"  
-<span class="dots">.  .  |  .  |  .  </span>ExpressionStructField &rarr;                   <span class="pos">32:14  32:16 </span><span class="sourceText">printsp b + </span><span class="posText">p.y</span><span class="sourceText">;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"p"  <span class="type">ExpressionVariable.name</span>           <span class="pos">32:14  32:14 </span><span class="sourceText">printsp b + </span><span class="posText">p</span><span class="sourceText">.y;	// 6666.6</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">y</span>"  
-<span class="dots">.  .  |  .  </span>SentencePrintln &rarr;                               <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionArray &rarr;                            <span class="pos">33:10  33:12 </span><span class="sourceText">println </span><span class="posText">v[3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  |  .  </span>"v"  <span class="type">ExpressionVariable.name</span>              <span class="pos">33:10  33:10 </span><span class="sourceText">println </span><span class="posText">v</span><span class="sourceText">[3];		// 3333</span>
-<span class="dots">.  .  |  .  |  .  </span>"3"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">33:12  33:12 </span><span class="sourceText">println v[</span><span class="posText">3</span><span class="sourceText">];		// 3333</span>
-<span class="dots">.  .  |  .  </span>SentencePrint &rarr;                                 <span class="pos">35:8  35:26  </span><span class="sourceText">print </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionLogical &rarr;                          <span class="pos">35:8  35:26  </span><span class="sourceText">print </span><span class="posText">a > 0 && b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  .  </span>ExpressionRelational &rarr;                    <span class="pos">35:8  35:12  </span><span class="sourceText">print </span><span class="posText">a > 0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"a"  <span class="type">ExpressionVariable.name</span>           <span class="pos">35:8  35:8   </span><span class="sourceText">print </span><span class="posText">a</span><span class="sourceText"> > 0 && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">></span>"  
-<span class="dots">.  .  |  .  |  .  |  </span>"0"  <span class="type">ExpressionConstantInt.value</span>       <span class="pos">35:12  35:12 </span><span class="sourceText">print a > </span><span class="posText">0</span><span class="sourceText"> && b < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  </span>"<span class="value">&&</span>"  
-<span class="dots">.  .  |  .  |  .  </span>ExpressionRelational &rarr;                    <span class="pos">35:17  35:26 </span><span class="sourceText">print a > 0 && </span><span class="posText">b < 3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"b"  <span class="type">ExpressionVariable.name</span>           <span class="pos">35:17  35:17 </span><span class="sourceText">print a > 0 && </span><span class="posText">b</span><span class="sourceText"> < 3333.3;	// 1</span>
-<span class="dots">.  .  |  .  |  .  |  </span>"<span class="value"><</span>"  
-<span class="dots">.  .  |  .  |  .  |  </span>"3333.3"  <span class="type">ExpressionConstantFloat.value</span><span class="pos">35:21  35:26 </span><span class="sourceText">print a > 0 && b < </span><span class="posText">3333.3</span><span class="sourceText">;	// 1</span>
-<span class="dots">.  .  |  .  </span>SentencePrint &rarr;                                 <span class="pos">36:14  36:14 </span><span class="sourceText">print <int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
-<span class="dots">.  .  |  .  |  </span>ExpressionCast &rarr;                             <span class="pos">36:14  36:14 </span><span class="sourceText">print <int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
-<span class="dots">.  .  |  .  |  .  </span><span class="value">TypeInt</span> &rarr;                                 <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  </span>"b"  <span class="type">ExpressionVariable.name</span>              <span class="pos">36:14  36:14 </span><span class="sourceText">print <int>(</span><span class="posText">b</span><span class="sourceText">);			// 2222</span>
+<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">27:2  27:9   </span><span class="sourceText"></span><span class="posText">a = 1111</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"a"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">27:2  27:2   </span><span class="sourceText"></span><span class="posText">a</span><span class="sourceText"> = 1111;</span>
+<span class="dots">.  .  |  .  |  </span>"1111"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">27:6  27:9   </span><span class="sourceText">a = </span><span class="posText">1111</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">28:2  28:11  </span><span class="sourceText"></span><span class="posText">b = 2222.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">28:2  28:2   </span><span class="sourceText"></span><span class="posText">b</span><span class="sourceText"> = 2222.2;</span>
+<span class="dots">.  .  |  .  |  </span>"2222.2"  <span class="type">ExpressionConstantFloat.value</span>      <span class="pos">28:6  28:11  </span><span class="sourceText">b = </span><span class="posText">2222.2</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">29:2  29:8   </span><span class="sourceText"></span><span class="posText">c = 'z'</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  |  </span>"c"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">29:2  29:2   </span><span class="sourceText"></span><span class="posText">c</span><span class="sourceText"> = 'z';</span>
+<span class="dots">.  .  |  .  |  </span>"'z'"  <span class="type">ExpressionConstantChar.value</span>          <span class="pos">29:6  29:8   </span><span class="sourceText">c = </span><span class="posText">'z'</span><span class="sourceText">;</span>
+<span class="dots">.  .  |  .  </span>SentencePrintln &rarr;                               <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">c</span><span class="sourceText">;	</span>
+<span class="dots">.  .  |  .  |  </span>"c"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">31:10  31:10 </span><span class="sourceText">println </span><span class="posText">c</span><span class="sourceText">;	</span>
+<span class="dots">.  .  |  .  </span>SentencePrintsp &rarr;                               <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="null">null</span>  expression:<span class="type">Expression</span>
+<span class="dots">.  .  |  .  </span>SentencePrint &rarr;                                 <span class="pos">33:8  33:8   </span><span class="sourceText">print </span><span class="posText">b</span><span class="sourceText">;	</span>
+<span class="dots">.  .  |  .  |  </span>"b"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">33:8  33:8   </span><span class="sourceText">print </span><span class="posText">b</span><span class="sourceText">;	</span>
 
 [ASTPrinter] --------------------------------
 </pre>

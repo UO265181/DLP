@@ -1,8 +1,10 @@
-#source "source.txt"
+#SOURCE "source.txt"
 
 #GLOBAL a:int
 
 #GLOBAL b:float
+
+#GLOBAL c:char
 
 #TYPE Punto : {
 	x:float
@@ -13,6 +15,33 @@
 
 #GLOBAL p:Punto
 
-#FUNC main
-#RET void
-halt
+
+#line 27
+pusha 0
+pushi 1111
+storei
+
+#line 28
+pusha 2
+pushf 2222.2
+storef
+
+#line 29
+pusha 6
+pushb 39
+storeb
+
+#line 31
+pusha 6
+loadb
+outb
+pushb 10
+outb
+pushb 32
+outb
+
+#line 33
+pusha 2
+loadf
+outf
+HALT

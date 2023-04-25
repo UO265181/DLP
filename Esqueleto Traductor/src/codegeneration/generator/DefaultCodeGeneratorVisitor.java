@@ -13,14 +13,14 @@ import ast.expressions.ExpressionArithmetic;
 import ast.expressions.ExpressionArray;
 import ast.expressions.ExpressionCallFunction;
 import ast.expressions.ExpressionCast;
-import ast.expressions.ExpressionConstantChar;
-import ast.expressions.ExpressionConstantFloat;
-import ast.expressions.ExpressionConstantInt;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionStructField;
 import ast.expressions.ExpressionUnary;
 import ast.expressions.ExpressionVariable;
+import ast.expressions.constant.ExpressionConstantChar;
+import ast.expressions.constant.ExpressionConstantFloat;
+import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
 import ast.sentences.SentenceIf;
@@ -76,7 +76,7 @@ public class DefaultCodeGeneratorVisitor implements Visitor {
 
 	private void throwError(AST node) {
 		errorManager.notify("Code Generation",
-				"No se ha definido la función " + getFunctionName() + " para el nodo " + node.toString(),
+				"No se ha definido la función " + getFunctionName() + " para el nodo " + node.getClass(),
 				node.getStart());
 	}
 

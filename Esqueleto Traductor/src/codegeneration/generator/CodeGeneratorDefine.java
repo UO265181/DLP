@@ -34,7 +34,7 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
     // class DefinitionVariable { String name; Type type; }
     @Override
 	public Object visit(DefinitionVariable node, Object param) {
-		getCodeWriter().out("#GLOBAL " + node.getName() + ":" + node.getType().toStringMAPL() + "\n");
+		getCodeWriter().write("#GLOBAL " + node.getName() + ":" + node.getType().toStringMAPL() + "\n");
 
 		return null;
 	}
@@ -45,7 +45,7 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	//  }
     // class DefinitionStruct { String name; List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
-		getCodeWriter().out("#TYPE " + node.getName() + " : {");
+		getCodeWriter().write("#TYPE " + node.getName() + " : {");
 
         for(StructField field : node.getStructFields()) {
             getCodeWriter().insertTab();

@@ -6,7 +6,7 @@ package ast.types;
 
 import org.antlr.v4.runtime.*;
 
-import ast.expressions.ExpressionConstantInt;
+import ast.expressions.constant.ExpressionConstantInt;
 import visitor.*;
 
 //	typeArray:type -> size:expressionConstantInt  type:type
