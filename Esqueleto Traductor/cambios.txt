@@ -30,3 +30,4 @@ f():int {
 pusha 4
 CAP 3 del TUTO de MAPL
 -------
+char no se escribe bien

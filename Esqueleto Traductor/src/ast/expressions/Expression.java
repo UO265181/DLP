@@ -15,4 +15,6 @@ public interface Expression extends AST {
 	boolean isModifiable();
 	void setModifiable(boolean modifiable);
 
+	Integer getDefinitionAdrress();
+
 }

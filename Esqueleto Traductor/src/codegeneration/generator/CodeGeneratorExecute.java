@@ -15,13 +15,8 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
     private final static String FUNCTION_NAME = "execute";
 
-    private CodeGeneratorValue cgValue;
-    private CodeGeneratorAddress cgAddress;
-
     public CodeGeneratorExecute(CodeWriter codeWriter, ErrorManager errorManager) {
         super(codeWriter, errorManager, FUNCTION_NAME);
-        this.cgValue = new CodeGeneratorValue(codeWriter, errorManager);
-        this.cgAddress = new CodeGeneratorAddress(codeWriter, errorManager);
     }
 
     //execute[[sentencePrint  →  expression:expression ]] =
@@ -33,7 +28,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         getCodeWriter().line(node);
 
         if(node.getExpression()!=null) { 
-            node.getExpression().accept(cgValue, param);
+            node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
             getCodeWriter().out(node.getExpression().getType());
         }
         
@@ -49,7 +44,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         getCodeWriter().line(node);
 
         if(node.getExpression()!=null) { 
-            node.getExpression().accept(cgValue, param);
+            node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
             getCodeWriter().out(node.getExpression().getType());
         }
 
@@ -67,7 +62,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         getCodeWriter().line(node);
 
         if(node.getExpression()!=null) { 
-            node.getExpression().accept(cgValue, param);
+            node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
             getCodeWriter().out(node.getExpression().getType());
         }
 
@@ -87,8 +82,8 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
     public Object visit(SentenceAssignment node, Object param) {
         getCodeWriter().line(node);
 
-        node.getLeft().accept(cgAddress, param);
-        node.getRight().accept(cgValue, param);
+        node.getLeft().accept(CodeGeneratorProvider.cgAddress, param);
+        node.getRight().accept(CodeGeneratorProvider.cgValue, param);
         getCodeWriter().store(node.getLeft().getType());
         
         return null;

@@ -12,14 +12,14 @@ import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
 import ast.expressions.Expression;
 import ast.expressions.ExpressionArithmetic;
-import ast.expressions.ExpressionArray;
 import ast.expressions.ExpressionCallFunction;
 import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
-import ast.expressions.ExpressionStructField;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.ExpressionVariable;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionStructField;
+import ast.expressions.access.ExpressionVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -490,12 +490,14 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(ExpressionArray node, Object param) {
 		super.visit(node, param);
 
+		
 		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
 				"El índice de un acceso array ha de ser int", node);
-		predicado(!node.getArray().getType().getType().isSameType(TypeError.getInstance()),
+		//TODO: ??
+		predicado(!node.getArray().getType().getTypeOfTheArray().isSameType(TypeError.getInstance()),
 				"La expresión del acceso array ha de ser de tipo array", node);
 
-		node.setType(node.getArray().getType().getType());
+		node.setType(node.getArray().getType().getTypeOfTheArray());
 
 		node.setModifiable(true);
 

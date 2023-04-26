@@ -14,7 +14,7 @@ import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
 import ast.expressions.ExpressionCallFunction;
-import ast.expressions.ExpressionVariable;
+import ast.expressions.access.ExpressionVariable;
 import ast.sentences.SentenceCallFunction;
 import ast.types.TypeStruct;
 import main.*;

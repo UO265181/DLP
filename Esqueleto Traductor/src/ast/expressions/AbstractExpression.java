@@ -29,4 +29,8 @@ public abstract class AbstractExpression extends AbstractAST implements Expressi
 		this.modifiable = modifiable;
 	}
 
+	public Integer getDefinitionAdrress() {
+		return null;
+	}
+
 }

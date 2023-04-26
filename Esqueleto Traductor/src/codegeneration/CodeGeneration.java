@@ -8,6 +8,7 @@ package codegeneration;
 import java.io.*;
 
 import ast.*;
+import codegeneration.generator.CodeGeneratorProvider;
 import codegeneration.generator.CodeGeneratorRun;
 import main.ErrorManager;
 
@@ -33,8 +34,9 @@ public class CodeGeneration {
 
         CodeWriter codeWriter = new CodeWriter(out, sourceFile);
 
-        CodeGeneratorRun cgRun = new CodeGeneratorRun(codeWriter, errorManager);
-        ast.accept(cgRun, null);
+        CodeGeneratorProvider.init(codeWriter,errorManager);
+
+        ast.accept(CodeGeneratorProvider.cgRun, null);
     }
 
 }

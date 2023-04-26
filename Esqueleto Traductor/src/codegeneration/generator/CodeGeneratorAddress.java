@@ -4,7 +4,8 @@
  */
 
 package codegeneration.generator;
-import ast.expressions.ExpressionVariable;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionVariable;
 import codegeneration.CodeWriter;
 import main.ErrorManager;
 
@@ -26,4 +27,21 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
         return null;
     }
 
+    //value[[expressionArray  →  array:expression  index:expression ]] = 
+	//  pusha {array.address}
+	//  value[[index]]
+	//  push {array.type.typeOfTheArray.size}
+	//  mul
+	//  add
+    @Override
+    public Object visit(ExpressionArray node, Object param) {
+        
+        getCodeWriter().pusha(node.getDefinitionAdrress());
+        node.getIndex().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().pushi(node.getArray().getType().getTypeOfTheArray().getMemorySize());
+        getCodeWriter().mul();
+        getCodeWriter().add();
+
+        return null;
+    }
 }

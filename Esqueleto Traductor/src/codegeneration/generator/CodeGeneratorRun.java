@@ -11,13 +11,10 @@ import main.ErrorManager;
 
 public class CodeGeneratorRun extends DefaultCodeGeneratorVisitor {
 
-    private CodeGeneratorDefine cgDefine;
-
     private final static String FUNCTION_NAME = "run";
 
     public CodeGeneratorRun(CodeWriter codeWriter, ErrorManager errorManager) {
         super(codeWriter, errorManager, FUNCTION_NAME);
-        this.cgDefine = new CodeGeneratorDefine(codeWriter, errorManager);
     }
 
     /*
@@ -33,7 +30,7 @@ public class CodeGeneratorRun extends DefaultCodeGeneratorVisitor {
         //getCodeWriter().callMain();
 
         for(Definition def : node.getDefinitions())
-            def.accept(cgDefine, param);
+            def.accept(CodeGeneratorProvider.cgDefine, param);
 
         getCodeWriter().halt();
 

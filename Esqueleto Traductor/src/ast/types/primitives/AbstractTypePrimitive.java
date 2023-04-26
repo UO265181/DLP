@@ -13,5 +13,4 @@ public abstract class AbstractTypePrimitive extends AbstractType implements Type
     public boolean isPrimitive() {
         return true;
     }
-
 }

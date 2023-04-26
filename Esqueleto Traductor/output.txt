@@ -17,31 +17,102 @@
 
 
 #line 27
-pusha 0
-pushi 1111
+pusha 7
+pushi 1
+pushi 2
+mul
+add
+pushi 51
 storei
 
 #line 28
-pusha 2
-pushf 2222.2
-storef
+pusha 7
+pushi 2
+pushi 2
+mul
+add
+pushi 52
+storei
 
 #line 29
-pusha 6
-pushb 39
-storeb
+pusha 7
+pushi 3
+pushi 2
+mul
+add
+pushi 53
+storei
+
+#line 30
+pusha 7
+pushi 0
+pushi 2
+mul
+add
+pushi 50
+storei
 
 #line 31
-pusha 6
-loadb
-outb
-pushb 10
-outb
-pushb 32
-outb
+pusha 7
+pushi 4
+pushi 2
+mul
+add
+pushi 54
+storei
 
 #line 33
-pusha 2
-loadf
-outf
+pusha 7
+pushi 0
+pushi 2
+mul
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 34
+pusha 7
+pushi 1
+pushi 2
+mul
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 35
+pusha 7
+pushi 2
+pushi 2
+mul
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 36
+pusha 7
+pushi 3
+pushi 2
+mul
+add
+loadi
+outi
+pushb 10
+outb
+
+#line 37
+pusha 7
+pushi 4
+pushi 2
+mul
+add
+loadi
+outi
+pushb 10
+outb
 HALT

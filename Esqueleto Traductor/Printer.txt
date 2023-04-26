@@ -14,10 +14,14 @@ var p:Punto;
 
 main() {
 
-	a = 1111;
-	b = 2222.2;
-	c = 'z';
-	println c;
-	printsp ;
-	print b;
+	v[1] = 51;
+	v[2] = 52;
+	v[3] = 53;
+	v[0] = 50;
+	v[4] = 54;
+	println v[0];
+	println v[1];
+	println v[2];
+	println v[3];
+	println v[4];
 }

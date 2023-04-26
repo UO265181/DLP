@@ -2,11 +2,12 @@
  * @generated VGen (for ANTLR) 1.7.2
  */
 
-package ast.expressions;
+package ast.expressions.access;
 
 import org.antlr.v4.runtime.*;
 
 import ast.definitions.DefinitionVariable;
+import ast.expressions.AbstractExpression;
 import visitor.*;
 
 //	expressionVariable:expression -> name:String
@@ -52,5 +53,10 @@ public class ExpressionVariable extends AbstractExpression {
 
 	public void setDefinition(DefinitionVariable definition) {
 		this.definition = definition;
+	}
+
+	@Override
+	public Integer getDefinitionAdrress() {
+		return definition.getAddress();
 	}
 }

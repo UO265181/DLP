@@ -2,10 +2,12 @@
  * @generated VGen (for ANTLR) 1.7.2
  */
 
-package ast.expressions;
+package ast.expressions.access;
 
 import org.antlr.v4.runtime.*;
 
+import ast.expressions.AbstractExpression;
+import ast.expressions.Expression;
 import visitor.*;
 
 //	expressionArray:expression -> array:expression  index:expression
@@ -55,4 +57,10 @@ public class ExpressionArray extends AbstractExpression {
 	public String toString() {
        return "{array:" + getArray() + ", index:" + getIndex() + "}";
    }
+
+   @Override
+   public Integer getDefinitionAdrress() {
+		return getArray().getDefinitionAdrress();
+   }
+
 }

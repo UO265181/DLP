@@ -67,6 +67,10 @@ public class CodeWriter {
 		write("pushi " + value);
 	}
 
+	public void pushi(int value) {
+		write("pushi " + value);
+	}
+
 	public void pushb(int value) {
 		write("pushb " + value);
 	}
@@ -96,6 +100,14 @@ public class CodeWriter {
 		write("pushb 32");
 		write("outb");
 	}
+
+	public void mul() {
+		write("mul");
+    }
+
+	public void add() {
+		write("add");
+    }
 
 	public void enter(int size) {
 		write("enter " + size);
@@ -135,5 +147,7 @@ public class CodeWriter {
 
 	private PrintWriter writer;
 	private String sourceFile;
+
+
 
 }

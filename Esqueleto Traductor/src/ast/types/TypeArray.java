@@ -38,7 +38,6 @@ public class TypeArray extends AbstractType {
 		this.size = size;
 	}
 
-	@Override
 	public Type getType() {
 		return type;
 	}
@@ -60,7 +59,7 @@ public class TypeArray extends AbstractType {
 
 	@Override
 	public boolean isSameType(Type type) {
-		return type.getType()==getType();
+		return getType().getTypeOfTheArray()==type;
 	}
 
 	@Override
@@ -73,5 +72,12 @@ public class TypeArray extends AbstractType {
 	public String toStringMAPL() {
 		return size.getValue() + "*" + type.toStringMAPL();
 	}
+
+	@Override
+	public Type getTypeOfTheArray() {
+		return getType().getTypeOfTheArray();
+	}
+
+
 
 }

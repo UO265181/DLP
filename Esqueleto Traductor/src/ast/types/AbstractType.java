@@ -13,9 +13,6 @@ public abstract class AbstractType extends AbstractAST implements Type {
         return false;
     }
 
-    public Type getType() {
-        return TypeError.getInstance();
-    }
 
     public DefinitionStruct getDefinitionStruct() {
         //TODO: mejor?
@@ -25,6 +22,10 @@ public abstract class AbstractType extends AbstractAST implements Type {
     public String getSuffix() {
         //TODO: mejorar
         return null;
+    }
+
+    public Type getTypeOfTheArray() {
+        return this;
     }
 
 }

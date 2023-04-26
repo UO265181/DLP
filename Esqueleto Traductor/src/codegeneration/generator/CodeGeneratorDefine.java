@@ -16,16 +16,9 @@ import main.ErrorManager;
 public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
     private final static String FUNCTION_NAME = "define";
-
-	private CodeGeneratorExecute cgDefineParam;
-	private CodeGeneratorDefineLocalVariable cgDefineLocalVariable;
-	private CodeGeneratorExecute cgExecute;
 	
     public CodeGeneratorDefine(CodeWriter codeWriter, ErrorManager errorManager) {
         super(codeWriter, errorManager, FUNCTION_NAME);
-        this.cgDefineParam = new CodeGeneratorExecute(codeWriter, errorManager);
-        this.cgDefineLocalVariable = new CodeGeneratorDefineLocalVariable(codeWriter, errorManager);
-        this.cgExecute = new CodeGeneratorExecute(codeWriter, errorManager);
     }
 
     //define[[definitionVariable  →  name:String  type:type ]] = 
@@ -76,7 +69,7 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
 			 //TODO: temporal
 		for(Sentence sentence : node.getSentences())
-			sentence.accept(cgExecute, param);
+			sentence.accept(CodeGeneratorProvider.cgExecute, param);
 		
 
 		return null;
