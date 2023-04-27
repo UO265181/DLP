@@ -97,13 +97,14 @@ public class DefinitionFunction extends AbstractDefinition {
 				+ getType() + ", localVariables:" + getLocalVariables() + ", sentences:" + getSentences() + "}";
 	}
 
-	public void calculateAdresses() {
+	public void calculateAdressesAndSetLocals() {
 
 		int realtiveAddress = 4; // BP+4
 
 		for (int i = getDefinitionFunctionParams().size() - 1; i >= 0; i--) {
 			getDefinitionFunctionParams().get(i).setAddress(realtiveAddress);
 			realtiveAddress += getDefinitionFunctionParams().get(i).getMemorySize();
+			getDefinitionFunctionParams().get(i).setLocal();
 		}
 
 		realtiveAddress = 0; // BP-0
@@ -111,6 +112,7 @@ public class DefinitionFunction extends AbstractDefinition {
 		for (DefinitionVariable localVariable : getLocalVariables()) {
 			realtiveAddress -= localVariable.getMemorySize();
 			localVariable.setAddress(realtiveAddress);
+			localVariable.setLocal();
 		}
 
 	}

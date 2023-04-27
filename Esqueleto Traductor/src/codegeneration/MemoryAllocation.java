@@ -42,7 +42,7 @@ public class MemoryAllocation extends DefaultVisitor {
 
 	public Object visit(DefinitionFunction node, Object param) {
 
-		node.calculateAdresses();
+		node.calculateAdressesAndSetLocals();
 
 		return null;
 	}

@@ -2,35 +2,246 @@
 
 call main
 HALT
-#GLOBAL global:float
+#TYPE Piloto : {
+	inicial:char
+	crono:3*float
+}
 
-#FUNC doble
-#PARAM valor:int
-#RET int
-doble:
-enter 0
+#GLOBAL F1:3*Piloto
 
-#line 22
-pusha 4
-load
-pushi 2
-mul
-ret 2, 0, 2
-#FUNC main
+#FUNC inicia
+#PARAM i:int
+#PARAM inicial:char
+#PARAM q1:float
+#PARAM q2:float
+#PARAM q3:float
 #RET VOID
-#LOCAL local:int
-main:
-enter 2
+
+#line 27
+inicia:
+enter 0
 
 #line 28
 pusha 0
-pushf 1.0
-storef
+pushi 0
+add
+pusha BP
+pushi 16
+add
+loadb
+storeb
 
 #line 29
-pusha -2
+pusha 0
+pushi 0
+pushi 4
+mul
+add
+pusha BP
+pushi 12
+add
+loadf
+storef
+
+#line 30
+pusha 0
+pushi 1
+pushi 4
+mul
+add
+pusha BP
+pushi 8
+add
+loadf
+storef
+
+#line 31
+pusha 0
 pushi 2
+pushi 4
+mul
+add
+pusha BP
+pushi 4
+add
+loadf
+storef
+ret 0, 0, 15
+#FUNC imprimeElMejor
+#RET VOID
+#LOCAL mejorPiloto:int
+#LOCAL menorCrono:float
+#LOCAL ultimaCrono:float
+#LOCAL i:int
+
+#line 38
+imprimeElMejor:
+enter 12
+
+#line 40
+pusha BP
+pushi -6
+add
+pushf 1000.0
+storef
+
+#line 41
+pusha BP
+pushi -12
+add
+pushi 0
 store
 
-#line 33
-out
+#line 48
+initWhile_1:
+pusha BP
+pushi -12
+add
+load
+pushi 3
+lt
+jz endWhile_1
+
+#line 43
+pusha BP
+pushi -10
+add
+pusha 0
+pushi 2
+pushi 4
+mul
+add
+loadf
+storef
+
+#line 46
+pusha BP
+pushi -10
+add
+loadf
+pusha BP
+pushi -6
+add
+loadf
+ltf
+jz endIf_1
+
+#line 45
+pusha BP
+pushi -6
+add
+pusha BP
+pushi -10
+add
+loadf
+storef
+
+#line 46
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -12
+add
+load
+store
+endIf_1:
+
+#line 48
+pusha BP
+pushi -12
+add
+pusha BP
+pushi -12
+add
+load
+pushi 1
+add
+store
+jmp initWhile_1
+endWhile_1:
+
+#line 51
+pusha 0
+pushi 0
+add
+loadb
+outb
+
+#line 52
+pusha BP
+pushi -12
+add
+pushi 0
+store
+
+#line 55
+initWhile_2:
+pusha BP
+pushi -12
+add
+load
+pushi 3
+lt
+jz endWhile_2
+
+#line 54
+pusha 0
+pusha BP
+pushi -12
+add
+load
+pushi 4
+mul
+add
+loadf
+outf
+
+#line 55
+pusha BP
+pushi -12
+add
+pusha BP
+pushi -12
+add
+load
+pushi 1
+add
+store
+jmp initWhile_2
+endWhile_2:
+ret 0, 12, 0
+#FUNC main
+#RET VOID
+
+#line 59
+main:
+enter 0
+
+#line 60
+pushi 0
+pushb 39
+pushf 1.50
+pushf 1.49
+pushf 1.48
+call inicia
+
+#line 61
+pushi 1
+pushb 39
+pushf 1.52
+pushf 1.51
+pushf 1.50
+call inicia
+
+#line 62
+pushi 2
+pushb 39
+pushf 1.54
+pushf 1.52
+pushf 1.51
+call inicia
+
+#line 64
+call imprimeElMejor
+ret 0, 0, 0

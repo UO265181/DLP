@@ -5,6 +5,7 @@
 package ast.expressions;
 
 import ast.AST;
+import ast.definitions.DefinitionVariable;
 import ast.types.Type;
 
 public interface Expression extends AST {
@@ -15,6 +16,6 @@ public interface Expression extends AST {
 	boolean isModifiable();
 	void setModifiable(boolean modifiable);
 
-	Integer getDefinitionAdrress();
+	DefinitionVariable getDefinitionVariable();
 
 }

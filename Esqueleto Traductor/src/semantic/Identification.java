@@ -131,7 +131,7 @@ public class Identification extends DefaultVisitor {
 
         DefinitionVariable variable = variables.getFromAny(node.getName());
         predicado(variable != null, "Variable no definida: " + node.getName(), node);
-        node.setDefinition(variable);
+        node.setDefinitionVariable(variable);
 
         return null;
     }

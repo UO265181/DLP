@@ -47,16 +47,14 @@ public class ExpressionVariable extends AbstractExpression {
 
 	private DefinitionVariable definition;
 
-	public DefinitionVariable getDefinition() {
-		return definition;
-	}
-
-	public void setDefinition(DefinitionVariable definition) {
+	public void setDefinitionVariable(DefinitionVariable definition) {
 		this.definition = definition;
 	}
 
 	@Override
-	public Integer getDefinitionAdrress() {
-		return definition.getAddress();
+	public DefinitionVariable getDefinitionVariable() {
+		return definition;
 	}
+	
+	
 }

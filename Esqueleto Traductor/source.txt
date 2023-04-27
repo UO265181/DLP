@@ -1,41 +1,65 @@
 /*
-Test para probar la Fase de Generación de Código
+Test 3 para probar la Fase de Generaci�n de C�digo
 
-COMPROBACION: Al ejecutarlo la salida debería ser la que indican los comentarios.
+COMPROBACION. Al ejecutar el programa deber� salir:
+A
+1.5
+1.49
+1.48
 
-CONSEJO: No limitarse a comprobar el resultado de la ejecución. Se recomienda además abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
+CONSEJO: No limitarse a comprobar el resultado de la ejecuci�n. Se recomienda adem�s abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
+
 Para facilitar esta tarea es de gran utilidad que el alumno haya generado directivas '#line' en el fichero de salida.
-Para información sobre la función de dicha directiva se debe abrir con GVM el siguiente tutorial: 
-Tutorial\3 Uso básico del depurador\4 Fusión Alto Nivel.txt
+Para informaci�n sobre la funci�n de dicha directiva se debe abrir con GVM el siguiente tutorial: 
+Tutorial\3 Uso b�sico del depurador\4 Fusi�n Alto Nivel.txt
 
-NOTA: Es posible que el alumno deba cambiar ligeramente este ejemplo para que coincida con la sintaxis de la práctica del alumno.
+NOTA: Es posible que el alumno deba adaptar ligeramente la sintaxis de este ejemplo si no coincide
+con la del lenguaje que le corresponde.
 */
 
-var a:int;
-var b:float;
-
-struct Punto {
-	x:float;
-	y:float;
+struct Piloto {
+	inicial:char;  
+	crono:[3]float;	// Tiempos en la Q1, Q2 y Q3
 };
 
-var v:[5]int;
-var p:Punto;
+var F1: [3]Piloto;
+
+inicia(i:int, inicial:char, q1:float, q2:float, q3:float) {
+	F1[i].inicial = inicial;
+	F1[i].crono[0] = q1;
+	F1[i].crono[1] = q2;
+	F1[i].crono[2] = q3;
+}  
+
+imprimeElMejor() {
+	var mejorPiloto:int;
+	var menorCrono:float;
+	var ultimaCrono:float;
+	var i:int;
+	
+	menorCrono = 1000.0;
+	i = 0;
+	while (i < 3) {
+		ultimaCrono = F1[i].crono[2];
+		if (ultimaCrono < menorCrono) {	// Solo importa la Q3
+			menorCrono = ultimaCrono; 
+			mejorPiloto = i;
+		}
+		i = i + 1;
+	}  
+
+	print F1[mejorPiloto].inicial;
+	i = 0;
+	while (i < 3) {
+		print F1[mejorPiloto].crono[i];
+		i = i + 1;
+	}  
+}
 
 main() {
-	a = 1111;
-	b = 2222.2;
-	v[3] = 3333;
-	p.y = 4444.4;
-		
-	printsp a;		    // 1111
-	printsp b + p.y;	// 6666.6
-	println v[3];		// 3333
+	inicia(0, 'A', 1.50, 1.49, 1.48);	// Alonso
+	inicia(1, 'H', 1.52, 1.51, 1.50);	// Hamilton
+	inicia(2, 'V', 1.54, 1.52, 1.51);	// Vettel
 
-	print a > 0 && b < 3333.3;	// 1
-	print <int>(b);			// 2222
-
-    // Al final debería salir:
-    // 1111 6666.6 3333
-    // 12222
+	imprimeElMejor();	// Los ordenadores no se equivocan
 }

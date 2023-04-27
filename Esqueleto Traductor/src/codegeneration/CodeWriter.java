@@ -14,15 +14,15 @@ public class CodeWriter {
 
 	private HashMap<String, String> operations;
 	private PrintWriter writer;
-	private int labels;
+	private int nWhileLabels, nIfLabels;
 	private String sourceFile;
-
 
 	public CodeWriter(Writer writer, String sourceFile) {
 		this.writer = new PrintWriter(writer);
 		this.sourceFile = sourceFile;
 		this.operations = new HashMap<String, String>();
-		
+
+
 		this.operations.put("+", "add");
 		this.operations.put("-", "sub");
 		this.operations.put("*", "mul");
@@ -58,11 +58,11 @@ public class CodeWriter {
 		insert("\n");
 	}
 
-	public void line(AST node) {
-		line(node.getEnd());
+	public void metaLine(AST node) {
+		metaLine(node.getEnd());
 	}
 
-	public void line(Position pos) {
+	public void metaLine(Position pos) {
 		if (pos != null)
 			write("\n#line " + pos.getLine());
 		else
@@ -85,16 +85,17 @@ public class CodeWriter {
 		write("in" + type.getSuffix());
 	}
 
+	public void pushaBP() {
+		write("pusha BP");
+	}
 
 	public void ret(int ret, int localVar, int param) {
 		write("ret " + ret + ", " + localVar + ", " + param);
 	}
 
-	
 	public void operation(String operator, Type type) {
 		write(operations.get(operator) + type.getSuffix());
-    }
-
+	}
 
 	public void pushf(String value) {
 		write("pushf " + value);
@@ -116,6 +117,10 @@ public class CodeWriter {
 		write("out" + type.getSuffix());
 	}
 
+	public void pop(Type type) {
+		write("pop" + type.getSuffix());
+    }
+
 	public void pusha(int address) {
 		write("pusha " + address);
 	}
@@ -129,8 +134,8 @@ public class CodeWriter {
 	}
 
 	public void cast(Type type, Type newType) {
-		write(type.getExplicitSuffix()+"2"+newType.getExplicitSuffix());
-    }
+		write(type.getExplicitSuffix() + "2" + newType.getExplicitSuffix());
+	}
 
 	public void pushOutNewLine() {
 		write("pushb 10");
@@ -144,11 +149,11 @@ public class CodeWriter {
 
 	public void mul() {
 		write("mul");
-    }
+	}
 
 	public void add() {
 		write("add");
-    }
+	}
 
 	public void enter(int size) {
 		write("enter " + size);
@@ -174,25 +179,33 @@ public class CodeWriter {
 		write("call main");
 	}
 
-
 	public void label(String name) {
 		write(name + ":");
 	}
 
-	public int getLabel() {
-		labels++;
-		return labels - 1;
+	public String[] getWhileLabels() {
+		nWhileLabels++;
+		String[] whileLabels = {"initWhile_"+nWhileLabels, "endWhile_"+nWhileLabels};
+		return whileLabels;
+    }
+
+	public String[] getIfLabels() {
+		nIfLabels++;
+		String[] ifLabels = {"else_"+nIfLabels, "endIf_"+nIfLabels};
+		return ifLabels;
+    }
+
+	public void metaFunc(String name) {
+		write("#FUNC " + name);
 	}
 
-    public void metaFunc(String name) {
-		write("#FUNC "+ name);
+	public void metaRet(Type type) {
+		write("#RET " + type.toStringMAPL());
+	}
+
+    public void metaLine(int line) {
+		write("\n#line " + line);
     }
-
-    public void metaRet(Type type) {
-		write("#RET "+ type.toStringMAPL());
-    }
-
-
 
 
 

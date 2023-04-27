@@ -1,17 +1,49 @@
 //// Printer ----
 
 
-var global:float;
 
-doble(valor:int): int {
+struct Piloto {
+	inicial:char;
+	crono:[3]float;
+};
+var F1:[3]Piloto;
 
-	return valor * 2;
+inicia(i:int, inicial:char, q1:float, q2:float, q3:float) {
+
+	F1[i].inicial = inicial;
+	F1[i].crono[0] = q1;
+	F1[i].crono[1] = q2;
+	F1[i].crono[2] = q3;
+}
+
+imprimeElMejor() {
+	var mejorPiloto:int;
+	var menorCrono:float;
+	var ultimaCrono:float;
+	var i:int;
+
+	menorCrono = 1000.0;
+	i = 0;
+	while (i < 3) {
+		ultimaCrono = F1[i].crono[2];
+		if (ultimaCrono < menorCrono) {
+			menorCrono = ultimaCrono;
+			mejorPiloto = i;
+		}
+		i = i + 1;
+	}
+	print F1[mejorPiloto].inicial;
+	i = 0;
+	while (i < 3) {
+		print F1[mejorPiloto].crono[i];
+		i = i + 1;
+	}
 }
 
 main() {
-	var local:int;
 
-	global = 1.0;
-	local = 2;
-	print doble(2);
+	inicia(0,'A',1.50,1.49,1.48);
+	inicia(1,'H',1.52,1.51,1.50);
+	inicia(2,'V',1.54,1.52,1.51);
+	imprimeElMejor();
 }

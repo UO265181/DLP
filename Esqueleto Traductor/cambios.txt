@@ -24,3 +24,7 @@ f():int {
 
 -------
 char no se escribe bien
+
+warnings 2 get
+
+    calculo mal la direccion de los structFields 0x3 ¿

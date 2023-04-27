@@ -63,14 +63,22 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	// {name}:
 	// enter {localVariables.size}
 	// execute[[sentences]]
+	// ret (0, localVariables.size, definitionFunctionParams.size}
 	public Object visit(DefinitionFunction node, Object param) {
 
 		getCodeWriter().metaFunc(node.getName());
 		for (DefinitionVariable varParam : node.getDefinitionFunctionParams())
 			varParam.accept(CodeGeneratorProvider.cgDefineParam, param);
 		getCodeWriter().metaRet(node.getType());
-		for (DefinitionVariable localVar : node.getLocalVariables())
+
+		int metaLineForEnter = node.getStart().getLine();
+
+		for (DefinitionVariable localVar : node.getLocalVariables()) {
 			localVar.accept(CodeGeneratorProvider.cgDefineLocalVariable, param);
+			metaLineForEnter = localVar.getStart().getLine();
+		}
+
+		getCodeWriter().metaLine(metaLineForEnter);
 
 		getCodeWriter().label(node.getName());
 
@@ -78,6 +86,9 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
 		for (Sentence sentence : node.getSentences())
 			sentence.accept(CodeGeneratorProvider.cgExecute, param);
+		//TODO:??
+		//if(node.getName().equals("main"))
+			getCodeWriter().ret(0, node.getLocalVariablesTotalSize(), node.getDefinitionFunctionParamsTotalSize());
 
 		return null;
 	}

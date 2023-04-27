@@ -217,7 +217,6 @@ public class CodeSelection extends DefaultVisitor {
 	public Object visit(While node, Object param) {
 
 		line(node.getStart());
-		comment("While");
 		
 		int initWhile = getLabel();
 		int endWhile = getLabel();

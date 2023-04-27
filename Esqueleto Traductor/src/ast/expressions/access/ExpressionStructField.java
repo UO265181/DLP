@@ -6,6 +6,7 @@ package ast.expressions.access;
 
 import org.antlr.v4.runtime.*;
 
+import ast.definitions.DefinitionVariable;
 import ast.expressions.AbstractExpression;
 import ast.expressions.Expression;
 import visitor.*;
@@ -61,7 +62,8 @@ public class ExpressionStructField extends AbstractExpression {
 	}
 
 	@Override
-	public Integer getDefinitionAdrress() {
-		return getStruct().getDefinitionAdrress();
+	public DefinitionVariable getDefinitionVariable() {
+		return getStruct().getDefinitionVariable();
 	}
+
 }

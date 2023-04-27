@@ -5,6 +5,8 @@
 
 package codegeneration.generator;
 
+
+
 import ast.expressions.access.ExpressionArray;
 import ast.expressions.access.ExpressionStructField;
 import ast.expressions.access.ExpressionVariable;
@@ -21,10 +23,22 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
 
     // address[[expressionVariable → name:String ]] =
     // pusha definition.address
+    //
+    //
+    // pusha BP
+    // push definition.address
+    // add
+    // TODO: poner los comentarios de esta clase bien
     @Override
     public Object visit(ExpressionVariable node, Object param) {
 
-        getCodeWriter().pusha(node.getDefinition().getAddress());
+        if (node.getDefinitionVariable().isLocal()) {
+            getCodeWriter().pushaBP();
+            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
+            getCodeWriter().add();
+        } else {
+            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
+        }
 
         return null;
     }
@@ -38,11 +52,22 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     @Override
     public Object visit(ExpressionArray node, Object param) {
 
-        getCodeWriter().pusha(node.getDefinitionAdrress());
+
+
+        if (node.getDefinitionVariable().isLocal()) {
+            getCodeWriter().pushaBP();
+            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
+            getCodeWriter().add();
+        } else {
+            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
+        }
+
         node.getIndex().accept(CodeGeneratorProvider.cgValue, param);
         getCodeWriter().pushi(node.getArray().getType().getTypeOfTheArray().getMemorySize());
         getCodeWriter().mul();
         getCodeWriter().add();
+
+
 
         return null;
     }
@@ -54,7 +79,16 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     @Override
     public Object visit(ExpressionStructField node, Object param) {
 
-        getCodeWriter().pusha(node.getDefinitionAdrress());
+        
+
+        if (node.getDefinitionVariable().isLocal()) {
+            getCodeWriter().pushaBP();
+            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
+            getCodeWriter().add();
+        } else {
+            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
+        }
+
         getCodeWriter().pushi(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getAddress());
         getCodeWriter().add();
 

@@ -5,6 +5,7 @@
 package ast.expressions;
 
 import ast.AbstractAST;
+import ast.definitions.DefinitionVariable;
 import ast.types.Type;
 
 public abstract class AbstractExpression extends AbstractAST implements Expression {
@@ -29,7 +30,7 @@ public abstract class AbstractExpression extends AbstractAST implements Expressi
 		this.modifiable = modifiable;
 	}
 
-	public Integer getDefinitionAdrress() {
+	public DefinitionVariable getDefinitionVariable() {
 		return null;
 	}
 

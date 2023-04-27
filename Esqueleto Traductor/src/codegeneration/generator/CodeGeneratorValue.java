@@ -5,7 +5,9 @@
 
 package codegeneration.generator;
 
+import ast.expressions.Expression;
 import ast.expressions.ExpressionArithmetic;
+import ast.expressions.ExpressionCallFunction;
 import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
@@ -158,6 +160,21 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
         node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
         getCodeWriter().operation(node.getOperator(), node.getType());
+
+        return null;
+    }
+
+    // value[[expressionCallFunction → name:String callFunctionParams:expression* ]]
+    // =
+    // value[[callFunctionParams]]
+    // call {name}
+    public Object visit(ExpressionCallFunction node, Object param) {
+        getCodeWriter().metaLine(node);
+        // TODO: meter line en el docx
+        for (Expression parameter : node.getCallFunctionParams())
+            parameter.accept(CodeGeneratorProvider.cgValue, param);
+
+        getCodeWriter().call(node.getName());
 
         return null;
     }

@@ -66,7 +66,8 @@ public class DefinitionVariable extends AbstractDefinition {
 	}
 
 	//TODO: mejorar
-	private Integer address = null;
+	private int address;
+	private boolean isLocal;
 
 	public void setAddress(int address) {
 		this.address = address;
@@ -74,6 +75,15 @@ public class DefinitionVariable extends AbstractDefinition {
 
 	public int getAddress() {
 		return address;
+	}
+
+
+	public void setLocal() {
+		this.isLocal = true;
+	}
+
+	public boolean isLocal() {
+		return isLocal;
 	}
 
 }

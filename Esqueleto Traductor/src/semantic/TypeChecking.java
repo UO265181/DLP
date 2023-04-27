@@ -454,7 +454,7 @@ public class TypeChecking extends DefaultVisitor {
 	// class ExpressionVariable { String name; }
 	public Object visit(ExpressionVariable node, Object param) {
 
-		node.setType(node.getDefinition().getType());
+		node.setType(node.getDefinitionVariable().getType());
 
 		node.setModifiable(true);
 
