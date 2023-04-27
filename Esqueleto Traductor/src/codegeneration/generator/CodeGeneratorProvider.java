@@ -10,7 +10,7 @@ public class CodeGeneratorProvider {
     public static CodeGeneratorAddress cgAddress;
     public static CodeGeneratorDefine cgDefine;
     public static CodeGeneratorDefineLocalVariable cgDefineLocalVariable;
-    public static CodeGeneratorDefineParam cgDefinePAram;
+    public static CodeGeneratorDefineParam cgDefineParam;
     public static CodeGeneratorExecute cgExecute;
 
     public static void init(CodeWriter codeWriter, ErrorManager errorManager) {
@@ -20,7 +20,7 @@ public class CodeGeneratorProvider {
         CodeGeneratorProvider.cgDefine = new CodeGeneratorDefine(codeWriter, errorManager);
         CodeGeneratorProvider.cgDefineLocalVariable = new CodeGeneratorDefineLocalVariable(codeWriter,
                 errorManager);
-        CodeGeneratorProvider.cgDefinePAram = new CodeGeneratorDefineParam(codeWriter, errorManager);
+        CodeGeneratorProvider.cgDefineParam = new CodeGeneratorDefineParam(codeWriter, errorManager);
         CodeGeneratorProvider.cgExecute = new CodeGeneratorExecute(codeWriter, errorManager);
     }
 

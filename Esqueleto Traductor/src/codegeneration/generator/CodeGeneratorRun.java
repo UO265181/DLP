@@ -4,6 +4,7 @@
  */
 
 package codegeneration.generator;
+
 import ast.*;
 import ast.definitions.Definition;
 import codegeneration.CodeWriter;
@@ -17,22 +18,23 @@ public class CodeGeneratorRun extends DefaultCodeGeneratorVisitor {
         super(codeWriter, errorManager, FUNCTION_NAME);
     }
 
-    /*
-     * run[[program  →  definitions:definition* ]] = 
-	 *      #SOURCE {file}
-	 *      define[[definitions]]
-     *      HALT
-     */
+    
+    // run[[program → definitions:definition* ]] =
+    // #SOURCE {file}
+    // call main
+    // HALT
+    // define[[definitions]]
+    //
     // class Program { List<Definition> definitions; }
     @Override
     public Object visit(Program node, Object param) {
+
         getCodeWriter().metaSource();
-        //getCodeWriter().callMain();
-
-        for(Definition def : node.getDefinitions())
-            def.accept(CodeGeneratorProvider.cgDefine, param);
-
+        getCodeWriter().callMain();
         getCodeWriter().halt();
+
+        for (Definition def : node.getDefinitions())
+            def.accept(CodeGeneratorProvider.cgDefine, param);
 
         return null;
     }

@@ -1,5 +1,7 @@
 #SOURCE "source.txt"
 
+call main
+HALT
 #GLOBAL a:int
 
 #GLOBAL b:float
@@ -13,6 +15,9 @@
 
 #GLOBAL p:Punto
 
+#FUNC main
+#RET VOID
+main:
 
 #line 26
 pusha 0
@@ -87,4 +92,3 @@ pusha 2
 loadf
 f2i
 out
-HALT

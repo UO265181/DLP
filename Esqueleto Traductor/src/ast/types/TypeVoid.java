@@ -43,6 +43,6 @@ public class TypeVoid extends AbstractType {
 
 	@Override
 	public String toStringMAPL() {
-		return "void";
+		return "VOID";
 	}
 }

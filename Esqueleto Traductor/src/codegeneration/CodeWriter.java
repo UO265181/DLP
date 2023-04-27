@@ -81,6 +81,11 @@ public class CodeWriter {
 		write("HALT");
 	}
 
+	public void in(Type type) {
+		write("in" + type.getSuffix());
+	}
+
+
 	public void ret(int ret, int localVar, int param) {
 		write("ret " + ret + ", " + localVar + ", " + param);
 	}
@@ -166,19 +171,28 @@ public class CodeWriter {
 	}
 
 	public void callMain() {
-		comment("Llamada a main");
 		write("call main");
 	}
 
 
 	public void label(String name) {
-		write("\t" + name + ":");
+		write(name + ":");
 	}
 
 	public int getLabel() {
 		labels++;
 		return labels - 1;
 	}
+
+    public void metaFunc(String name) {
+		write("#FUNC "+ name);
+    }
+
+    public void metaRet(Type type) {
+		write("#RET "+ type.toStringMAPL());
+    }
+
+
 
 
 

@@ -38,6 +38,7 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	//  }
     // class DefinitionStruct { String name; List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
+		//TODO: mejorar¿
 		getCodeWriter().write("#TYPE " + node.getName() + " : {");
 
         for(StructField field : node.getStructFields()) {
@@ -57,17 +58,17 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	// List<Sentence> sentences; }
 	public Object visit(DefinitionFunction node, Object param) {
 		
-		/*
-		getCodeWriter().out("#FUNC "+ node.getName());
+		
+		getCodeWriter().metaFunc(node.getName());
 		for(DefinitionVariable varParam : node.getDefinitionFunctionParams())
-			varParam.accept(cgDefineParam, param);
-		getCodeWriter().out("#RET "+ node.getType().toStringMAPL());
+			varParam.accept(CodeGeneratorProvider.cgDefineParam, param);
+		getCodeWriter().metaRet(node.getType());
 		for(DefinitionVariable localVar : node.getLocalVariables())
-			localVar.accept(cgDefineLocalVariable, param);
+			localVar.accept(CodeGeneratorProvider.cgDefineLocalVariable, param);
 
-			 */
+			
+		getCodeWriter().label(node.getName());
 
-			 //TODO: temporal
 		for(Sentence sentence : node.getSentences())
 			sentence.accept(CodeGeneratorProvider.cgExecute, param);
 		
