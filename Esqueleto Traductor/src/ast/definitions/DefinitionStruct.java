@@ -62,18 +62,16 @@ public class DefinitionStruct extends AbstractDefinition {
 	}
 
 	// TODO: añadir a la GA
-	public Type getFieldType(String fieldName) {
+	public StructField getField(String fieldName) {
 		for (StructField field : getStructFields()) {
 			if (field.getName().equals(fieldName))
-				return field.getType();
+				return field;
 		}
-		return TypeError.getInstance();
+		return null;
 	}
-
 
 	public int getMemorySize() {
 		return getStructFields().stream().mapToInt(field -> field.getMemorySize()).sum();
 	}
-
 
 }

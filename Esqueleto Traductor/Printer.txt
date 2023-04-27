@@ -3,7 +3,6 @@
 
 var a:int;
 var b:float;
-var c:char;
 
 struct Punto {
 	x:float;
@@ -14,14 +13,13 @@ var p:Punto;
 
 main() {
 
-	v[1] = 51;
-	v[2] = 52;
-	v[3] = 53;
-	v[0] = 50;
-	v[4] = 54;
-	println v[0];
-	println v[1];
-	println v[2];
+	a = 1111;
+	b = 2222.2;
+	v[3] = 3333;
+	p.y = 4444.4;
+	printsp a;
+	printsp b + p.y;
 	println v[3];
-	println v[4];
+	print a > 0 && b < 3333.3;
+	print <int>(b);
 }

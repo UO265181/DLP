@@ -15,6 +15,7 @@ public interface Type extends AST {
     int getMemorySize();
     String toStringMAPL();
     String getSuffix();
+    String getExplicitSuffix();
     Type getTypeOfTheArray();
 
 }

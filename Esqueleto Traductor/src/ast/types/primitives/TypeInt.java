@@ -52,6 +52,11 @@ public class TypeInt extends AbstractTypePrimitive {
 
 	@Override
 	public String getSuffix() {
+		return "";
+	}
+
+	@Override
+	public String getExplicitSuffix() {
 		return "i";
 	}
 }

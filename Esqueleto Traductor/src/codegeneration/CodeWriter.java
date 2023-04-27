@@ -2,6 +2,7 @@ package codegeneration;
 
 import java.io.PrintWriter;
 import java.io.Writer;
+import java.util.HashMap;
 
 import ast.AST;
 import ast.Position;
@@ -11,9 +12,34 @@ import ast.types.Type;
 
 public class CodeWriter {
 
+	private HashMap<String, String> operations;
+	private PrintWriter writer;
+	private int labels;
+	private String sourceFile;
+
+
 	public CodeWriter(Writer writer, String sourceFile) {
 		this.writer = new PrintWriter(writer);
 		this.sourceFile = sourceFile;
+		this.operations = new HashMap<String, String>();
+		
+		this.operations.put("+", "add");
+		this.operations.put("-", "sub");
+		this.operations.put("*", "mul");
+		this.operations.put("/", "div");
+		this.operations.put("%", "mod");
+
+		this.operations.put("<", "lt");
+		this.operations.put(">", "gt");
+		this.operations.put("<=", "le");
+		this.operations.put(">=", "ge");
+		this.operations.put("==", "eq");
+		this.operations.put("!=", "ne");
+
+		this.operations.put("&&", "and");
+		this.operations.put("||", "or");
+
+		this.operations.put("!", "not");
 	}
 
 	public void write(String instruction) {
@@ -59,6 +85,12 @@ public class CodeWriter {
 		write("ret " + ret + ", " + localVar + ", " + param);
 	}
 
+	
+	public void operation(String operator, Type type) {
+		write(operations.get(operator) + type.getSuffix());
+    }
+
+
 	public void pushf(String value) {
 		write("pushf " + value);
 	}
@@ -90,6 +122,10 @@ public class CodeWriter {
 	public void store(Type type) {
 		write("store" + type.getSuffix());
 	}
+
+	public void cast(Type type, Type newType) {
+		write(type.getExplicitSuffix()+"2"+newType.getExplicitSuffix());
+    }
 
 	public void pushOutNewLine() {
 		write("pushb 10");
@@ -134,7 +170,6 @@ public class CodeWriter {
 		write("call main");
 	}
 
-	private int labels;
 
 	public void label(String name) {
 		write("\t" + name + ":");
@@ -145,8 +180,9 @@ public class CodeWriter {
 		return labels - 1;
 	}
 
-	private PrintWriter writer;
-	private String sourceFile;
+
+
+
 
 
 

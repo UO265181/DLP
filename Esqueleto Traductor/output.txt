@@ -4,8 +4,6 @@
 
 #GLOBAL b:float
 
-#GLOBAL c:char
-
 #TYPE Punto : {
 	x:float
 	y:float
@@ -16,103 +14,77 @@
 #GLOBAL p:Punto
 
 
+#line 26
+pusha 0
+pushi 1111
+store
+
 #line 27
-pusha 7
-pushi 1
-pushi 2
-mul
-add
-pushi 51
-storei
+pusha 2
+pushf 2222.2
+storef
 
 #line 28
-pusha 7
-pushi 2
-pushi 2
-mul
-add
-pushi 52
-storei
-
-#line 29
-pusha 7
+pusha 6
 pushi 3
 pushi 2
 mul
 add
-pushi 53
-storei
+pushi 3333
+store
 
-#line 30
-pusha 7
-pushi 0
-pushi 2
-mul
+#line 29
+pusha 16
+pushi 4
 add
-pushi 50
-storei
+pushf 4444.4
+storef
 
 #line 31
-pusha 7
-pushi 4
-pushi 2
-mul
-add
-pushi 54
-storei
-
-#line 33
-pusha 7
-pushi 0
-pushi 2
-mul
-add
-loadi
-outi
-pushb 10
+pusha 0
+load
+out
+pushb 32
 outb
 
-#line 34
-pusha 7
-pushi 1
+#line 32
+pusha 2
+loadf
+pusha 16
+pushi 4
+add
+loadf
+addf
+outf
+pushb 32
+outb
+
+#line 33
+pusha 6
+pushi 3
 pushi 2
 mul
 add
-loadi
-outi
+load
+out
 pushb 10
 outb
 
 #line 35
-pusha 7
-pushi 2
-pushi 2
-mul
-add
-loadi
-outi
-pushb 10
-outb
+pusha 0
+load
+pushi 0
+gt
+pusha 2
+loadf
+pushf 3333.3
+ltf
+and
+out
 
 #line 36
-pusha 7
-pushi 3
-pushi 2
-mul
-add
-loadi
-outi
-pushb 10
-outb
-
-#line 37
-pusha 7
-pushi 4
-pushi 2
-mul
-add
-loadi
-outi
-pushb 10
-outb
+pusha 2
+loadf
+f2i
+out
 HALT

@@ -53,4 +53,9 @@ public class TypeChar extends AbstractTypePrimitive {
 	public String getSuffix() {
 		return "b";
 	}
+
+	@Override
+	public String getExplicitSuffix() {
+		return "b";
+	}
 }

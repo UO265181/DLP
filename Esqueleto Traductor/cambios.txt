@@ -20,14 +20,5 @@ f():int {
     }
 }
 
-
--------
-#source "source.txt"
-#GLOBAL f:float
-#GLOBAL i:int
-
-#line
-pusha 4
-CAP 3 del TUTO de MAPL
 -------
 char no se escribe bien

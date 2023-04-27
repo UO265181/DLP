@@ -53,4 +53,9 @@ public class TypeFloat extends AbstractTypePrimitive {
 	public String getSuffix() {
 		return "f";
 	}
+
+	@Override
+	public String getExplicitSuffix() {
+		return "f";
+	}
 }

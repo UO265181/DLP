@@ -24,6 +24,11 @@ public abstract class AbstractType extends AbstractAST implements Type {
         return null;
     }
 
+    public String getExplicitSuffix() {
+        //TODO: mejorar
+        return null;
+    }
+
     public Type getTypeOfTheArray() {
         return this;
     }

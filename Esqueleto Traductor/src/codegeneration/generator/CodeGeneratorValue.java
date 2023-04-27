@@ -4,7 +4,14 @@
  */
 
 package codegeneration.generator;
+
+import ast.expressions.ExpressionArithmetic;
+import ast.expressions.ExpressionCast;
+import ast.expressions.ExpressionLogical;
+import ast.expressions.ExpressionRelational;
+import ast.expressions.ExpressionUnary;
 import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionStructField;
 import ast.expressions.access.ExpressionVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
@@ -20,12 +27,12 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
         super(codeWriter, errorManager, FUNCTION_NAME);
     }
 
-    //value[[expressionVariable  →  name:String ]] = 
-	//  address[[this]]
-	//  load{type.suffix}
+    // value[[expressionVariable → name:String ]] =
+    // address[[this]]
+    // load{type.suffix}
     @Override
     public Object visit(ExpressionVariable node, Object param) {
-        
+
         node.accept(CodeGeneratorProvider.cgAddress, param);
 
         getCodeWriter().load(node.getType());
@@ -33,48 +40,126 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
         return null;
     }
 
-    //value[[expressionConstantInt  →  value:String ]] = 
-	//  push{type.suffix} {value}
+    // value[[expressionConstantInt → value:String ]] =
+    // push{type.suffix} {value}
     @Override
     public Object visit(ExpressionConstantInt node, Object param) {
-        
+
         getCodeWriter().pushi(node.getValue());
 
         return null;
     }
 
-    //value[[expressionConstantFloat  →  value:String ]] = 
-	//  push{type.suffix} {value}
+    // value[[expressionConstantFloat → value:String ]] =
+    // push{type.suffix} {value}
     @Override
     public Object visit(ExpressionConstantFloat node, Object param) {
-        
+
         getCodeWriter().pushf(node.getValue());
 
         return null;
     }
 
-    //value[[expressionConstantChar  →  value:String ]] = 
-	//  push{type.suffix} {value}
+    // value[[expressionConstantChar → value:String ]] =
+    // push{type.suffix} {value}
     @Override
     public Object visit(ExpressionConstantChar node, Object param) {
-        
+
         getCodeWriter().pushb(node.getASCII());
 
         return null;
     }
 
-
-    //value[[expressionArray  →  array:expression  index:expression ]] = 
-	//  address[[this]]
-	//  load{array.type.typeOfTheArray.suffix}
+    // value[[expressionArray → array:expression index:expression ]] =
+    // address[[this]]
+    // load{array.type.typeOfTheArray.suffix}
     @Override
     public Object visit(ExpressionArray node, Object param) {
-        
+
         node.accept(CodeGeneratorProvider.cgAddress, param);
         getCodeWriter().load(node.getType().getTypeOfTheArray());
 
         return null;
     }
 
+    // value[[expressionStructField → struct:expression name:String ]] =
+    // address[[this]]
+    // load{struct.getStructField(name).type.suffix}
+    @Override
+    public Object visit(ExpressionStructField node, Object param) {
+
+        node.accept(CodeGeneratorProvider.cgAddress, param);
+        getCodeWriter().load(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());
+
+        return null;
+    }
+
+    // value[[expressionCast → newType:type expression:expression ]] =
+    // value[[expression]]
+    // {expression.type.suffix}2{newType.suffix}
+    @Override
+    public Object visit(ExpressionCast node, Object param) {
+
+        node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().cast(node.getExpression().getType(), node.getNewType());
+
+        return null;
+    }
+
+    // value[[expressionArithmetic → left:expression operator:String
+    // right:expression ]] =
+    // value[[left]]
+    // value[[right]]
+    @Override
+    public Object visit(ExpressionArithmetic node, Object param) {
+
+        node.getLeft().accept(CodeGeneratorProvider.cgValue, param);
+        node.getRight().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().operation(node.getOperator(), node.getLeft().getType());
+
+        return null;
+    }
+
+    // value[[expressionRelational → left:expression operator:String
+    // right:expression ]] =
+    // value[[left]]
+    // value[[right]]
+    // {getOperation(operator)}{this.type.suffix}
+    @Override
+    public Object visit(ExpressionRelational node, Object param) {
+
+        node.getLeft().accept(CodeGeneratorProvider.cgValue, param);
+        node.getRight().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().operation(node.getOperator(), node.getLeft().getType());
+
+        return null;
+    }
+
+    // value[[expressionLogical → left:expression operator:String
+    // right:expression ]] =
+    // value[[left]]
+    // value[[right]]
+    // {getOperation(operator)}{this.type.suffix}
+    @Override
+    public Object visit(ExpressionLogical node, Object param) {
+
+        node.getLeft().accept(CodeGeneratorProvider.cgValue, param);
+        node.getRight().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().operation(node.getOperator(), node.getLeft().getType());
+
+        return null;
+    }
+
+    // value[[expressionUnary → operator:String expression:expression ]] =
+    // value[[expression]]
+    // {getOperation(operator)}{this.type.suffix}
+    @Override
+    public Object visit(ExpressionUnary node, Object param) {
+
+        node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().operation(node.getOperator(), node.getType());
+
+        return null;
+    }
 
 }

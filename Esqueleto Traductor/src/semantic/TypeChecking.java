@@ -466,20 +466,21 @@ public class TypeChecking extends DefaultVisitor {
 		super.visit(node, param);
 
 		DefinitionStruct defStruct = node.getStruct().getType().getDefinitionStruct();
-		Type fieldType = TypeError.getInstance();
+		StructField field = null;
 
 		if (defStruct != null) {
-			fieldType = defStruct.getFieldType(node.getName());
+			field = defStruct.getField(node.getName());
 
-			predicado(!fieldType.isSameType(TypeError.getInstance()),
+			predicado(field!=null,
 					"El campo '" + node.getName() + "' ha de estar definido en la estructura: " + defStruct.getName(),
 					node);
 		} else {
+			//TODO: mejor¿
 			errorManager.notify("Type Checking", "La expresión del acceso a estructura ha de ser de tipo estructura",
 					node.getStart());
 		}
 
-		node.setType(fieldType);
+		node.setType(field.getType());
 
 		node.setModifiable(true);
 
