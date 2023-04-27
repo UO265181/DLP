@@ -114,4 +114,12 @@ public class DefinitionFunction extends AbstractDefinition {
 		}
 
 	}
+
+    public int getLocalVariablesTotalSize() {
+        return getLocalVariables().stream().mapToInt(var -> var.getMemorySize()).sum();
+    }
+
+	public int getDefinitionFunctionParamsTotalSize() {
+        return getDefinitionFunctionParams().stream().mapToInt(var -> var.getMemorySize()).sum();
+    }
 }

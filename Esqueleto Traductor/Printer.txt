@@ -1,25 +1,17 @@
 //// Printer ----
 
 
-var a:int;
-var b:float;
+var global:float;
 
-struct Punto {
-	x:float;
-	y:float;
-};
-var v:[5]int;
-var p:Punto;
+doble(valor:int): int {
+
+	return valor * 2;
+}
 
 main() {
+	var local:int;
 
-	a = 1111;
-	b = 2222.2;
-	v[3] = 3333;
-	p.y = 4444.4;
-	printsp a;
-	printsp b + p.y;
-	println v[3];
-	print a > 0 && b < 3333.3;
-	print <int>(b);
+	global = 1.0;
+	local = 2;
+	print doble(2);
 }

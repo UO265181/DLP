@@ -10,6 +10,7 @@ import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
 import ast.sentences.SentencePrintsp;
 import ast.sentences.SentenceRead;
+import ast.sentences.SentenceReturn;
 import codegeneration.CodeWriter;
 import main.ErrorManager;
 
@@ -100,6 +101,21 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         node.getExpression().accept(CodeGeneratorProvider.cgAddress, param);
         getCodeWriter().in(node.getExpression().getType());
         getCodeWriter().store(node.getExpression().getType());
+
+        return null;
+    }
+
+    // execute[[sentenceReturn → expression:expression ]] =
+    // value[[expression]]
+    // ret {expression.type.size}, {fatherFunction.localVariables.size},
+    // {fatherFunction.definitionFunctionParams.size}
+    public Object visit(SentenceReturn node, Object param) {
+        getCodeWriter().line(node);
+        // TODO: meter line en el docx
+        node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
+        getCodeWriter().ret(node.getExpression().getType().getMemorySize(),
+                node.getFatherFunction().getLocalVariablesTotalSize(),
+                node.getFatherFunction().getDefinitionFunctionParamsTotalSize());
 
         return null;
     }
