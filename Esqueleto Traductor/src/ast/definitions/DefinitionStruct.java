@@ -59,12 +59,13 @@ public class DefinitionStruct extends AbstractDefinition {
 		return "{name:" + getName() + ", structFields:" + getStructFields() + "}";
 	}
 
+
 	public StructField getField(String fieldName) {
 		for (StructField field : getStructFields()) {
 			if (field.getName().equals(fieldName))
 				return field;
 		}
-		return null;
+		throw new IllegalStateException("Campo no encontrado: "+ this.toString());
 	}
 
 	public int getMemorySize() {

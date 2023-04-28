@@ -26,7 +26,7 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     // pusha BP
     // push definition.address
     // add
-    // TODO: poner los comentarios de esta clase bien (y los del docx)
+    // TODO: poner los comentarios de esta clase bien (y )
     @Override
     public Object visit(ExpressionVariable node, Object param) {
 

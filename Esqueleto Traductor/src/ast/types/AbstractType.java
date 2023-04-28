@@ -15,18 +15,15 @@ public abstract class AbstractType extends AbstractAST implements Type {
 
 
     public DefinitionStruct getDefinitionStruct() {
-        //TODO: mejor?
-        return null;
+        throw new IllegalStateException("Llamada a una estructura no definida: " + this.toString());
     }
 
     public String getSuffix() {
-        //TODO: mejorar
-        return null;
+        throw new IllegalStateException("Llamada a un sufijo no definido: " + this.toString());
     }
 
     public String getExplicitSuffix() {
-        //TODO: mejorar
-        return null;
+        throw new IllegalStateException("Llamada a un sufijo no definido: " + this.toString());
     }
 
     public Type getTypeOfTheArray() {

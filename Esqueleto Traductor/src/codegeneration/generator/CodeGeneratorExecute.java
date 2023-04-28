@@ -67,18 +67,16 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
         String[] labels = getCodeWriter().getIfLabels();
 
-        boolean hasElse = node.getElseSentences() != null;
-
         getCodeWriter().metaLine(node);
 
         node.getCondition().accept(CodeGeneratorProvider.cgValue, param);
-        if (hasElse)
+        if (node.hasElse())
             getCodeWriter().jz(labels[0]);
         else
             getCodeWriter().jz(labels[1]);
         for (Sentence ifSentence : node.getIfSentences())
             ifSentence.accept(CodeGeneratorProvider.cgExecute, param);
-        if (hasElse) {
+        if (node.hasElse()) {
             getCodeWriter().jmp(labels[1]);
             getCodeWriter().label(labels[0]);
         }

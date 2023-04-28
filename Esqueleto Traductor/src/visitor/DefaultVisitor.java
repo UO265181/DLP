@@ -171,7 +171,8 @@ public class DefaultVisitor implements Visitor {
 		if (node.getCondition() != null)
 			node.getCondition().accept(this, param);
 		visitChildren(node.getIfSentences(), param);
-		visitChildren(node.getElseSentences(), param);
+		if(node.hasElse())
+			visitChildren(node.getElseSentences(), param);
 		return null;
 	}
 

@@ -56,7 +56,17 @@ public class TypeStruct extends AbstractType {
 
 	@Override
 	public boolean isSameType(Type type) {
-		return type.getDefinitionStruct() == null ? false : type.getDefinitionStruct().getName().equals(getName());
+
+		DefinitionStruct definitionStruct;
+
+		try {
+			definitionStruct = type.getDefinitionStruct();
+		} catch (IllegalStateException e) {
+			//No es un struct
+			return false;
+		}
+
+		return definitionStruct.getName().equals(getName());
 	}
 
 	@Override

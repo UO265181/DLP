@@ -7,7 +7,6 @@ package semantic;
 
 import ast.*;
 import ast.definitions.DefinitionFunction;
-import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
 import ast.expressions.ExpressionArithmetic;
@@ -233,7 +232,7 @@ public class TypeChecking extends DefaultVisitor {
 			child.accept(this, param);
 		}
 
-		if (node.getElseSentences() != null) {
+		if (node.hasElse()) {
 			for (Sentence child : node.getElseSentences()) {
 				child.setFatherFunction(node.getFatherFunction());
 				child.accept(this, param);
@@ -465,7 +464,9 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(ExpressionStructField node, Object param) {
 		super.visit(node, param);
 
-		if (node.getStruct().getType().getDefinitionStruct() == null) {
+		try {
+			node.getStruct().getType().getDefinitionStruct();
+		} catch (IllegalStateException e) {
 			errorManager.notify("Type Checking", "La expresión del acceso a estructura ha de ser de tipo estructura",
 					node.getStart());
 
@@ -474,7 +475,9 @@ public class TypeChecking extends DefaultVisitor {
 			return null;
 		}
 
-		if (node.getStruct().getType().getDefinitionStruct().getField(node.getName()) == null) {
+		try {
+			node.getStruct().getType().getDefinitionStruct().getField(node.getName());
+		} catch (IllegalStateException e) {
 			errorManager.notify("Type Checking",
 					"El campo '" + node.getName() + "' ha de estar definido en la estructura: "
 							+ node.getStruct().getType().getDefinitionStruct().getName(),
@@ -497,7 +500,7 @@ public class TypeChecking extends DefaultVisitor {
 
 		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
 				"El índice de un acceso array ha de ser int", node);
-		
+
 		predicado(!node.getArray().getType().getTypeOfTheArray().isSameType(TypeError.getInstance()),
 				"La expresión del acceso array ha de hacerse a un array", node);
 
