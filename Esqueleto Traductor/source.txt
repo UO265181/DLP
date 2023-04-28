@@ -1,11 +1,8 @@
 /*
-Test 3 para probar la Fase de Generaci�n de C�digo
+Test 1 para probar la Fase de Generaci�n de C�digo
 
 COMPROBACION. Al ejecutar el programa deber� salir:
-A
-1.5
-1.49
-1.48
+743,2314
 
 CONSEJO: No limitarse a comprobar el resultado de la ejecuci�n. Se recomienda adem�s abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
 
@@ -17,49 +14,50 @@ NOTA: Es posible que el alumno deba adaptar ligeramente la sintaxis de este ejem
 con la del lenguaje que le corresponde.
 */
 
-struct Piloto {
-	inicial:char;  
-	crono:[3]float;	// Tiempos en la Q1, Q2 y Q3
-};
+potencia(base:float, exponente:int):float {
+	var total:float;
 
-var F1: [3]Piloto;
-
-inicia(i:int, inicial:char, q1:float, q2:float, q3:float) {
-	F1[i].inicial = inicial;
-	F1[i].crono[0] = q1;
-	F1[i].crono[1] = q2;
-	F1[i].crono[2] = q3;
-}  
-
-imprimeElMejor() {
-	var mejorPiloto:int;
-	var menorCrono:float;
-	var ultimaCrono:float;
-	var i:int;
-	
-	menorCrono = 1000.0;
-	i = 0;
-	while (i < 3) {
-		ultimaCrono = F1[i].crono[2];
-		if (ultimaCrono < menorCrono) {	// Solo importa la Q3
-			menorCrono = ultimaCrono; 
-			mejorPiloto = i;
+	if (exponente == 0) {
+		total = 1.0;
+	} else {
+		if (exponente < 0) {
+			total = 1.0 / potencia(base, 0 - exponente);
+		} else { 
+			total = base;
+			while (exponente > 1) {
+				total = total * base;
+				exponente = exponente - 1;
+			}
 		}
-		i = i + 1;
-	}  
-
-	println F1[mejorPiloto].inicial;
-	i = 0;
-	while (i < 3) {
-		println F1[mejorPiloto].crono[i];
-		i = i + 1;
-	}  
+	}
+	return total;
 }
 
-main() {
-	inicia(0, 'A', 1.50, 1.49, 1.48);	// Alonso
-	inicia(1, 'H', 1.52, 1.51, 1.50);	// Hamilton
-	inicia(2, 'V', 1.54, 1.52, 1.51);	// Vettel
+	
+letraHipoteca(capital:float, meses:int, interes:float):float {
+	var mensual:float;
 
-	imprimeElMejor();	// Los ordenadores no se equivocan
+	mensual = interes / 12.0;
+	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - meses)));
+}
+
+
+main() {
+	var precioVivienda:float;
+	var mesesHipoteca:int;
+	var interes:float;
+
+/*
+	read precioVivienda;
+	read mesesHipoteca;
+	read interes;
+*/
+	precioVivienda = 200000.0;
+	mesesHipoteca = 30 * 12;
+	interes = 2.04;	
+
+	print letraHipoteca(precioVivienda, mesesHipoteca, interes);
+
+//	Con los datos anteriores deber�an salir (redondeando) 743 euros de letra al mes
+
 }

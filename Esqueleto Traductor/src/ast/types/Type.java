@@ -10,6 +10,11 @@ import ast.definitions.DefinitionStruct;
 public interface Type extends AST {
 
     boolean isPrimitive();
+    /**
+     * Solo para tipos primitivos, void y error
+     * @param type
+     * @return
+     */
     boolean isSameType(Type type);
     DefinitionStruct getDefinitionStruct();
     int getMemorySize();

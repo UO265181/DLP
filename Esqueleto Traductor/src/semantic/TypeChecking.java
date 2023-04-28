@@ -203,12 +203,14 @@ public class TypeChecking extends DefaultVisitor {
 				node.getCallFunctionParams().get(i).accept(this, param);
 
 				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
-						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de ser primitivo: " + node.getName(),
+						"El tipo del parámetro número " + (i + 1) + " de la llamada a función ha de ser primitivo: "
+								+ node.getName(),
 						node);
 				predicado(
 						node.getCallFunctionParams().get(i).getType().isSameType(node.getDefinition()
 								.getDefinitionFunctionParams().get(i).getType()),
-						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de coincidir con el de su definición: "
+						"El tipo del parámetro número " + (i + 1)
+								+ " de la llamada a función ha de coincidir con el de su definición: "
 								+ node.getName(),
 						node);
 			}
@@ -303,12 +305,14 @@ public class TypeChecking extends DefaultVisitor {
 				node.getCallFunctionParams().get(i).accept(this, param);
 
 				predicado(node.getCallFunctionParams().get(i).getType().isPrimitive(),
-						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de ser primitivo: " + node.getName(),
+						"El tipo del parámetro número " + (i + 1) + " de la llamada a función ha de ser primitivo: "
+								+ node.getName(),
 						node);
 				predicado(
 						node.getCallFunctionParams().get(i).getType().isSameType(node.getDefinition()
 								.getDefinitionFunctionParams().get(i).getType()),
-						"El tipo del parámetro número " + (i+1) + " de la llamada a función ha de coincidir con el de su definición: "
+						"El tipo del parámetro número " + (i + 1)
+								+ " de la llamada a función ha de coincidir con el de su definición: "
 								+ node.getName(),
 						node);
 			}
@@ -461,23 +465,27 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(ExpressionStructField node, Object param) {
 		super.visit(node, param);
 
-		DefinitionStruct defStruct = node.getStruct().getType().getDefinitionStruct();
-		StructField field = null;
-
-		if (defStruct != null) {
-			field = defStruct.getField(node.getName());
-
-			predicado(field!=null,
-					"El campo '" + node.getName() + "' ha de estar definido en la estructura: " + defStruct.getName(),
-					node);
-		} else {
-			//TODO: mejor¿
+		if (node.getStruct().getType().getDefinitionStruct() == null) {
 			errorManager.notify("Type Checking", "La expresión del acceso a estructura ha de ser de tipo estructura",
 					node.getStart());
+
+			node.setType(TypeError.getInstance());
+			node.setModifiable(false);
+			return null;
 		}
 
-		node.setType(field.getType());
+		if (node.getStruct().getType().getDefinitionStruct().getField(node.getName()) == null) {
+			errorManager.notify("Type Checking",
+					"El campo '" + node.getName() + "' ha de estar definido en la estructura: "
+							+ node.getStruct().getType().getDefinitionStruct().getName(),
+					node.getStart());
 
+			node.setType(TypeError.getInstance());
+			node.setModifiable(false);
+			return null;
+		}
+
+		node.setType(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());
 		node.setModifiable(true);
 
 		return null;
@@ -487,12 +495,11 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(ExpressionArray node, Object param) {
 		super.visit(node, param);
 
-		
 		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
 				"El índice de un acceso array ha de ser int", node);
-		//TODO: ??
+		
 		predicado(!node.getArray().getType().getTypeOfTheArray().isSameType(TypeError.getInstance()),
-				"La expresión del acceso array ha de ser de tipo array", node);
+				"La expresión del acceso array ha de hacerse a un array", node);
 
 		node.setType(node.getArray().getType().getTypeOfTheArray());
 

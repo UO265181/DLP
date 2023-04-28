@@ -30,7 +30,7 @@ public abstract class AbstractType extends AbstractAST implements Type {
     }
 
     public Type getTypeOfTheArray() {
-        return this;
+        return TypeError.getInstance();
     }
 
 }

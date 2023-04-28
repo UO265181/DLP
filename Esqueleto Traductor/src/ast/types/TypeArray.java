@@ -73,7 +73,7 @@ public class TypeArray extends AbstractType {
 
 	@Override
 	public Type getTypeOfTheArray() {
-		return getType().getTypeOfTheArray();
+		return getType();
 	}
 
 
