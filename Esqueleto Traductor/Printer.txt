@@ -2,48 +2,39 @@
 
 
 
-struct Piloto {
-	inicial:char;
-	crono:[3]float;
-};
-var F1:[3]Piloto;
+potencia(base:float, exponente:int): float {
+	var total:float;
 
-inicia(i:int, inicial:char, q1:float, q2:float, q3:float) {
-
-	F1[i].inicial = inicial;
-	F1[i].crono[0] = q1;
-	F1[i].crono[1] = q2;
-	F1[i].crono[2] = q3;
+	if (exponente == 0) {
+		total = 1.0;
+	} else {
+		if (exponente < 0) {
+			total = 1.0 / potencia(base,0 - exponente);
+		} else {
+			total = base;
+			while (exponente > 1) {
+				total = total * base;
+				exponente = exponente - 1;
+			}
+		}
+	}
+	return total;
 }
 
-imprimeElMejor() {
-	var mejorPiloto:int;
-	var menorCrono:float;
-	var ultimaCrono:float;
-	var i:int;
+letraHipoteca(capital:float, meses:int, interes:float): float {
+	var mensual:float;
 
-	menorCrono = 1000.0;
-	i = 0;
-	while (i < 3) {
-		ultimaCrono = F1[i].crono[2];
-		if (ultimaCrono < menorCrono) {
-			menorCrono = ultimaCrono;
-			mejorPiloto = i;
-		}
-		i = i + 1;
-	}
-	print F1[mejorPiloto].inicial;
-	i = 0;
-	while (i < 3) {
-		print F1[mejorPiloto].crono[i];
-		i = i + 1;
-	}
+	mensual = interes / 12.0;
+	return capital * mensual / 100.0 * 1.0 - potencia(1.0 + mensual / 100.0,0 - meses);
 }
 
 main() {
+	var precioVivienda:float;
+	var mesesHipoteca:int;
+	var interes:float;
 
-	inicia(0,'A',1.50,1.49,1.48);
-	inicia(1,'H',1.52,1.51,1.50);
-	inicia(2,'V',1.54,1.52,1.51);
-	imprimeElMejor();
+	precioVivienda = 200000.0;
+	mesesHipoteca = 30 * 12;
+	interes = 2.04;
+	print letraHipoteca(precioVivienda,mesesHipoteca,interes);
 }
