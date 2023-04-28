@@ -10,7 +10,6 @@ import ast.definitions.DefinitionFunction;
 import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
-import ast.expressions.Expression;
 import ast.expressions.ExpressionArithmetic;
 import ast.expressions.ExpressionCallFunction;
 import ast.expressions.ExpressionCast;
@@ -33,10 +32,7 @@ import ast.sentences.SentencePrintsp;
 import ast.sentences.SentenceRead;
 import ast.sentences.SentenceReturn;
 import ast.sentences.SentenceWhile;
-import ast.types.Type;
-import ast.types.TypeArray;
 import ast.types.TypeError;
-import ast.types.TypeStruct;
 import ast.types.TypeVoid;
 import ast.types.primitives.TypeChar;
 import ast.types.primitives.TypeFloat;
@@ -512,10 +508,6 @@ public class TypeChecking extends DefaultVisitor {
 	private void predicado(boolean condition, String errorMessage, Position position) {
 		if (!condition)
 			errorManager.notify("Type Checking", errorMessage, position);
-	}
-
-	private void predicado(boolean condition, String errorMessage) {
-		predicado(condition, errorMessage, (Position) null);
 	}
 
 	private ErrorManager errorManager;

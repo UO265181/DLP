@@ -4,8 +4,6 @@
 
 package ast.definitions;
 
-import java.util.List;
-
 import org.antlr.v4.runtime.*;
 
 import ast.types.Type;
@@ -65,18 +63,27 @@ public class DefinitionVariable extends AbstractDefinition {
 		return type.getMemorySize();
 	}
 
-	//TODO: mejorar
 	private int address;
 	private boolean isLocal;
+	private boolean addressed;
 
 	public void setAddress(int address) {
 		this.address = address;
+		this.addressed = true;
 	}
 
 	public int getAddress() {
-		return address;
-	}
 
+		if (addressed)
+			return address;
+
+		try {
+			throw new IllegalAccessException("No se ha asignado ninguna dirección previamente: " + this.toString());
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+			return 0;
+		}
+	}
 
 	public void setLocal() {
 		this.isLocal = true;

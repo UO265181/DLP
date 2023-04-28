@@ -4,8 +4,6 @@
 
 package ast.expressions;
 
-import org.antlr.v4.runtime.*;
-
 import ast.types.Type;
 import visitor.*;
 

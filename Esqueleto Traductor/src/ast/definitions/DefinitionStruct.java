@@ -7,8 +7,6 @@ package ast.definitions;
 import java.util.*;
 import org.antlr.v4.runtime.*;
 
-import ast.types.Type;
-import ast.types.TypeError;
 import visitor.*;
 
 //	definitionStruct:definition -> name:String  structFields:structField*
@@ -61,7 +59,6 @@ public class DefinitionStruct extends AbstractDefinition {
 		return "{name:" + getName() + ", structFields:" + getStructFields() + "}";
 	}
 
-	// TODO: añadir a la GA
 	public StructField getField(String fieldName) {
 		for (StructField field : getStructFields()) {
 			if (field.getName().equals(fieldName))

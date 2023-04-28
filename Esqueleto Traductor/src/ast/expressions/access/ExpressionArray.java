@@ -4,8 +4,6 @@
 
 package ast.expressions.access;
 
-import org.antlr.v4.runtime.*;
-
 import ast.definitions.DefinitionVariable;
 import ast.expressions.AbstractExpression;
 import ast.expressions.Expression;

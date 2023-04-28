@@ -2,229 +2,309 @@
 
 call main
 HALT
-#FUNC potencia
-#PARAM base:float
-#PARAM exponente:int
-#RET float
-#LOCAL total:float
+#TYPE Piloto : {
+	inicial:char
+	crono:3*float
+}
 
-#line 18
-potencia:
-enter 4
+#GLOBAL F1:3*Piloto
 
-#line 29
-pusha BP
-pushi 4
-add
-load
-pushi 0
-eq
-jz else_1
+#FUNC inicia
+#PARAM i:int
+#PARAM inicial:char
+#PARAM q1:float
+#PARAM q2:float
+#PARAM q3:float
+#RET VOID
 
-#line 21
-pusha BP
-pushi -4
-add
-pushf 1.0
-storef
-jmp endIf_1
-else_1:
-
-#line 29
-pusha BP
-pushi 4
-add
-load
-pushi 0
-lt
-jz else_2
-
-#line 24
-pusha BP
-pushi -4
-add
-pushf 1.0
-
-#line 24
-pusha BP
-pushi 6
-add
-loadf
-pushi 0
-pusha BP
-pushi 4
-add
-load
-sub
-call potencia
-divf
-storef
-jmp endIf_2
-else_2:
-
-#line 26
-pusha BP
-pushi -4
-add
-pusha BP
-pushi 6
-add
-loadf
-storef
-
-#line 29
-initWhile_1:
-pusha BP
-pushi 4
-add
-load
-pushi 1
-gt
-jz endWhile_1
+#line 27
+inicia:
+enter 0
 
 #line 28
+pusha 0
 pusha BP
-pushi -4
-add
-pusha BP
-pushi -4
-add
-loadf
-pusha BP
-pushi 6
-add
-loadf
-mulf
-storef
-
-#line 29
-pusha BP
-pushi 4
-add
-pusha BP
-pushi 4
+pushi 17
 add
 load
+pushi 13
+mul
+add
+pushi 0
+add
+pusha BP
+pushi 16
+add
+loadb
+storeb
+
+#line 29
+pusha 0
+pusha BP
+pushi 17
+add
+load
+pushi 13
+mul
+add
 pushi 1
-sub
-store
-jmp initWhile_1
-endWhile_1:
-endIf_2:
-endIf_1:
-
-#line 33
-pusha BP
-pushi -4
 add
-loadf
-ret 4, 4, 6
-ret 0, 4, 6
-#FUNC letraHipoteca
-#PARAM capital:float
-#PARAM meses:int
-#PARAM interes:float
-#RET float
-#LOCAL mensual:float
-
-#line 38
-letraHipoteca:
-enter 4
-
-#line 40
-pusha BP
-pushi -4
-add
-pusha BP
+pushi 0
 pushi 4
+mul
+add
+pusha BP
+pushi 12
 add
 loadf
-pushf 12.0
-divf
 storef
 
-#line 41
+#line 30
+pusha 0
 pusha BP
-pushi 10
+pushi 17
 add
-loadf
-pusha BP
-pushi -4
+load
+pushi 13
+mul
 add
-loadf
-mulf
-pushf 100.0
-pushf 1.0
-
-#line 41
-pushf 1.0
-pusha BP
-pushi -4
+pushi 1
 add
-loadf
-pushf 100.0
-divf
-addf
-pushi 0
+pushi 1
+pushi 4
+mul
+add
 pusha BP
 pushi 8
 add
+loadf
+storef
+
+#line 31
+pusha 0
+pusha BP
+pushi 17
+add
 load
-sub
-call potencia
-subf
-mulf
-divf
-ret 4, 4, 10
-ret 0, 4, 10
-#FUNC main
+pushi 13
+mul
+add
+pushi 1
+add
+pushi 2
+pushi 4
+mul
+add
+pusha BP
+pushi 4
+add
+loadf
+storef
+ret 0, 0, 15
+#FUNC imprimeElMejor
 #RET VOID
-#LOCAL precioVivienda:float
-#LOCAL mesesHipoteca:int
-#LOCAL interes:float
+#LOCAL mejorPiloto:int
+#LOCAL menorCrono:float
+#LOCAL ultimaCrono:float
+#LOCAL i:int
+
+#line 38
+imprimeElMejor:
+enter 12
+
+#line 40
+pusha BP
+pushi -6
+add
+pushf 1000.0
+storef
+
+#line 41
+pusha BP
+pushi -12
+add
+pushi 0
+store
 
 #line 48
-main:
-enter 10
+initWhile_1:
+pusha BP
+pushi -12
+add
+load
+pushi 3
+lt
+jz endWhile_1
+
+#line 43
+pusha BP
+pushi -10
+add
+pusha 0
+pusha BP
+pushi -12
+add
+load
+pushi 13
+mul
+add
+pushi 1
+add
+pushi 2
+pushi 4
+mul
+add
+loadf
+storef
+
+#line 46
+pusha BP
+pushi -10
+add
+loadf
+pusha BP
+pushi -6
+add
+loadf
+ltf
+jz endIf_1
+
+#line 45
+pusha BP
+pushi -6
+add
+pusha BP
+pushi -10
+add
+loadf
+storef
+
+#line 46
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -12
+add
+load
+store
+endIf_1:
+
+#line 48
+pusha BP
+pushi -12
+add
+pusha BP
+pushi -12
+add
+load
+pushi 1
+add
+store
+jmp initWhile_1
+endWhile_1:
+
+#line 51
+pusha 0
+pusha BP
+pushi -2
+add
+load
+pushi 13
+mul
+add
+pushi 0
+add
+loadb
+outb
+pushb 10
+outb
+
+#line 52
+pusha BP
+pushi -12
+add
+pushi 0
+store
+
+#line 55
+initWhile_2:
+pusha BP
+pushi -12
+add
+load
+pushi 3
+lt
+jz endWhile_2
+
+#line 54
+pusha 0
+pusha BP
+pushi -2
+add
+load
+pushi 13
+mul
+add
+pushi 1
+add
+pusha BP
+pushi -12
+add
+load
+pushi 4
+mul
+add
+loadf
+outf
+pushb 10
+outb
 
 #line 55
 pusha BP
-pushi -4
+pushi -12
 add
-pushf 200000.0
-storef
-
-#line 56
 pusha BP
-pushi -6
-add
-pushi 30
-pushi 12
-mul
-store
-
-#line 57
-pusha BP
-pushi -10
-add
-pushf 2.04
-storef
-
-#line 59
-
-#line 59
-pusha BP
-pushi -4
-add
-loadf
-pusha BP
-pushi -6
+pushi -12
 add
 load
-pusha BP
-pushi -10
+pushi 1
 add
-loadf
-call letraHipoteca
-outf
-ret 0, 10, 0
+store
+jmp initWhile_2
+endWhile_2:
+ret 0, 12, 0
+#FUNC main
+#RET VOID
+
+#line 59
+main:
+enter 0
+
+#line 60
+pushi 0
+pushb 39
+pushf 1.50
+pushf 1.49
+pushf 1.48
+call inicia
+
+#line 61
+pushi 1
+pushb 39
+pushf 1.52
+pushf 1.51
+pushf 1.50
+call inicia
+
+#line 62
+pushi 2
+pushb 39
+pushf 1.54
+pushf 1.52
+pushf 1.51
+call inicia
+
+#line 64
+call imprimeElMejor
+ret 0, 0, 0

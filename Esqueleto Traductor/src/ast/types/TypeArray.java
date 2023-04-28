@@ -4,7 +4,6 @@
 
 package ast.types;
 
-import org.antlr.v4.runtime.*;
 
 import ast.expressions.constant.ExpressionConstantInt;
 import visitor.*;
@@ -64,8 +63,7 @@ public class TypeArray extends AbstractType {
 
 	@Override
 	public int getMemorySize() {
-		//TODO: valueOf en otro lao?
-		return getType().getMemorySize()* Integer.valueOf(getSize().getValue());
+		return getType().getMemorySize()* getSize().getIntValue();
 	}
 
 	@Override

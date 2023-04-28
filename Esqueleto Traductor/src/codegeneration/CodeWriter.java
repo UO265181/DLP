@@ -6,8 +6,6 @@ import java.util.HashMap;
 
 import ast.AST;
 import ast.Position;
-import ast.definitions.Definition;
-import ast.definitions.DefinitionStruct;
 import ast.types.Type;
 
 public class CodeWriter {

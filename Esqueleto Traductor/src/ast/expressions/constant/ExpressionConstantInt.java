@@ -28,6 +28,11 @@ public class ExpressionConstantInt extends AbstractExpression {
 	public String getValue() {
 		return value;
 	}
+
+	public int getIntValue() {
+		return Integer.parseInt(value);
+	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}

@@ -5,8 +5,6 @@
 
 package codegeneration.generator;
 
-import javax.swing.text.AbstractDocument.LeafElement;
-
 import ast.expressions.Expression;
 import ast.sentences.Sentence;
 import ast.sentences.SentenceAssignment;

@@ -5,9 +5,8 @@
 package ast.types.primitives;
 
 import ast.types.AbstractType;
-import ast.types.Type;
 
-public abstract class AbstractTypePrimitive extends AbstractType implements Type {
+public abstract class AbstractTypePrimitive extends AbstractType  {
 
 
     public boolean isPrimitive() {
