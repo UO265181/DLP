@@ -10,6 +10,7 @@ import ast.definitions.DefinitionFunction;
 public abstract class AbstractSentence extends AbstractAST implements Sentence {
 
     private DefinitionFunction fatherFunction;
+    private boolean hasGoodReturn;
 
     public DefinitionFunction getFatherFunction() {
         return fatherFunction;
@@ -18,5 +19,13 @@ public abstract class AbstractSentence extends AbstractAST implements Sentence {
     public void setFatherFunction(DefinitionFunction fatherFunction) {
         this.fatherFunction = fatherFunction;
     }
+
+    public boolean hasGoodReturn() {
+		return hasGoodReturn;
+	}
+
+	public void setHasGoodReturn(boolean hasGoodReturn) {
+		this.hasGoodReturn = hasGoodReturn;
+	}
 
 }

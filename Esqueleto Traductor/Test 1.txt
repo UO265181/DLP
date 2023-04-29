@@ -1,16 +1,16 @@
 /*
-Test 1 para probar la Fase de Generación de Código
+Test 1 para probar la Fase de Generaciï¿½n de Cï¿½digo
 
-COMPROBACION: Al ejecutarlo la salida debería ser:
+COMPROBACION: Al ejecutarlo la salida deberï¿½a ser:
 14
 
-CONSEJO: No limitarse a comprobar el resultado de la ejecución. Se recomienda además abrir el 
+CONSEJO: No limitarse a comprobar el resultado de la ejecuciï¿½n. Se recomienda ademï¿½s abrir el 
 fichero generado usando el depurador GVM y comprobar sus instrucciones.
 
 Para facilitar esta tarea es de gran utilidad que el alumno haya generado directivas '#line' en el 
 fichero de salida.
-Para información sobre la función de dicha directiva se debe abrir con GVM el siguiente tutorial: 
-Tutorial\3 Uso básico del depurador\4 Fusión Alto Nivel.txt
+Para informaciï¿½n sobre la funciï¿½n de dicha directiva se debe abrir con GVM el siguiente tutorial: 
+Tutorial\3 Uso bï¿½sico del depurador\4 Fusiï¿½n Alto Nivel.txt
 
 NOTA: Es posible que el alumno deba adaptar ligeramente la sintaxis de este ejemplo si no coincide
 con la del lenguaje que le corresponde.

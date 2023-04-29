@@ -86,9 +86,9 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
 		for (Sentence sentence : node.getSentences())
 			sentence.accept(CodeGeneratorProvider.cgExecute, param);
-		//TODO:??
-		//if(node.getName().equals("main"))
-			getCodeWriter().ret(0, node.getLocalVariablesTotalSize(), node.getDefinitionFunctionParamsTotalSize());
+		
+		if(!node.hasGoodReturn())
+			getCodeWriter().ret(node.getType().getMemorySize(), node.getLocalVariablesTotalSize(), node.getDefinitionFunctionParamsTotalSize());
 
 		return null;
 	}

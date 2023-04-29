@@ -12,6 +12,8 @@ public interface Sentence extends AST {
     DefinitionFunction getFatherFunction();
     void setFatherFunction(DefinitionFunction fatherFunction);
 
+    boolean hasGoodReturn();
+    void setHasGoodReturn(boolean hasGoodReturn);
 
 
 }

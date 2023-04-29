@@ -1,5 +1,5 @@
 /*
-Test 1 para probar la Fase de Generaci�n de C�digo
+Test 4 para probar la Fase de Generaci�n de C�digo
 
 COMPROBACION. Al ejecutar el programa deber� salir:
 743,2314

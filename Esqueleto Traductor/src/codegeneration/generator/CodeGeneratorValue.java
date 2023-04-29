@@ -74,12 +74,12 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
     // value[[expressionArray → array:expression index:expression ]] =
     // address[[this]]
-    // load{array.type.typeOfTheArray.suffix}
+    // load{array.type}//TODO: dcx
     @Override
     public Object visit(ExpressionArray node, Object param) {
 
         node.accept(CodeGeneratorProvider.cgAddress, param);
-        getCodeWriter().load(node.getType().getTypeOfTheArray());
+        getCodeWriter().load(node.getType());
 
         return null;
     }

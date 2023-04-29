@@ -78,6 +78,9 @@ public class TypeChecking extends DefaultVisitor {
 		for (Sentence child : node.getSentences()) {
 			child.setFatherFunction(node);
 			child.accept(this, param);
+
+			if(!node.hasGoodReturn() && child.hasGoodReturn())
+				node.setHasGoodReturn(true);
 		}
 
 		return null;
@@ -155,6 +158,8 @@ public class TypeChecking extends DefaultVisitor {
 			}
 		}
 
+		node.setHasGoodReturn(true);
+
 		return null;
 	}
 
@@ -227,17 +232,28 @@ public class TypeChecking extends DefaultVisitor {
 		predicado(node.getCondition().getType().isSameType(TypeInt.getInstance()),
 				"La condición de una sentencia if ha de ser de tipo entero", node);
 
+		boolean returnIf = false, returnElse = false;
+
 		for (Sentence child : node.getIfSentences()) {
 			child.setFatherFunction(node.getFatherFunction());
 			child.accept(this, param);
+
+			if(!returnIf && child.hasGoodReturn())
+				returnIf = true;
 		}
 
 		if (node.hasElse()) {
 			for (Sentence child : node.getElseSentences()) {
 				child.setFatherFunction(node.getFatherFunction());
 				child.accept(this, param);
+
+				if(!returnElse && child.hasGoodReturn())
+					returnElse = true;
 			}
 		}
+
+		if(returnIf && returnElse)
+			node.setHasGoodReturn(true);
 
 		return null;
 	}

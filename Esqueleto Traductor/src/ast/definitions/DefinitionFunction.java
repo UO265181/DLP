@@ -124,4 +124,14 @@ public class DefinitionFunction extends AbstractDefinition {
 	public int getDefinitionFunctionParamsTotalSize() {
         return getDefinitionFunctionParams().stream().mapToInt(var -> var.getMemorySize()).sum();
     }
+
+	private boolean hasGoodReturn;
+
+	public boolean hasGoodReturn() {
+		return hasGoodReturn;
+	}
+
+	public void setHasGoodReturn(boolean hasGoodReturn) {
+		this.hasGoodReturn = hasGoodReturn;
+	}
 }
