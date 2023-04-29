@@ -40,7 +40,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
         String[] labels = getCodeWriter().getWhileLabels();
 
-        getCodeWriter().metaLine(node);
+        getCodeWriter().metaLine(node.getStart());
 
         getCodeWriter().label(labels[0]);
         node.getCondition().accept(CodeGeneratorProvider.cgValue, param);
@@ -67,7 +67,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
         String[] labels = getCodeWriter().getIfLabels();
 
-        getCodeWriter().metaLine(node);
+        getCodeWriter().metaLine(node.getStart());
 
         node.getCondition().accept(CodeGeneratorProvider.cgValue, param);
         if (node.hasElse())

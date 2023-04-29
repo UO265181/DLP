@@ -4,6 +4,8 @@
 
 package ast.expressions.constant;
 
+import java.util.HashMap;
+
 import org.antlr.v4.runtime.*;
 
 import ast.expressions.AbstractExpression;
@@ -15,6 +17,10 @@ public class ExpressionConstantChar extends AbstractExpression {
 
 	public ExpressionConstantChar(String value) {
 		this.value = value;
+
+
+		nonSingleChars = new HashMap<String, Integer>();
+		nonSingleChars.put("'\n'", 10);
 	}
 
 	public ExpressionConstantChar(Object value) {
@@ -23,6 +29,9 @@ public class ExpressionConstantChar extends AbstractExpression {
        // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
        // Obtiene la linea/columna a partir de las de los hijos.
        setPositions(value);
+
+		nonSingleChars = new HashMap<String, Integer>();
+		nonSingleChars.put("'\\n'", 10);
 	}
 
 	public String getValue() {
@@ -43,7 +52,15 @@ public class ExpressionConstantChar extends AbstractExpression {
        return "{value:" + getValue() + "}";
    }
 
+   private HashMap<String,Integer> nonSingleChars;
+
    public int getASCII() {
-		return value.toCharArray()[0];
+
+		Integer specialValue = nonSingleChars.get(getValue());
+	
+
+		if(specialValue==null)
+			return value.charAt(1);
+		return specialValue;
    }
 }

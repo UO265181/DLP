@@ -1,63 +1,78 @@
 /*
-Test 4 para probar la Fase de Generaci�n de C�digo
+Test 2 para probar la Fase de Generación de Código
 
-COMPROBACION. Al ejecutar el programa deber� salir:
-743,2314
+COMPROBACION: Si cuando pida un valor se introduce un 2 debería salir: 
+C
+1200
+A
+1000
+B
+1100
+C
+1200
+D
+1300
 
-CONSEJO: No limitarse a comprobar el resultado de la ejecuci�n. Se recomienda adem�s abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
+CONSEJO: No limitarse a comprobar el resultado de la ejecución. Se recomienda además abrir el fichero generado usando el depurador GVM y comprobar sus instrucciones.
 
 Para facilitar esta tarea es de gran utilidad que el alumno haya generado directivas '#line' en el fichero de salida.
-Para informaci�n sobre la funci�n de dicha directiva se debe abrir con GVM el siguiente tutorial: 
-Tutorial\3 Uso b�sico del depurador\4 Fusi�n Alto Nivel.txt
+Para información sobre la función de dicha directiva se debe abrir con GVM el siguiente tutorial: 
+Tutorial\3 Uso básico del depurador\4 Fusión Alto Nivel.txt
 
 NOTA: Es posible que el alumno deba adaptar ligeramente la sintaxis de este ejemplo si no coincide
 con la del lenguaje que le corresponde.
 */
 
-potencia(base:float, exponente:int):float {
-	var total:float;
+struct Persona {
+	inicial:char;
+	sueldo:float;  
+};
 
-	if (exponente == 0) {
-		total = 1.0;
-	} else {
-		if (exponente < 0) {
-			total = 1.0 / potencia(base, 0 - exponente);
-		} else { 
-			total = base;
-			while (exponente > 1) {
-				total = total * base;
-				exponente = exponente - 1;
-			}
-		}
+var empresa:[4] Persona;
+
+inicia() {
+	var i:int;
+
+	i = 0;
+	while (i < 4) {
+		empresa[i].inicial = <char>(i + <int>('\n'));
+		empresa[i].sueldo = <float>(1000 + (i * 100));
+		i = i + 1;
+	}  
+}
+
+busca(i:int) {
+	if (i < 0 || i >= 4) {
+		return;
 	}
-	return total;
+	println empresa[i].inicial;
+	println empresa[i].sueldo;
 }
 
-	
-letraHipoteca(capital:float, meses:int, interes:float):float {
-	var mensual:float;
+imprime():int {
+	var i:int;
+	var aux:Persona;
 
-	mensual = interes / 12.0;
-	return capital * mensual / (100.0 * (1.0 - potencia(1.0 + mensual/100.0, 0 - meses)));
+	i = 0;
+	while (! (i >= 4)) {
+		aux.inicial = empresa[i].inicial;
+		aux.sueldo = empresa[i].sueldo;
+		
+		println aux.inicial;
+		println aux.sueldo;
+		
+		i = i + 1;
+	}  
+	return i;
 }
-
 
 main() {
-	var precioVivienda:float;
-	var mesesHipoteca:int;
-	var interes:float;
+	var posicion:int;
 
-/*
-	read precioVivienda;
-	read mesesHipoteca;
-	read interes;
-*/
-	precioVivienda = 200000.0;
-	mesesHipoteca = 30 * 12;
-	interes = 2.04;	
+	inicia();
 
-	print letraHipoteca(precioVivienda, mesesHipoteca, interes);
+	read posicion;
+	busca(posicion);
 
-//	Con los datos anteriores deber�an salir (redondeando) 743 euros de letra al mes
-
+	imprime();	// No se recoge el valor de retorno
 }

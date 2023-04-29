@@ -2,227 +2,286 @@
 
 call main
 HALT
-#FUNC potencia
-#PARAM base:float
-#PARAM exponente:int
-#RET float
-#LOCAL total:float
+#TYPE Persona : {
+	inicial:char
+	sueldo:float
+}
 
-#line 18
-potencia:
-enter 4
+#GLOBAL empresa:4*Persona
 
-#line 29
+#FUNC inicia
+#RET VOID
+#LOCAL i:int
+
+#line 34
+inicia:
+enter 2
+
+#line 36
 pusha BP
-pushi 4
+pushi -2
+add
+pushi 0
+store
+
+#line 37
+initWhile_1:
+pusha BP
+pushi -2
 add
 load
-pushi 0
-eq
-jz else_1
+pushi 4
+lt
+jz endWhile_1
 
-#line 21
+#line 38
+pusha 0
 pusha BP
-pushi -4
+pushi -2
 add
-pushf 1.0
-storef
-jmp endIf_1
-else_1:
+load
+pushi 5
+mul
+add
+pushi 0
+add
+pusha BP
+pushi -2
+add
+load
+pushb 10
+b2i
+add
+i2b
+storeb
 
-#line 29
+#line 39
+pusha 0
+pusha BP
+pushi -2
+add
+load
+pushi 5
+mul
+add
+pushi 1
+add
+pushi 1000
+pusha BP
+pushi -2
+add
+load
+pushi 100
+mul
+add
+i2f
+storef
+
+#line 40
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_1
+endWhile_1:
+ret 0, 2, 0
+#FUNC busca
+#PARAM i:int
+#RET VOID
+
+#line 44
+busca:
+enter 0
+
+#line 45
 pusha BP
 pushi 4
 add
 load
 pushi 0
 lt
-jz else_2
-
-#line 24
-pusha BP
-pushi -4
-add
-pushf 1.0
-
-#line 24
-pusha BP
-pushi 6
-add
-loadf
-pushi 0
 pusha BP
 pushi 4
 add
 load
-sub
-call potencia
-divf
-storef
-jmp endIf_2
-else_2:
-
-#line 26
-pusha BP
-pushi -4
-add
-pusha BP
-pushi 6
-add
-loadf
-storef
-
-#line 29
-initWhile_1:
-pusha BP
 pushi 4
-add
-load
-pushi 1
-gt
-jz endWhile_1
-
-#line 28
-pusha BP
-pushi -4
-add
-pusha BP
-pushi -4
-add
-loadf
-pusha BP
-pushi 6
-add
-loadf
-mulf
-storef
-
-#line 29
-pusha BP
-pushi 4
-add
-pusha BP
-pushi 4
-add
-load
-pushi 1
-sub
-store
-jmp initWhile_1
-endWhile_1:
-endIf_2:
+ge
+or
+jz endIf_1
+ret 0, 0, 2
 endIf_1:
 
-#line 33
-pusha BP
-pushi -4
-add
-loadf
-ret 4, 4, 6
-#FUNC letraHipoteca
-#PARAM capital:float
-#PARAM meses:int
-#PARAM interes:float
-#RET float
-#LOCAL mensual:float
-
-#line 38
-letraHipoteca:
-enter 4
-
-#line 40
-pusha BP
-pushi -4
-add
+#line 48
+pusha 0
 pusha BP
 pushi 4
 add
-loadf
-pushf 12.0
-divf
-storef
-
-#line 41
-pusha BP
-pushi 10
+load
+pushi 5
+mul
 add
-loadf
-pusha BP
-pushi -4
-add
-loadf
-mulf
-pushf 100.0
-pushf 1.0
-
-#line 41
-pushf 1.0
-pusha BP
-pushi -4
-add
-loadf
-pushf 100.0
-divf
-addf
 pushi 0
+add
+loadb
+outb
+pushb 10
+outb
+
+#line 49
+pusha 0
 pusha BP
-pushi 8
+pushi 4
 add
 load
-sub
-call potencia
-subf
-mulf
-divf
-ret 4, 4, 10
-#FUNC main
-#RET VOID
-#LOCAL precioVivienda:float
-#LOCAL mesesHipoteca:int
-#LOCAL interes:float
-
-#line 48
-main:
-enter 10
-
-#line 55
-pusha BP
-pushi -4
+pushi 5
+mul
 add
-pushf 200000.0
-storef
+pushi 1
+add
+loadf
+outf
+pushb 10
+outb
+ret 0, 0, 2
+#FUNC imprime
+#RET int
+#LOCAL i:int
+#LOCAL aux:Persona
+
+#line 54
+imprime:
+enter 7
 
 #line 56
 pusha BP
-pushi -6
+pushi -2
 add
-pushi 30
-pushi 12
-mul
+pushi 0
 store
 
 #line 57
+initWhile_2:
 pusha BP
-pushi -10
-add
-pushf 2.04
-storef
-
-#line 59
-
-#line 59
-pusha BP
-pushi -4
-add
-loadf
-pusha BP
-pushi -6
+pushi -2
 add
 load
+pushi 4
+ge
+not
+jz endWhile_2
+
+#line 58
 pusha BP
-pushi -10
+pushi -7
+add
+pushi 0
+add
+pusha 0
+pusha BP
+pushi -2
+add
+load
+pushi 5
+mul
+add
+pushi 0
+add
+loadb
+storeb
+
+#line 59
+pusha BP
+pushi -7
+add
+pushi 1
+add
+pusha 0
+pusha BP
+pushi -2
+add
+load
+pushi 5
+mul
+add
+pushi 1
 add
 loadf
-call letraHipoteca
+storef
+
+#line 61
+pusha BP
+pushi -7
+add
+pushi 0
+add
+loadb
+outb
+pushb 10
+outb
+
+#line 62
+pusha BP
+pushi -7
+add
+pushi 1
+add
+loadf
 outf
-ret 0, 10, 0
+pushb 10
+outb
+
+#line 64
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_2
+endWhile_2:
+
+#line 66
+pusha BP
+pushi -2
+add
+load
+ret 2, 7, 0
+#FUNC main
+#RET VOID
+#LOCAL posicion:int
+
+#line 70
+main:
+enter 2
+
+#line 72
+call inicia
+
+#line 74
+pusha BP
+pushi -2
+add
+in
+store
+
+#line 75
+pusha BP
+pushi -2
+add
+load
+call busca
+
+#line 77
+call imprime
+pop
+ret 0, 2, 0

@@ -1,30 +1,4 @@
-arrays no forzar tipos en sintático
 usar genéricos en vez de object
 ga modo miguel
-type funfionc?? error type??
 
-
-------
-comprobar los returns??
-
-no hace falta comprobar que haya return
-
-f():int {
-    if(true) {
-
-    }
-    return a;
-}
-
-f():int {
-    if(false) {
-        return a;
-    }
-}
-
--------
-char no se escribe bien
-
-warnings 2 get
-
-    calculo mal la direccion de los structFields 0x3 ¿
+chars de mas de un caracter chunga (meter +1 chunga)
