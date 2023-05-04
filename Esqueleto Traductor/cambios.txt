@@ -5,7 +5,6 @@ chars de mas de un caracter chunga (meter +1 chunga)
 ifs en code specification
 null en code specification
 
-conversiones float a char
 sumar chars
 
 

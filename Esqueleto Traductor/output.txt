@@ -3,289 +3,69 @@
 call main
 HALT
 #TYPE Persona : {
-	inicial:float
+	inicial:char
 	sueldo:float
 }
 
 #GLOBAL empresa:4*Persona
 
-#FUNC inicia
+#FUNC main
 #RET VOID
-#LOCAL i:int
 
-#line 34
-inicia:
-enter 2
+#line 9
+main:
+enter 0
 
-#line 36
-pusha BP
-pushi -2
-add
-pushi 0
-store
-
-#line 37
-initWhile_1:
-pusha BP
-pushi -2
-add
-load
-pushi 4
-lt
-jz endWhile_1
-
-#line 38
+#line 11
 pusha 0
-pusha BP
-pushi -2
-add
-load
-pushi 8
+pushi 0
+pushi 5
 mul
 add
 pushi 0
 add
-pusha BP
-pushi -2
-add
-load
+pushi 0
 pushb 65
 b2i
 add
 i2b
-b2i 
- i2f
-storef
+storeb
 
-#line 39
+#line 12
 pusha 0
-pusha BP
-pushi -2
-add
-load
-pushi 8
-mul
-add
-pushi 4
-add
-pushi 1000
-pusha BP
-pushi -2
-add
-load
-pushi 100
-mul
-add
-i2f
-storef
-
-#line 40
-pusha BP
-pushi -2
-add
-pusha BP
-pushi -2
-add
-load
-pushi 1
-add
-store
-jmp initWhile_1
-endWhile_1:
-ret 0, 2, 0
-#FUNC busca
-#PARAM i:int
-#RET VOID
-
-#line 44
-busca:
-enter 0
-
-#line 45
-pusha BP
-pushi 4
-add
-load
 pushi 0
-lt
-pusha BP
-pushi 4
-add
-load
-pushi 4
-ge
-or
-jz endIf_1
-
-#line 46
-ret 0, 0, 2
-endIf_1:
-
-#line 48
-pusha 0
-pusha BP
-pushi 4
-add
-load
-pushi 8
+pushi 5
 mul
 add
 pushi 0
 add
-loadf
-outf
-pushb 10
+pusha 0
+pushi 0
+pushi 5
+mul
+add
+pushi 0
+add
+loadb
+pusha 0
+pushi 0
+pushi 5
+mul
+add
+pushi 0
+add
+loadb
+addb
+storeb
+
+#line 13
+pusha 0
+pushi 0
+pushi 5
+mul
+add
+pushi 0
+add
+loadb
 outb
-
-#line 49
-pusha 0
-pusha BP
-pushi 4
-add
-load
-pushi 8
-mul
-add
-pushi 4
-add
-loadf
-outf
-pushb 10
-outb
-ret 0, 0, 2
-#FUNC imprime
-#RET int
-#LOCAL i:int
-#LOCAL aux:Persona
-
-#line 54
-imprime:
-enter 10
-
-#line 56
-pusha BP
-pushi -2
-add
-pushi 0
-store
-
-#line 57
-initWhile_2:
-pusha BP
-pushi -2
-add
-load
-pushi 4
-ge
-not
-jz endWhile_2
-
-#line 58
-pusha BP
-pushi -10
-add
-pushi 0
-add
-pusha 0
-pusha BP
-pushi -2
-add
-load
-pushi 8
-mul
-add
-pushi 0
-add
-loadf
-storef
-
-#line 59
-pusha BP
-pushi -10
-add
-pushi 4
-add
-pusha 0
-pusha BP
-pushi -2
-add
-load
-pushi 8
-mul
-add
-pushi 4
-add
-loadf
-storef
-
-#line 61
-pusha BP
-pushi -10
-add
-pushi 0
-add
-loadf
-outf
-pushb 10
-outb
-
-#line 62
-pusha BP
-pushi -10
-add
-pushi 4
-add
-loadf
-outf
-pushb 10
-outb
-
-#line 64
-pusha BP
-pushi -2
-add
-pusha BP
-pushi -2
-add
-load
-pushi 1
-add
-store
-jmp initWhile_2
-endWhile_2:
-
-#line 66
-pusha BP
-pushi -2
-add
-load
-ret 2, 10, 0
-#FUNC main
-#RET VOID
-#LOCAL posicion:int
-
-#line 70
-main:
-enter 2
-
-#line 72
-call inicia
-
-#line 74
-pusha BP
-pushi -2
-add
-in
-store
-
-#line 75
-pusha BP
-pushi -2
-add
-load
-call busca
-
-#line 77
-call imprime
-pop
-ret 0, 2, 0
+ret 0, 0, 0

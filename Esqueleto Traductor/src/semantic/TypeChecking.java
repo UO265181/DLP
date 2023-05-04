@@ -384,7 +384,7 @@ public class TypeChecking extends DefaultVisitor {
 		predicado(node.getLeft().getType().isSameType(node.getRight().getType()),
 				"Los tipos en una expresión aritmética han de ser los mismos", node);
 
-		if (node.getOperator().contains("+-*/")) {
+		if ("+-*/".contains(node.getOperator())) {
 			predicado(
 					node.getLeft().getType().isSameType(TypeInt.getInstance())
 							|| node.getLeft().getType().isSameType(TypeFloat.getInstance()),
@@ -398,7 +398,7 @@ public class TypeChecking extends DefaultVisitor {
 							+ node.getOperator(),
 					node);
 
-		} else if (node.getOperator().contains("%")) {
+		} else if ("%".contains(node.getOperator())) {
 			predicado(
 					node.getLeft().getType().isSameType(TypeInt.getInstance()),
 					"El tipo de la izquierda en una expresión aritmética ha de ser int para el operando: "
