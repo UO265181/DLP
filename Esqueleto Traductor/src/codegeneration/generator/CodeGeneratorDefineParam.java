@@ -20,7 +20,7 @@ public class CodeGeneratorDefineParam extends DefaultCodeGeneratorVisitor {
     // #PARAM {name} : {type}
     @Override
     public Object visit(DefinitionVariable node, Object param) {
-        getCodeWriter().write("#PARAM " + node.getName() + ":" + node.getType().toStringMAPL());
+        getCodeWriter().metaParam(node.getName(), node.getType());
         return null;
     }
 

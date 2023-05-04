@@ -219,4 +219,8 @@ public class CodeWriter {
 		write("#GLOBAL " + name + ":" + type.toStringMAPL());
 	}
 
+	public void metaParam(String name, Type type) {
+		write("#PARAM " + name + ":" + type.toStringMAPL());
+	}
+
 }
