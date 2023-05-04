@@ -58,7 +58,8 @@ public class TypeArray extends AbstractType {
 
 	@Override
 	public boolean isSameType(Type type) {
-		return getType().getTypeOfTheArray()==type;
+		//TODO: dudoso
+		return this==type;
 	}
 
 	@Override

@@ -50,15 +50,6 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     @Override
     public Object visit(ExpressionArray node, Object param) {
 
-        /* 
-        if (node.getDefinitionVariable().isLocal()) {
-            getCodeWriter().pushaBP();
-            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
-            getCodeWriter().add();
-        } else {
-            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
-        }
-        */
         node.getArray().accept(CodeGeneratorProvider.cgAddress, param);
 
         node.getIndex().accept(CodeGeneratorProvider.cgValue, param);
@@ -75,15 +66,6 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     // add
     @Override
     public Object visit(ExpressionStructField node, Object param) {
-
-        /* 
-        if (node.getDefinitionVariable().isLocal()) {
-            getCodeWriter().pushaBP();
-            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
-            getCodeWriter().add();
-        } else {
-            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
-        }*/
 
         node.getStruct().accept(CodeGeneratorProvider.cgAddress, param);
 

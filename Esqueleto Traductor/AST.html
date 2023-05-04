@@ -27,14 +27,14 @@
 <span class="dots">.  .  </span>DefinitionStruct &rarr;                                    <span class="pos">26:8  28:7   </span><span class="sourceText">struct </span><span class="posText">Persona {</span><span class="sourceText"> ... </span><span class="posText">sueldo</span><span class="sourceText">:float;  </span>
 <span class="dots">.  .  |  </span>"<span class="value">Persona</span>"  
 <span class="dots">.  .  |  </span>structFields  <span class="type">List&lt;StructField&gt;</span> = 
-<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">27:2  27:8   </span><span class="sourceText"></span><span class="posText">inicial</span><span class="sourceText">:char;</span>
+<span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">27:2  27:8   </span><span class="sourceText"></span><span class="posText">inicial</span><span class="sourceText">:float;</span>
 <span class="dots">.  .  |  .  |  </span>"<span class="value">inicial</span>"  
-<span class="dots">.  .  |  .  |  </span><span class="value">TypeChar</span> &rarr;                                   <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  </span><span class="value">TypeFloat</span> &rarr;                                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  .  |  </span><span class="value">0</span>  <span class="type">int</span>
 <span class="dots">.  .  |  .  </span>StructField &rarr;                                   <span class="pos">28:2  28:7   </span><span class="sourceText"></span><span class="posText">sueldo</span><span class="sourceText">:float;  </span>
 <span class="dots">.  .  |  .  |  </span>"<span class="value">sueldo</span>"  
 <span class="dots">.  .  |  .  |  </span><span class="value">TypeFloat</span> &rarr;                                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  </span><span class="value">1</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">4</span>  <span class="type">int</span>
 <span class="dots">.  .  </span>DefinitionVariable &rarr;                                  <span class="pos">31:5  31:23  </span><span class="sourceText">var </span><span class="posText">empresa:[4] Persona</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  </span>"<span class="value">empresa</span>"  
 <span class="dots">.  .  |  </span>TypeArray &rarr;                                        <span class="pos">31:14  31:23 </span><span class="sourceText">var empresa:[</span><span class="posText">4] Persona</span><span class="sourceText">;</span>
@@ -60,20 +60,22 @@
 <span class="dots">.  .  |  .  |  .  </span>"<span class="value"><</span>"  
 <span class="dots">.  .  |  .  |  .  </span>"4"  <span class="type">ExpressionConstantInt.value</span>          <span class="pos">37:13  37:13 </span><span class="sourceText">while (i < </span><span class="posText">4</span><span class="sourceText">) {</span>
 <span class="dots">.  .  |  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
-<span class="dots">.  .  |  .  |  .  </span>SentenceAssignment &rarr;                      <span class="pos">38:3  38:44  </span><span class="sourceText"></span><span class="posText">empresa[i].inicial = <char>(i + <int>('\n'</span><span class="sourceText">));</span>
-<span class="dots">.  .  |  .  |  .  |  </span>ExpressionStructField &rarr;                <span class="pos">38:3  38:20  </span><span class="sourceText"></span><span class="posText">empresa[i].inicial</span><span class="sourceText"> = <char>(i + <int>('\n'));</span>
-<span class="dots">.  .  |  .  |  .  |  .  </span>ExpressionArray &rarr;                   <span class="pos">38:3  38:11  </span><span class="sourceText"></span><span class="posText">empresa[i</span><span class="sourceText">].inicial = <char>(i + <int>('\n'));</span>
-<span class="dots">.  .  |  .  |  .  |  .  |  </span>"empresa"  <span class="type">ExpressionVariable.name</span><span class="pos">38:3  38:9   </span><span class="sourceText"></span><span class="posText">empresa</span><span class="sourceText">[i].inicial = <char>(i + <int>('\n'));</span>
-<span class="dots">.  .  |  .  |  .  |  .  |  </span>"i"  <span class="type">ExpressionVariable.name</span>     <span class="pos">38:11  38:11 </span><span class="sourceText">empresa[</span><span class="posText">i</span><span class="sourceText">].inicial = <char>(i + <int>('\n'));</span>
+<span class="dots">.  .  |  .  |  .  </span>SentenceAssignment &rarr;                      <span class="pos">38:3  38:51  </span><span class="sourceText"></span><span class="posText">empresa[i].inicial = <float>(<char>(i + <int>('A'</span><span class="sourceText">)));</span>
+<span class="dots">.  .  |  .  |  .  |  </span>ExpressionStructField &rarr;                <span class="pos">38:3  38:20  </span><span class="sourceText"></span><span class="posText">empresa[i].inicial</span><span class="sourceText"> = <float>(<char>(i + <int>('A')));</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>ExpressionArray &rarr;                   <span class="pos">38:3  38:11  </span><span class="sourceText"></span><span class="posText">empresa[i</span><span class="sourceText">].inicial = <float>(<char>(i + <int>('A')));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  </span>"empresa"  <span class="type">ExpressionVariable.name</span><span class="pos">38:3  38:9   </span><span class="sourceText"></span><span class="posText">empresa</span><span class="sourceText">[i].inicial = <float>(<char>(i + <int>('A')));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  </span>"i"  <span class="type">ExpressionVariable.name</span>     <span class="pos">38:11  38:11 </span><span class="sourceText">empresa[</span><span class="posText">i</span><span class="sourceText">].inicial = <float>(<char>(i + <int>('A')));</span>
 <span class="dots">.  .  |  .  |  .  |  .  </span>"<span class="value">inicial</span>"  
-<span class="dots">.  .  |  .  |  .  |  </span>ExpressionCast &rarr;                       <span class="pos">38:31  38:44 </span><span class="sourceText">empresa[i].inicial = <char>(</span><span class="posText">i + <int>('\n'</span><span class="sourceText">));</span>
-<span class="dots">.  .  |  .  |  .  |  .  </span><span class="value">TypeChar</span> &rarr;                          <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  |  .  </span>ExpressionArithmetic &rarr;              <span class="pos">38:31  38:44 </span><span class="sourceText">empresa[i].inicial = <char>(</span><span class="posText">i + <int>('\n'</span><span class="sourceText">));</span>
-<span class="dots">.  .  |  .  |  .  |  .  |  </span>"i"  <span class="type">ExpressionVariable.name</span>     <span class="pos">38:31  38:31 </span><span class="sourceText">empresa[i].inicial = <char>(</span><span class="posText">i</span><span class="sourceText"> + <int>('\n'));</span>
-<span class="dots">.  .  |  .  |  .  |  .  |  </span>"<span class="value">+</span>"  
-<span class="dots">.  .  |  .  |  .  |  .  |  </span>ExpressionCast &rarr;                 <span class="pos">38:41  38:44 </span><span class="sourceText">empresa[i].inicial = <char>(i + <int>(</span><span class="posText">'\n'</span><span class="sourceText">));</span>
-<span class="dots">.  .  |  .  |  .  |  .  |  .  </span><span class="value">TypeInt</span> &rarr;                     <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
-<span class="dots">.  .  |  .  |  .  |  .  |  .  </span>"'\n'"  <span class="type">ExpressionConstantChar.value</span><span class="pos">38:41  38:44 </span><span class="sourceText">empresa[i].inicial = <char>(i + <int>(</span><span class="posText">'\n'</span><span class="sourceText">));</span>
+<span class="dots">.  .  |  .  |  .  |  </span>ExpressionCast &rarr;                       <span class="pos">38:39  38:51 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(</span><span class="posText">i + <int>('A'</span><span class="sourceText">)));</span>
+<span class="dots">.  .  |  .  |  .  |  .  </span><span class="value">TypeFloat</span> &rarr;                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  |  .  </span>ExpressionCast &rarr;                    <span class="pos">38:39  38:51 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(</span><span class="posText">i + <int>('A'</span><span class="sourceText">)));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  </span><span class="value">TypeChar</span> &rarr;                       <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  |  .  |  </span>ExpressionArithmetic &rarr;           <span class="pos">38:39  38:51 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(</span><span class="posText">i + <int>('A'</span><span class="sourceText">)));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  .  </span>"i"  <span class="type">ExpressionVariable.name</span>  <span class="pos">38:39  38:39 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(</span><span class="posText">i</span><span class="sourceText"> + <int>('A')));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  .  </span>"<span class="value">+</span>"  
+<span class="dots">.  .  |  .  |  .  |  .  |  .  </span>ExpressionCast &rarr;              <span class="pos">38:49  38:51 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(i + <int>(</span><span class="posText">'A'</span><span class="sourceText">)));</span>
+<span class="dots">.  .  |  .  |  .  |  .  |  .  |  </span><span class="value">TypeInt</span> &rarr;                  <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  |  .  |  .  |  </span>"'A'"  <span class="type">ExpressionConstantChar.value</span><span class="pos">38:49  38:51 </span><span class="sourceText">empresa[i].inicial = <float>(<char>(i + <int>(</span><span class="posText">'A'</span><span class="sourceText">)));</span>
 <span class="dots">.  .  |  .  |  .  </span>SentenceAssignment &rarr;                      <span class="pos">39:3  39:45  </span><span class="sourceText"></span><span class="posText">empresa[i].sueldo = <float>(1000 + (i * 100</span><span class="sourceText">));</span>
 <span class="dots">.  .  |  .  |  .  |  </span>ExpressionStructField &rarr;                <span class="pos">39:3  39:19  </span><span class="sourceText"></span><span class="posText">empresa[i].sueldo</span><span class="sourceText"> = <float>(1000 + (i * 100));</span>
 <span class="dots">.  .  |  .  |  .  |  .  </span>ExpressionArray &rarr;                   <span class="pos">39:3  39:11  </span><span class="sourceText"></span><span class="posText">empresa[i</span><span class="sourceText">].sueldo = <float>(1000 + (i * 100));</span>
@@ -105,7 +107,7 @@
 <span class="dots">.  .  |  </span><span class="value">TypeVoid</span> &rarr;                                         <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
 <span class="dots">.  .  |  </span>localVariables  <span class="type">List&lt;DefinitionVariable&gt;</span> = 
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
-<span class="dots">.  .  |  .  </span>SentenceIf &rarr;                                    <span class="pos">45:6  45:20  </span><span class="sourceText">if (</span><span class="posText">i < 0 || i >= 4</span><span class="sourceText">) {</span>
+<span class="dots">.  .  |  .  </span>SentenceIf &rarr;                                    <span class="pos">45:6  46:8   </span><span class="sourceText">if (</span><span class="posText">i < 0 || i >= 4) {</span><span class="sourceText"> ... </span><span class="posText">return</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  .  |  </span>ExpressionLogical &rarr;                          <span class="pos">45:6  45:20  </span><span class="sourceText">if (</span><span class="posText">i < 0 || i >= 4</span><span class="sourceText">) {</span>
 <span class="dots">.  .  |  .  |  .  </span>ExpressionRelational &rarr;                    <span class="pos">45:6  45:10  </span><span class="sourceText">if (</span><span class="posText">i < 0</span><span class="sourceText"> || i >= 4) {</span>
 <span class="dots">.  .  |  .  |  .  |  </span>"i"  <span class="type">ExpressionVariable.name</span>           <span class="pos">45:6  45:6   </span><span class="sourceText">if (</span><span class="posText">i</span><span class="sourceText"> < 0 || i >= 4) {</span>
@@ -117,7 +119,7 @@
 <span class="dots">.  .  |  .  |  .  |  </span>"<span class="value">>=</span>"  
 <span class="dots">.  .  |  .  |  .  |  </span>"4"  <span class="type">ExpressionConstantInt.value</span>       <span class="pos">45:20  45:20 </span><span class="sourceText">if (i < 0 || i >= </span><span class="posText">4</span><span class="sourceText">) {</span>
 <span class="dots">.  .  |  .  |  </span>ifSentences  <span class="type">List&lt;Sentence&gt;</span> = 
-<span class="dots">.  .  |  .  |  .  </span>SentenceReturn &rarr;                          <span class="pos"><span class="null">null</span>  <span class="null">null</span>   </span>
+<span class="dots">.  .  |  .  |  .  </span>SentenceReturn &rarr;                          <span class="pos">46:3  46:8   </span><span class="sourceText"></span><span class="posText">return</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  .  |  .  |  </span><span class="null">null</span>  expression:<span class="type">Expression</span>
 <span class="dots">.  .  |  .  |  </span>elseSentences  <span class="type">List&lt;Sentence&gt;</span> =  <span class="null">null</span>
 <span class="dots">.  .  |  .  </span>SentencePrintln &rarr;                               <span class="pos">48:10  48:27 </span><span class="sourceText">println </span><span class="posText">empresa[i].inicial</span><span class="sourceText">;</span>
@@ -144,7 +146,7 @@
 <span class="dots">.  .  |  .  </span>DefinitionVariable &rarr;                            <span class="pos">54:6  54:16  </span><span class="sourceText">var </span><span class="posText">aux:Persona</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  .  |  </span>"<span class="value">aux</span>"  
 <span class="dots">.  .  |  .  |  </span>"Persona"  <span class="type">TypeStruct.name</span>                   <span class="pos">54:10  54:16 </span><span class="sourceText">var aux:</span><span class="posText">Persona</span><span class="sourceText">;</span>
-<span class="dots">.  .  |  .  |  </span><span class="value">-7</span>  <span class="type">int</span>
+<span class="dots">.  .  |  .  |  </span><span class="value">-10</span>  <span class="type">int</span>
 <span class="dots">.  .  |  </span>sentences  <span class="type">List&lt;Sentence&gt;</span> = 
 <span class="dots">.  .  |  .  </span>SentenceAssignment &rarr;                            <span class="pos">56:2  56:6   </span><span class="sourceText"></span><span class="posText">i = 0</span><span class="sourceText">;</span>
 <span class="dots">.  .  |  .  |  </span>"i"  <span class="type">ExpressionVariable.name</span>                 <span class="pos">56:2  56:2   </span><span class="sourceText"></span><span class="posText">i</span><span class="sourceText"> = 0;</span>

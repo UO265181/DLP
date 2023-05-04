@@ -2,3 +2,20 @@ usar genéricos en vez de object
 ga modo miguel
 
 chars de mas de un caracter chunga (meter +1 chunga)
+ifs en code specification
+null en code specification
+
+conversiones float a char
+sumar chars
+
+
+
+
+---
+cuidado con orden de la exp
+actualizar los visitor
+asignar el nuevo tipo en el typeChecking (o los atributos del nodo)
+
+empezar por ga para hacer un mapa mental de lo que hay que cambiar (llevar papel)
+MAPL warning 99% -> error
+

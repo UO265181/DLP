@@ -27,7 +27,8 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	// class DefinitionVariable { String name; Type type; }
 	@Override
 	public Object visit(DefinitionVariable node, Object param) {
-		getCodeWriter().write("#GLOBAL " + node.getName() + ":" + node.getType().toStringMAPL() + "\n");
+		getCodeWriter().metaGlobal(node.getName(),node.getType());
+		getCodeWriter().insertNewLine();
 
 		return null;
 	}

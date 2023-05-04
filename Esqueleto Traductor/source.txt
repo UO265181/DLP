@@ -24,7 +24,7 @@ con la del lenguaje que le corresponde.
 */
 
 struct Persona {
-	inicial:char;
+	inicial:float;
 	sueldo:float;  
 };
 
@@ -35,7 +35,7 @@ inicia() {
 
 	i = 0;
 	while (i < 4) {
-		empresa[i].inicial = <char>(i + <int>('\n'));
+		empresa[i].inicial = <float>(<char>(i + <int>('A')));
 		empresa[i].sueldo = <float>(1000 + (i * 100));
 		i = i + 1;
 	}  

@@ -10,7 +10,7 @@ import ast.types.Type;
 
 public class CodeWriter {
 
-	private HashMap<String, String> operations;
+	private HashMap<String, String> operations, multiCasts;
 	private PrintWriter writer;
 	private int nWhileLabels, nIfLabels;
 	private String sourceFile;
@@ -19,7 +19,6 @@ public class CodeWriter {
 		this.writer = new PrintWriter(writer);
 		this.sourceFile = sourceFile;
 		this.operations = new HashMap<String, String>();
-
 
 		this.operations.put("+", "add");
 		this.operations.put("-", "sub");
@@ -38,6 +37,10 @@ public class CodeWriter {
 		this.operations.put("||", "or");
 
 		this.operations.put("!", "not");
+
+		this.multiCasts = new HashMap<String, String>();
+		this.multiCasts.put("b2f", "b2i \n i2f");
+		this.multiCasts.put("f2b", "f2i \n i2b");
 	}
 
 	public void write(String instruction) {
@@ -117,7 +120,7 @@ public class CodeWriter {
 
 	public void pop(Type type) {
 		write("pop" + type.getSuffix());
-    }
+	}
 
 	public void pusha(int address) {
 		write("pusha " + address);
@@ -132,7 +135,14 @@ public class CodeWriter {
 	}
 
 	public void cast(Type type, Type newType) {
-		write(type.getExplicitSuffix() + "2" + newType.getExplicitSuffix());
+		// TODO: mejorar?
+		String cast = type.getExplicitSuffix() + "2" + newType.getExplicitSuffix();
+
+		String multiCast = this.multiCasts.get(cast);
+		if (multiCast != null)
+			cast = multiCast;
+
+		write(cast);
 	}
 
 	public void pushOutNewLine() {
@@ -183,15 +193,15 @@ public class CodeWriter {
 
 	public String[] getWhileLabels() {
 		nWhileLabels++;
-		String[] whileLabels = {"initWhile_"+nWhileLabels, "endWhile_"+nWhileLabels};
+		String[] whileLabels = { "initWhile_" + nWhileLabels, "endWhile_" + nWhileLabels };
 		return whileLabels;
-    }
+	}
 
 	public String[] getIfLabels() {
 		nIfLabels++;
-		String[] ifLabels = {"else_"+nIfLabels, "endIf_"+nIfLabels};
+		String[] ifLabels = { "else_" + nIfLabels, "endIf_" + nIfLabels };
 		return ifLabels;
-    }
+	}
 
 	public void metaFunc(String name) {
 		write("#FUNC " + name);
@@ -201,14 +211,12 @@ public class CodeWriter {
 		write("#RET " + type.toStringMAPL());
 	}
 
-    public void metaLine(int line) {
+	public void metaLine(int line) {
 		write("\n#line " + line);
-    }
+	}
 
-
-
-
-
-
+	public void metaGlobal(String name, Type type) {
+		write("#GLOBAL " + name + ":" + type.toStringMAPL());
+	}
 
 }

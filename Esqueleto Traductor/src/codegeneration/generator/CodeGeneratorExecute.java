@@ -203,7 +203,7 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
         getCodeWriter().call(node.getName());
 
-        if(!node.getDefinition().getType().isSameType(TypeVoid.getInstance()))
+        if (!node.getDefinition().getType().isSameType(TypeVoid.getInstance()))
             getCodeWriter().pop(node.getDefinition().getType());
 
         return null;

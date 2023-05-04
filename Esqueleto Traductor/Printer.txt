@@ -3,7 +3,7 @@
 
 
 struct Persona {
-	inicial:char;
+	inicial:float;
 	sueldo:float;
 };
 var empresa:[4]Persona;
@@ -13,7 +13,7 @@ inicia() {
 
 	i = 0;
 	while (i < 4) {
-		empresa[i].inicial = <char>(i + <int>('\n'));
+		empresa[i].inicial = <float>(<char>(i + <int>('A')));
 		empresa[i].sueldo = <float>(1000 + i * 100);
 		i = i + 1;
 	}

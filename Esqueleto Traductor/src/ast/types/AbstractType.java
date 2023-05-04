@@ -30,4 +30,5 @@ public abstract class AbstractType extends AbstractAST implements Type {
         return TypeError.getInstance();
     }
 
+
 }

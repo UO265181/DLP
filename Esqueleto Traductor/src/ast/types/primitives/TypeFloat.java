@@ -13,6 +13,8 @@ public class TypeFloat extends AbstractTypePrimitive {
 
 	private static TypeFloat typeFloat;
 
+	private static final int DEFAULT_FLOAT_SIZE = 4;
+
 	private TypeFloat() {
 	}
 
@@ -37,7 +39,6 @@ public class TypeFloat extends AbstractTypePrimitive {
 		return type == getInstance();
 	}
 
-	private static final int DEFAULT_FLOAT_SIZE = 4;
 
 	@Override
 	public int getMemorySize() {

@@ -321,7 +321,7 @@ public class GrammarParser extends Parser {
 				((DefinitionContext)_localctx).sentences = sentences();
 				setState(58);
 				match(T__2);
-				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list, TypeVoid.getInstance(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
+				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list,TypeVoid.getInstance(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
 						
 				}
 				break;
@@ -682,7 +682,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(122);
 				match(T__9);
-				 ((TypeContext)_localctx).ast = TypeInt.getInstance(); 
+				 ((TypeContext)_localctx).ast =  TypeInt.getInstance(); 
 				}
 				break;
 			case T__10:
@@ -794,6 +794,7 @@ public class GrammarParser extends Parser {
 		public ExpressionContext left;
 		public ExpressionContext right;
 		public ExpressionContext expression;
+		public Token s;
 		public SentencesContext sentences;
 		public SentencesContext ifSentences;
 		public SentencesContext elseSentences;
@@ -859,10 +860,10 @@ public class GrammarParser extends Parser {
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(157);
-				match(T__15);
+				((SentenceContext)_localctx).s = match(T__15);
 				setState(158);
 				match(T__3);
-				 ((SentenceContext)_localctx).ast =  new SentenceReturn(null); 
+				 ((SentenceContext)_localctx).ast =  new SentenceReturn(null);  _localctx.ast.setPositions(((SentenceContext)_localctx).s);
 				}
 				break;
 			case 4:
@@ -881,10 +882,10 @@ public class GrammarParser extends Parser {
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(165);
-				match(T__16);
+				((SentenceContext)_localctx).s = match(T__16);
 				setState(166);
 				match(T__3);
-				 ((SentenceContext)_localctx).ast =  new SentencePrint(null); 
+				 ((SentenceContext)_localctx).ast =  new SentencePrint(null); _localctx.ast.setPositions(((SentenceContext)_localctx).s);
 				}
 				break;
 			case 6:
@@ -903,10 +904,10 @@ public class GrammarParser extends Parser {
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(173);
-				match(T__17);
+				((SentenceContext)_localctx).s = match(T__17);
 				setState(174);
 				match(T__3);
-				 ((SentenceContext)_localctx).ast =  new SentencePrintsp(null); 
+				 ((SentenceContext)_localctx).ast =  new SentencePrintsp(null); _localctx.ast.setPositions(((SentenceContext)_localctx).s);
 				}
 				break;
 			case 8:
@@ -925,10 +926,10 @@ public class GrammarParser extends Parser {
 				enterOuterAlt(_localctx, 9);
 				{
 				setState(181);
-				match(T__18);
+				((SentenceContext)_localctx).s = match(T__18);
 				setState(182);
 				match(T__3);
-				 ((SentenceContext)_localctx).ast =  new SentencePrintln(null); 
+				 ((SentenceContext)_localctx).ast =  new SentencePrintln(null); _localctx.ast.setPositions(((SentenceContext)_localctx).s);
 				}
 				break;
 			case 10:

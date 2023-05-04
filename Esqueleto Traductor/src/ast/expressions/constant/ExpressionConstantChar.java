@@ -18,49 +18,62 @@ public class ExpressionConstantChar extends AbstractExpression {
 	public ExpressionConstantChar(String value) {
 		this.value = value;
 
+		storeIntValue();
 
-		nonSingleChars = new HashMap<String, Integer>();
-		nonSingleChars.put("'\n'", 10);
 	}
 
 	public ExpressionConstantChar(Object value) {
-		this.value = (value instanceof Token) ? ((Token)value).getText() : (String) value;
+		this.value = (value instanceof Token) ? ((Token) value).getText() : (String) value;
 
-       // Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
-       // Obtiene la linea/columna a partir de las de los hijos.
-       setPositions(value);
+		// Lo siguiente se puede borrar si no se quiere la posicion en el fichero.
+		// Obtiene la linea/columna a partir de las de los hijos.
+		setPositions(value);
 
-		nonSingleChars = new HashMap<String, Integer>();
-		nonSingleChars.put("'\\n'", 10);
+		storeIntValue();
+	}
+
+	private void storeIntValue() {
+
+		specialValues = new HashMap<String, Integer>();
+		specialValues.put("'\\n\'", 10);
+
+		Integer specialValue = specialValues.get(getValue());
+
+		if (specialValue == null)
+			setIntValue(value.charAt(1));
+		else {
+			setIntValue(specialValue);
+		}
 	}
 
 	public String getValue() {
 		return value;
 	}
+
 	public void setValue(String value) {
 		this.value = value;
 	}
 
 	@Override
-	public Object accept(Visitor v, Object param) { 
+	public Object accept(Visitor v, Object param) {
 		return v.visit(this, param);
 	}
 
 	private String value;
 
 	public String toString() {
-       return "{value:" + getValue() + "}";
-   }
+		return "{value:" + getValue() + "}";
+	}
 
-   private HashMap<String,Integer> nonSingleChars;
+	private HashMap<String, Integer> specialValues;
 
-   public int getASCII() {
+	private int intValue;
 
-		Integer specialValue = nonSingleChars.get(getValue());
-	
+	private void setIntValue(int value) {
+		this.intValue = value;
+	}
 
-		if(specialValue==null)
-			return value.charAt(1);
-		return specialValue;
-   }
+	public int getIntValue() {
+		return intValue;
+	}
 }

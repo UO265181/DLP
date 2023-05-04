@@ -71,13 +71,13 @@ sentence
 	left = expression '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
 		}
 	| 'return' expression ';' { $ast = new SentenceReturn($expression.ast); }
-	| 'return' ';' { $ast = new SentenceReturn(null); }
+	| s='return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}
 	| 'print' expression ';' { $ast = new SentencePrint($expression.ast); }
-	| 'print' ';' { $ast = new SentencePrint(null); }
+	| s='print' ';' { $ast = new SentencePrint(null); $ast.setPositions($s);}
 	| 'printsp' expression ';' { $ast = new SentencePrintsp($expression.ast); }
-	| 'printsp' ';' { $ast = new SentencePrintsp(null); }
+	| s='printsp' ';' { $ast = new SentencePrintsp(null); $ast.setPositions($s);}
 	| 'println' expression ';' { $ast = new SentencePrintln($expression.ast); }
-	| 'println' ';' { $ast = new SentencePrintln(null); }
+	| s='println' ';' { $ast = new SentencePrintln(null); $ast.setPositions($s);}
 	| 'read' expression ';' { $ast = new SentenceRead($expression.ast); }
 	| 'while' '(' expression ')' '{' sentences '}' { $ast = new SentenceWhile($expression.ast, $sentences.list); 
 		}

@@ -3,7 +3,7 @@
 call main
 HALT
 #TYPE Persona : {
-	inicial:char
+	inicial:float
 	sueldo:float
 }
 
@@ -40,7 +40,7 @@ pusha BP
 pushi -2
 add
 load
-pushi 5
+pushi 8
 mul
 add
 pushi 0
@@ -49,11 +49,13 @@ pusha BP
 pushi -2
 add
 load
-pushb 10
+pushb 65
 b2i
 add
 i2b
-storeb
+b2i 
+ i2f
+storef
 
 #line 39
 pusha 0
@@ -61,10 +63,10 @@ pusha BP
 pushi -2
 add
 load
-pushi 5
+pushi 8
 mul
 add
-pushi 1
+pushi 4
 add
 pushi 1000
 pusha BP
@@ -114,6 +116,8 @@ pushi 4
 ge
 or
 jz endIf_1
+
+#line 46
 ret 0, 0, 2
 endIf_1:
 
@@ -123,13 +127,13 @@ pusha BP
 pushi 4
 add
 load
-pushi 5
+pushi 8
 mul
 add
 pushi 0
 add
-loadb
-outb
+loadf
+outf
 pushb 10
 outb
 
@@ -139,10 +143,10 @@ pusha BP
 pushi 4
 add
 load
-pushi 5
+pushi 8
 mul
 add
-pushi 1
+pushi 4
 add
 loadf
 outf
@@ -156,7 +160,7 @@ ret 0, 0, 2
 
 #line 54
 imprime:
-enter 7
+enter 10
 
 #line 56
 pusha BP
@@ -178,7 +182,7 @@ jz endWhile_2
 
 #line 58
 pusha BP
-pushi -7
+pushi -10
 add
 pushi 0
 add
@@ -187,49 +191,49 @@ pusha BP
 pushi -2
 add
 load
-pushi 5
+pushi 8
 mul
 add
 pushi 0
 add
-loadb
-storeb
+loadf
+storef
 
 #line 59
 pusha BP
-pushi -7
+pushi -10
 add
-pushi 1
+pushi 4
 add
 pusha 0
 pusha BP
 pushi -2
 add
 load
-pushi 5
+pushi 8
 mul
 add
-pushi 1
+pushi 4
 add
 loadf
 storef
 
 #line 61
 pusha BP
-pushi -7
+pushi -10
 add
 pushi 0
 add
-loadb
-outb
+loadf
+outf
 pushb 10
 outb
 
 #line 62
 pusha BP
-pushi -7
+pushi -10
 add
-pushi 1
+pushi 4
 add
 loadf
 outf
@@ -255,7 +259,7 @@ pusha BP
 pushi -2
 add
 load
-ret 2, 7, 0
+ret 2, 10, 0
 #FUNC main
 #RET VOID
 #LOCAL posicion:int

@@ -67,7 +67,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     @Override
     public Object visit(ExpressionConstantChar node, Object param) {
 
-        getCodeWriter().pushb(node.getASCII());
+        getCodeWriter().pushb(node.getIntValue());
 
         return null;
     }
@@ -99,10 +99,14 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // value[[expressionCast → newType:type expression:expression ]] =
     // value[[expression]]
     // {expression.type.suffix}2{newType.suffix}
+    //TODO: update docs
     @Override
     public Object visit(ExpressionCast node, Object param) {
 
         node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
+
+        
+
         getCodeWriter().cast(node.getExpression().getType(), node.getNewType());
 
         return null;
