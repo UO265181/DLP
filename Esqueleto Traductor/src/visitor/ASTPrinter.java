@@ -17,9 +17,9 @@ import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionArray;
-import ast.expressions.access.ExpressionStructField;
-import ast.expressions.access.ExpressionVariable;
+import ast.expressions.access.ExpressionAccessArray;
+import ast.expressions.access.ExpressionAccessStructField;
+import ast.expressions.access.ExpressionAccessVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -447,31 +447,31 @@ public class ASTPrinter extends DefaultVisitor {
 	}
 
 	// class ExpressionVariable { String name; }
-	public Object visit(ExpressionVariable node, Object param) {
+	public Object visit(ExpressionAccessVariable node, Object param) {
 		int indent = ((Integer) param).intValue();
 
-		printCompact(indent, "ExpressionVariable", node, "name", node.getName());
+		printCompact(indent, "ExpressionAccessVariable", node, "name", node.getName());
 		return null;
 	}
 
 	// class ExpressionStructField { Expression struct; String name; }
-	public Object visit(ExpressionStructField node, Object param) {
+	public Object visit(ExpressionAccessStructField node, Object param) {
 		int indent = ((Integer) param).intValue();
 
-		printName(indent, "ExpressionStructField", node, false);
+		printName(indent, "ExpressionAccessStructField", node, false);
 
-		visit(indent + 1, "struct", "Expression", node.getStruct());
+		visit(indent + 1, "struct", "Access", node.getStruct());
 		print(indent + 1, "name", "String", node.getName());
 		return null;
 	}
 
 	// class ExpressionArray { Expression array; Expression index; }
-	public Object visit(ExpressionArray node, Object param) {
+	public Object visit(ExpressionAccessArray node, Object param) {
 		int indent = ((Integer) param).intValue();
 
-		printName(indent, "ExpressionArray", node, false);
+		printName(indent, "ExpressionAccessArray", node, false);
 
-		visit(indent + 1, "array", "Expression", node.getArray());
+		visit(indent + 1, "array", "Access", node.getArray());
 		visit(indent + 1, "index", "Expression", node.getIndex());
 		return null;
 	}

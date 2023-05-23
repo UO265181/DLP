@@ -5,9 +5,9 @@
 
 package codegeneration.generator;
 
-import ast.expressions.access.ExpressionArray;
-import ast.expressions.access.ExpressionStructField;
-import ast.expressions.access.ExpressionVariable;
+import ast.expressions.access.ExpressionAccessArray;
+import ast.expressions.access.ExpressionAccessStructField;
+import ast.expressions.access.ExpressionAccessVariable;
 import codegeneration.CodeWriter;
 import main.ErrorManager;
 
@@ -28,14 +28,14 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     // add
     // TODO: poner los comentarios de esta clase bien (y )
     @Override
-    public Object visit(ExpressionVariable node, Object param) {
+    public Object visit(ExpressionAccessVariable node, Object param) {
 
-        if (node.getDefinitionVariable().isLocal()) {
+        if (node.getDefinition().isLocal()) {
             getCodeWriter().pushaBP();
-            getCodeWriter().pushi(node.getDefinitionVariable().getAddress());
+            getCodeWriter().pushi(node.getDefinition().getAddress());
             getCodeWriter().add();
         } else {
-            getCodeWriter().pusha(node.getDefinitionVariable().getAddress());
+            getCodeWriter().pusha(node.getDefinition().getAddress());
         }
 
         return null;
@@ -48,7 +48,7 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     // mul
     // add
     @Override
-    public Object visit(ExpressionArray node, Object param) {
+    public Object visit(ExpressionAccessArray node, Object param) {
 
         node.getArray().accept(CodeGeneratorProvider.cgAddress, param);
 
@@ -65,7 +65,7 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     // push {struct.getStructFieldRelativeAddress(name)}
     // add
     @Override
-    public Object visit(ExpressionStructField node, Object param) {
+    public Object visit(ExpressionAccessStructField node, Object param) {
 
         node.getStruct().accept(CodeGeneratorProvider.cgAddress, param);
 

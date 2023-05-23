@@ -1,12 +1,7 @@
+delegar a los tipos operaciones (arth, indexin)
+
 usar genéricos en vez de object
-ga modo miguel
-
-chars de mas de un caracter chunga (meter +1 chunga)
-ifs en code specification
-null en code specification
-
-sumar chars
-
+mirar como entregar
 
 
 

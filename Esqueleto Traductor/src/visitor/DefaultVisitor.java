@@ -15,9 +15,9 @@ import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionArray;
-import ast.expressions.access.ExpressionStructField;
-import ast.expressions.access.ExpressionVariable;
+import ast.expressions.access.ExpressionAccessArray;
+import ast.expressions.access.ExpressionAccessStructField;
+import ast.expressions.access.ExpressionAccessVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -249,19 +249,19 @@ public class DefaultVisitor implements Visitor {
 	}
 
 	//	class ExpressionVariable { String name; }
-	public Object visit(ExpressionVariable node, Object param) {
+	public Object visit(ExpressionAccessVariable node, Object param) {
 		return null;
 	}
 
 	//	class ExpressionStructField { Expression struct;  String name; }
-	public Object visit(ExpressionStructField node, Object param) {
+	public Object visit(ExpressionAccessStructField node, Object param) {
 		if (node.getStruct() != null)
 			node.getStruct().accept(this, param);
 		return null;
 	}
 
 	//	class ExpressionArray { Expression array;  Expression index; }
-	public Object visit(ExpressionArray node, Object param) {
+	public Object visit(ExpressionAccessArray node, Object param) {
 		if (node.getArray() != null)
 			node.getArray().accept(this, param);
 		if (node.getIndex() != null)
