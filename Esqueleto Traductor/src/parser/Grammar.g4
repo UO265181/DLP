@@ -27,7 +27,7 @@ definition
 	definitionVariable { $ast = $definitionVariable.ast; }
 	| 'struct' IDENT '{' structFields '}' ';' { $ast = new DefinitionStruct($IDENT, $structFields.list); 
 		}
-	| IDENT '(' definitionFunctionParams ')' '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, new TypeVoid(), $definitionVariables.list, $sentences.list); 
+	| IDENT '(' definitionFunctionParams ')' '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, TypeVoid.getInstance(), $definitionVariables.list, $sentences.list); 
 		}
 	| IDENT '(' definitionFunctionParams ')' ':' type '{' definitionVariables sentences '}' { $ast = new DefinitionFunction($IDENT, $definitionFunctionParams.list, $type.ast, $definitionVariables.list, $sentences.list); 
 		};
@@ -63,9 +63,9 @@ definitionFunctionParam
 
 type
 	returns[Type ast]:
-	'int' { $ast = new TypeInt(); }
-	| 'float' { $ast = new TypeFloat(); }
-	| 'char' { $ast = new TypeChar(); }
+	'int' { $ast = TypeInt.getInstance(); }
+	| 'float' { $ast =  TypeFloat.getInstance(); }
+	| 'char' { $ast =  TypeChar.getInstance(); }
 	| '[' INT_CONSTANT ']' type { $ast = new TypeArray(new ExpressionConstantInt($INT_CONSTANT), $type.ast); 
 		}
 	| IDENT { $ast = new TypeStruct($IDENT); };
@@ -121,6 +121,11 @@ expression
 	| left = expression operator = ('==' | '!=') right = expression { $ast = new ExpressionRelational($left.ast,$operator,$right.ast); 
 		}
 	| left = expression operator = '&&' right = expression { $ast = new ExpressionLogical($left.ast,$operator,$right.ast); 
+		}
+	| left = expression operator = '^' right = expression { $ast = new ExpressionLogical(
+		new ExpressionUnary("!",new ExpressionLogical($left.ast,"&&",$right.ast)),
+		"&&",
+		new ExpressionLogical($left.ast,"||",$right.ast)); 
 		}
 	| left = expression operator = '||' right = expression { $ast = new ExpressionLogical($left.ast,$operator,$right.ast); 
 		}

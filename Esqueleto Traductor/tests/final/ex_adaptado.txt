@@ -43,8 +43,8 @@ right() {
 
 /**
 wrong() {
-    print 1.0 ^ 0.0;                           // # Compilation error
-    print '0' ^ '1';                           // # Compilation error
+    print 1.0 ^ 0.0;                            # Compilation error
+    print '0' ^ '1';                            # Compilation error
 }
 */
 
