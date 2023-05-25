@@ -96,14 +96,13 @@ main() {
 	print <int>(juan);		// Expresiones de tipos simples
 	print <float>(2.5);		// Deben ser distintos tipos
 	
-	print juan[5];
-	print 2[5];	
-	print v[5.0];	
+	print juan[5];	// Debe ser tipo array
+	print 2[5];	// Debe ser tipo array
+	print v[5.0];	// Debe ser indice entero
 	print v[i+2];
 	
 	print juan.edad;
-	print 5.edad;	
-	print juan.nombre;
+	print 5.edad;	// Se requiere tipo struct
+	print juan.nombre; // Campo no definido
 	
 }
-
