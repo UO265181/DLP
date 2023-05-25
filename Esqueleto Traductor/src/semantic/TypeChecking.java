@@ -31,6 +31,7 @@ import ast.sentences.SentencePrintsp;
 import ast.sentences.SentenceRead;
 import ast.sentences.SentenceReturn;
 import ast.sentences.SentenceWhile;
+import ast.types.TypeArray;
 import ast.types.TypeError;
 import ast.types.TypeVoid;
 import ast.types.primitives.TypeChar;
@@ -48,10 +49,14 @@ public class TypeChecking extends DefaultVisitor {
 	// class DefinitionVariable { String name; Type type; }
 	public Object visit(DefinitionVariable node, Object param) {
 		super.visit(node, param);
+		return null;
+	}
 
-		predicado(!node.getType().isSameType(TypeVoid.getInstance()),
-				"No se puede definir una variable de tipo void: " + node.getName(), node);
-
+	// class TypeArray { ExpressionConstantInt size; Type type; }
+	public Object visit(TypeArray node, Object param) {
+		super.visit(node, param);
+		predicado(node.getSize().getType().isSameType(TypeInt.getInstance()),
+					"El tamaño de un array ha de ser una constante entera", node);
 		return null;
 	}
 
@@ -79,7 +84,7 @@ public class TypeChecking extends DefaultVisitor {
 			child.setFatherFunction(node);
 			child.accept(this, param);
 
-			if(!node.hasGoodReturn() && child.hasGoodReturn())
+			if (!node.hasGoodReturn() && child.hasGoodReturn())
 				node.setHasGoodReturn(true);
 		}
 
@@ -89,10 +94,7 @@ public class TypeChecking extends DefaultVisitor {
 	// class StructField { String name; Type type; }
 	public Object visit(StructField node, Object param) {
 
-		// super.visit(node, param);
-
-		if (node.getType() != null)
-			node.getType().accept(this, param);
+		super.visit(node, param);
 
 		return null;
 	}
@@ -238,7 +240,7 @@ public class TypeChecking extends DefaultVisitor {
 			child.setFatherFunction(node.getFatherFunction());
 			child.accept(this, param);
 
-			if(!returnIf && child.hasGoodReturn())
+			if (!returnIf && child.hasGoodReturn())
 				returnIf = true;
 		}
 
@@ -247,12 +249,12 @@ public class TypeChecking extends DefaultVisitor {
 				child.setFatherFunction(node.getFatherFunction());
 				child.accept(this, param);
 
-				if(!returnElse && child.hasGoodReturn())
+				if (!returnElse && child.hasGoodReturn())
 					returnElse = true;
 			}
 		}
 
-		if(returnIf && returnElse)
+		if (returnIf && returnElse)
 			node.setHasGoodReturn(true);
 
 		return null;
