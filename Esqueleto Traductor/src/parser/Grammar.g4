@@ -2,7 +2,16 @@ grammar Grammar;
 import Lexicon;
 
 @parser::header {
-    import ast.*;
+	import ast.*;
+	import ast.definitions.*;
+	import ast.expressions.Expression;
+	import ast.expressions.access.*;
+	import ast.expressions.constant.*;
+	import ast.expressions.*;
+	import ast.definitions.*;
+	import ast.sentences.*;
+	import ast.types.*;
+	import ast.types.primitives.*;
 }
 
 start
@@ -71,13 +80,13 @@ sentence
 	left = expression '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
 		}
 	| 'return' expression ';' { $ast = new SentenceReturn($expression.ast); }
-	| s='return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}
+	| s = 'return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}
 	| 'print' expression ';' { $ast = new SentencePrint($expression.ast); }
-	| s='print' ';' { $ast = new SentencePrint(null); $ast.setPositions($s);}
+	| s = 'print' ';' { $ast = new SentencePrint(null); $ast.setPositions($s);}
 	| 'printsp' expression ';' { $ast = new SentencePrintsp($expression.ast); }
-	| s='printsp' ';' { $ast = new SentencePrintsp(null); $ast.setPositions($s);}
+	| s = 'printsp' ';' { $ast = new SentencePrintsp(null); $ast.setPositions($s);}
 	| 'println' expression ';' { $ast = new SentencePrintln($expression.ast); }
-	| s='println' ';' { $ast = new SentencePrintln(null); $ast.setPositions($s);}
+	| s = 'println' ';' { $ast = new SentencePrintln(null); $ast.setPositions($s);}
 	| 'read' expression ';' { $ast = new SentenceRead($expression.ast); }
 	| 'while' '(' expression ')' '{' sentences '}' { $ast = new SentenceWhile($expression.ast, $sentences.list); 
 		}

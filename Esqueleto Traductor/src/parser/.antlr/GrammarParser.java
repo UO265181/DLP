@@ -1,6 +1,15 @@
-// Generated from c:\Users\UO265181\Desktop\DLP\Esqueleto Traductor\src\parser\Grammar.g4 by ANTLR 4.9.2
+// Generated from d:\Temporal\dlp\continua\DLP\Esqueleto Traductor\src\parser\Grammar.g4 by ANTLR 4.9.2
 
-    import ast.*;
+	import ast.*;
+	import ast.definitions.*;
+	import ast.expressions.Expression;
+	import ast.expressions.access.*;
+	import ast.expressions.constant.*;
+	import ast.expressions.*;
+	import ast.definitions.*;
+	import ast.sentences.*;
+	import ast.types.*;
+	import ast.types.primitives.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;

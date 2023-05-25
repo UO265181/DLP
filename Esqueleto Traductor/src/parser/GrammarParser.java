@@ -1,42 +1,16 @@
 // Generated from src\parser\Grammar.g4 by ANTLR 4.7.2
 package parser;
 
-    import ast.*;
-import ast.definitions.Definition;
-import ast.definitions.DefinitionFunction;
-import ast.definitions.DefinitionStruct;
-import ast.definitions.DefinitionVariable;
-import ast.definitions.StructField;
-import ast.expressions.Expression;
-import ast.expressions.ExpressionArithmetic;
-import ast.expressions.ExpressionCallFunction;
-import ast.expressions.ExpressionCast;
-import ast.expressions.ExpressionLogical;
-import ast.expressions.ExpressionRelational;
-import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionArray;
-import ast.expressions.access.ExpressionStructField;
-import ast.expressions.access.ExpressionVariable;
-import ast.expressions.constant.ExpressionConstantChar;
-import ast.expressions.constant.ExpressionConstantFloat;
-import ast.expressions.constant.ExpressionConstantInt;
-import ast.sentences.Sentence;
-import ast.sentences.SentenceAssignment;
-import ast.sentences.SentenceCallFunction;
-import ast.sentences.SentenceIf;
-import ast.sentences.SentencePrint;
-import ast.sentences.SentencePrintln;
-import ast.sentences.SentencePrintsp;
-import ast.sentences.SentenceRead;
-import ast.sentences.SentenceReturn;
-import ast.sentences.SentenceWhile;
-import ast.types.Type;
-import ast.types.TypeArray;
-import ast.types.TypeStruct;
-import ast.types.TypeVoid;
-import ast.types.primitives.TypeChar;
-import ast.types.primitives.TypeFloat;
-import ast.types.primitives.TypeInt;
+	import ast.*;
+	import ast.definitions.*;
+	import ast.expressions.Expression;
+	import ast.expressions.access.*;
+	import ast.expressions.constant.*;
+	import ast.expressions.*;
+	import ast.definitions.*;
+	import ast.sentences.*;
+	import ast.types.*;
+	import ast.types.primitives.*;
 
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
@@ -321,7 +295,7 @@ public class GrammarParser extends Parser {
 				((DefinitionContext)_localctx).sentences = sentences();
 				setState(58);
 				match(T__2);
-				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list,TypeVoid.getInstance(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
+				 ((DefinitionContext)_localctx).ast =  new DefinitionFunction(((DefinitionContext)_localctx).IDENT, ((DefinitionContext)_localctx).definitionFunctionParams.list, TypeVoid.getInstance(), ((DefinitionContext)_localctx).definitionVariables.list, ((DefinitionContext)_localctx).sentences.list); 
 						
 				}
 				break;
@@ -682,7 +656,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(122);
 				match(T__9);
-				 ((TypeContext)_localctx).ast =  TypeInt.getInstance(); 
+				 ((TypeContext)_localctx).ast = TypeInt.getInstance(); 
 				}
 				break;
 			case T__10:
@@ -690,7 +664,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(124);
 				match(T__10);
-				 ((TypeContext)_localctx).ast =  TypeFloat.getInstance(); 
+				 ((TypeContext)_localctx).ast = TypeFloat.getInstance(); 
 				}
 				break;
 			case T__11:
@@ -698,7 +672,7 @@ public class GrammarParser extends Parser {
 				{
 				setState(126);
 				match(T__11);
-				 ((TypeContext)_localctx).ast =  TypeChar.getInstance(); 
+				 ((TypeContext)_localctx).ast = TypeChar.getInstance(); 
 				}
 				break;
 			case T__12:
