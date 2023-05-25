@@ -6,6 +6,7 @@ package ast.types;
 
 import ast.AST;
 import ast.definitions.DefinitionStruct;
+import ast.expressions.constant.ExpressionConstantInt;
 
 public interface Type extends AST {
 
@@ -29,5 +30,7 @@ public interface Type extends AST {
      * @return El tipo de este array
      */
     Type getTypeOfTheArray();
+
+    ExpressionConstantInt getNumberOfElementsOfTheArray();
 
 }

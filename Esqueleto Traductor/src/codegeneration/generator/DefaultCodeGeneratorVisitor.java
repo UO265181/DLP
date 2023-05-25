@@ -23,6 +23,7 @@ import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceDestructuringAssignment;
 import ast.sentences.SentenceIf;
 import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
@@ -280,10 +281,19 @@ public class DefaultCodeGeneratorVisitor implements Visitor {
 		return null;
 	}
 
+	@Override
+	public Object visit(SentenceDestructuringAssignment node, Object param) {
+		throwError(node);
+		return null;
+	}
+
+
 	// Método auxiliar -----------------------------
 	protected void visitChildren(List<? extends AST> children, Object param) {
 		if (children != null)
 			for (AST child : children)
 				child.accept(this, param);
 	}
+
+
 }

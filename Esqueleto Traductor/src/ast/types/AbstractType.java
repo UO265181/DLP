@@ -6,6 +6,7 @@ package ast.types;
 
 import ast.AbstractAST;
 import ast.definitions.DefinitionStruct;
+import ast.expressions.constant.ExpressionConstantInt;
 
 public abstract class AbstractType extends AbstractAST implements Type {
 
@@ -28,6 +29,10 @@ public abstract class AbstractType extends AbstractAST implements Type {
 
     public Type getTypeOfTheArray() {
         return TypeError.getInstance();
+    }
+
+    public ExpressionConstantInt getNumberOfElementsOfTheArray() {
+        return null;
     }
 
 

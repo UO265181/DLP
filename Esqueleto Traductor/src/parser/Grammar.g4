@@ -75,9 +75,14 @@ sentences
 		sentence { $list.add($sentence.ast); }
 	)*;
 
+destructuring returns[List<Expression> list = new ArrayList<Expression>()]: 
+	'[' expression { $list.add($expression.ast);}(',' expression { $list.add($expression.ast);})*']';
+
 sentence
 	returns[Sentence ast]:
 	left = expression '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
+		}
+	| destructuring '=' right = expression ';' { $ast = new SentenceDestructuringAssignment($destructuring.list, $right.ast); 
 		}
 	| 'return' expression ';' { $ast = new SentenceReturn($expression.ast); }
 	| s = 'return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}

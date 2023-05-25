@@ -23,6 +23,7 @@ import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceDestructuringAssignment;
 import ast.sentences.SentenceIf;
 import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
@@ -160,6 +161,14 @@ public class DefaultVisitor implements Visitor {
 		return null;
 	}
 
+	//	class SentenceDestructuringAssignment { List<Expression> left;  Expression right; }
+	public Object visit(SentenceDestructuringAssignment node, Object param) {
+		visitChildren(node.getLeft(), param);
+		if (node.getRight() != null)
+			node.getRight().accept(this, param);
+		return null;
+	}
+
 	//	class SentenceCallFunction { String name;  List<Expression> callFunctionParams; }
 	public Object visit(SentenceCallFunction node, Object param) {
 		visitChildren(node.getCallFunctionParams(), param);
@@ -171,8 +180,7 @@ public class DefaultVisitor implements Visitor {
 		if (node.getCondition() != null)
 			node.getCondition().accept(this, param);
 		visitChildren(node.getIfSentences(), param);
-		if(node.hasElse())
-			visitChildren(node.getElseSentences(), param);
+		visitChildren(node.getElseSentences(), param);
 		return null;
 	}
 
@@ -183,6 +191,7 @@ public class DefaultVisitor implements Visitor {
 		visitChildren(node.getSentences(), param);
 		return null;
 	}
+
 
 	//	class ExpressionConstantInt { String value; }
 	public Object visit(ExpressionConstantInt node, Object param) {

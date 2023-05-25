@@ -9,6 +9,7 @@ import ast.*;
 import ast.definitions.DefinitionFunction;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
+import ast.expressions.Expression;
 import ast.expressions.ExpressionArithmetic;
 import ast.expressions.ExpressionCallFunction;
 import ast.expressions.ExpressionCast;
@@ -24,6 +25,7 @@ import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.Sentence;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceDestructuringAssignment;
 import ast.sentences.SentenceIf;
 import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
@@ -56,7 +58,7 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(TypeArray node, Object param) {
 		super.visit(node, param);
 		predicado(node.getSize().getType().isSameType(TypeInt.getInstance()),
-					"El tamaño de un array ha de ser una constante entera", node);
+				"El tamaño de un array ha de ser una constante entera", node);
 		return null;
 	}
 
@@ -172,6 +174,62 @@ public class TypeChecking extends DefaultVisitor {
 		predicado(node.getExpression().getType().isPrimitive(), "El tipo de la expresión a leer ha de ser primitivo",
 				node);
 		predicado(node.getExpression().isModifiable(), "La expresión a leer ha de ser modificable", node);
+
+		return null;
+	}
+
+	public Object visit(SentenceDestructuringAssignment node, Object param) {
+		super.visit(node, param);
+
+		for (Expression exp : node.getLeft()) {
+			predicado(exp.isModifiable(), "La expresión izquierda de una asignación estructurada ha de ser modificable",
+					node);
+			predicado(exp.getType().isPrimitive(),
+					"La expresión izquierda de una asignación estructurada ha de ser de tipo primitivo", node);
+		}
+
+		if (!node.getRight().getType().getTypeOfTheArray().isSameType(TypeError.getInstance())) {
+
+			predicado(node.getRight().getType().getTypeOfTheArray().isPrimitive(),
+				"El array de la asignación estructurada de ser de tipo primitivo", node);
+
+			int nExpressions = 0;
+
+			for (Expression exp : node.getLeft()) {
+				predicado(exp.getType().isSameType(node.getRight().getType().getTypeOfTheArray()),
+						"La asignación estructurada ha de hacerse a expresiones del mismo tipo que el array",
+						node);
+				nExpressions++;
+			}
+
+			int arraySize = Integer.parseInt(node.getRight().getType().getNumberOfElementsOfTheArray().getValue());
+
+			predicado(nExpressions < arraySize,
+					"La asignación estructurada ha de tener menos expresiones que el tamaño del array",
+					node);
+
+		} else {
+			errorManager.notify("Type Checking",
+					"La expresión derecha de una asignación estructurada ha de ser un array",
+					node.getStart());
+		}
+
+		return null;
+	}
+
+	// class ExpressionArray { Expression array; Expression index; }
+	public Object visit(ExpressionArray node, Object param) {
+		super.visit(node, param);
+
+		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
+				"El índice de un acceso array ha de ser int", node);
+
+		predicado(!node.getArray().getType().getTypeOfTheArray().isSameType(TypeError.getInstance()),
+				"La expresión del acceso array ha de hacerse a un array", node);
+
+		node.setType(node.getArray().getType().getTypeOfTheArray());
+
+		node.setModifiable(true);
 
 		return null;
 	}
@@ -507,23 +565,6 @@ public class TypeChecking extends DefaultVisitor {
 		}
 
 		node.setType(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());
-		node.setModifiable(true);
-
-		return null;
-	}
-
-	// class ExpressionArray { Expression array; Expression index; }
-	public Object visit(ExpressionArray node, Object param) {
-		super.visit(node, param);
-
-		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
-				"El índice de un acceso array ha de ser int", node);
-
-		predicado(!node.getArray().getType().getTypeOfTheArray().isSameType(TypeError.getInstance()),
-				"La expresión del acceso array ha de hacerse a un array", node);
-
-		node.setType(node.getArray().getType().getTypeOfTheArray());
-
 		node.setModifiable(true);
 
 		return null;

@@ -25,6 +25,7 @@ import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceDestructuringAssignment;
 import ast.sentences.SentenceIf;
 import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
@@ -313,6 +314,18 @@ public class ASTPrinter extends DefaultVisitor {
 		return null;
 	}
 
+	// class SentenceDestructuringAssignment { List<Expression> left; Expression
+	// right; }
+	public Object visit(SentenceDestructuringAssignment node, Object param) {
+		int indent = ((Integer) param).intValue();
+
+		printName(indent, "SentenceDestructuringAssignment", node, false);
+
+		visit(indent + 1, "left", "List<Expression>", node.getLeft());
+		visit(indent + 1, "right", "Expression", node.getRight());
+		return null;
+	}
+
 	// class SentenceCallFunction { String name; List<Expression>
 	// callFunctionParams; }
 	public Object visit(SentenceCallFunction node, Object param) {
@@ -491,16 +504,17 @@ public class ASTPrinter extends DefaultVisitor {
 		write(indent, formatValue(value) + "  " + typeTag(type));
 	}
 
-	/* 
-	private void print(int indent, String attName, String type, List<? extends Object> children) {
-		write(indent, attName + "  " + typeTag(type) + " = ");
-		if (children != null)
-			for (Object child : children)
-				write(indent + 1, formatValue(child));
-		else
-			writer.print(" " + valueTag(null));
-	}
-	*/
+	/*
+	 * private void print(int indent, String attName, String type, List<? extends
+	 * Object> children) {
+	 * write(indent, attName + "  " + typeTag(type) + " = ");
+	 * if (children != null)
+	 * for (Object child : children)
+	 * write(indent + 1, formatValue(child));
+	 * else
+	 * writer.print(" " + valueTag(null));
+	 * }
+	 */
 
 	// Versión compacta de una linea para nodos que solo tienen un atributo String
 	private void printCompact(int indent, String nodeName, AST node, String attName, Object value) {
@@ -610,7 +624,7 @@ public class ASTPrinter extends DefaultVisitor {
 		if (sourceFile == null)
 			return null;
 		try {
-			//String spaces = new String(new char[tabWidth]).replace("\0", " ");
+			// String spaces = new String(new char[tabWidth]).replace("\0", " ");
 
 			List<String> lines = new ArrayList<String>();
 			BufferedReader br = new BufferedReader(new FileReader(sourceFile));

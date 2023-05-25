@@ -6,9 +6,12 @@
 package codegeneration.generator;
 
 import ast.expressions.Expression;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.constant.ExpressionConstantInt;
 import ast.sentences.Sentence;
 import ast.sentences.SentenceAssignment;
 import ast.sentences.SentenceCallFunction;
+import ast.sentences.SentenceDestructuringAssignment;
 import ast.sentences.SentenceIf;
 import ast.sentences.SentencePrint;
 import ast.sentences.SentencePrintln;
@@ -172,6 +175,32 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         node.getLeft().accept(CodeGeneratorProvider.cgAddress, param);
         node.getRight().accept(CodeGeneratorProvider.cgValue, param);
         getCodeWriter().store(node.getLeft().getType());
+
+        return null;
+    }
+
+
+    // execute[[sentenceAssignment → left:expression right:expression ]] =
+    // #LINE {end.line}
+    // for
+    // address[[left]]
+    //
+    @Override
+    public Object visit(SentenceDestructuringAssignment node, Object param) {
+        getCodeWriter().metaLine(node);
+
+        int index = 0;
+
+        for(Expression exp : node.getLeft()) {
+            exp.accept(CodeGeneratorProvider.cgAddress, param);
+            //v[i]
+            ExpressionArray expArray = new ExpressionArray(node.getRight(), new ExpressionConstantInt(String.valueOf(index)));
+            expArray.setType(node.getRight().getType().getTypeOfTheArray());
+            expArray.accept(CodeGeneratorProvider.cgValue, param);
+            getCodeWriter().store(exp.getType());
+
+            index++;
+        }
 
         return null;
     }

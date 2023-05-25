@@ -23,6 +23,7 @@ sentencePrintln:sentence -> expression;
 sentenceReturn:sentence -> expression;
 sentenceRead:sentence -> expression;
 sentenceAssignment:sentence -> left:expression right:expression;
+sentenceDestructuringAssignment:sentence -> left:expression* right:expression;
 sentenceCallFunction:sentence -> name:string callFunctionParams:expression*;
 sentenceIf:sentence -> condition:expression ifSentences:sentence* elseSentences:sentence*;
 sentenceWhile:sentence -> condition:expression sentences:sentence*;

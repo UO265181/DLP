@@ -76,6 +76,11 @@ public class TypeArray extends AbstractType {
 		return getType();
 	}
 
+	@Override
+	public ExpressionConstantInt getNumberOfElementsOfTheArray() {
+        return this.size;
+    }
+
 
 
 }
