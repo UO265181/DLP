@@ -23,11 +23,9 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 
 	// define[[definitionVariable → name:String type:type ]] =
 	// #GLOBAL {name} : {type}
-	//
-	// class DefinitionVariable { String name; Type type; }
 	@Override
 	public Object visit(DefinitionVariable node, Object param) {
-		getCodeWriter().metaGlobal(node.getName(),node.getType());
+		getCodeWriter().metaGlobal(node.getName(), node.getType());
 		getCodeWriter().insertNewLine();
 
 		return null;
@@ -37,9 +35,7 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 	// #TYPE {name} : {
 	// define[[structFields]]
 	// }
-	// class DefinitionStruct { String name; List<StructField> structFields; }
 	public Object visit(DefinitionStruct node, Object param) {
-		// TODO: mejorar¿
 		getCodeWriter().write("#TYPE " + node.getName() + " : {");
 
 		for (StructField field : node.getStructFields()) {
@@ -54,56 +50,55 @@ public class CodeGeneratorDefine extends DefaultCodeGeneratorVisitor {
 		return null;
 	}
 
-	// define[[definitionFunction → name:String
-	// definitionFunctionParams:definitionVariable*
-	// type:type localVariables:definitionVariable* sentences:sentence* ]] =
-	// #FUNC {name}
-	// defineParam[[definitionFunctionParams]]
-	// #RET {type}
-	// defineLocalVariable[[localVariables]]
-	// {name}:
-	// enter {localVariables.size}
-	// execute[[sentences]]
-	// ret (0, localVariables.size, definitionFunctionParams.size}
+	//#FUNC {name}
+	//defineParam[[definitionFunctionParams]]
+	//#RET {type}
+	//defineLocalVariable[[localVariables]]
+	//{name}:
+	//enter {localVariables.size}
+	//execute[[sentences]]
+	//if (!definitionFunction.hasGoodReturn) {
+	//ret (0, localVariables.size, definitionFunctionParams.size}
+	//}
 	public Object visit(DefinitionFunction node, Object param) {
 
-		getCodeWriter().metaFunc(node.getName());
+		getCodeWriter().metaFunc(node.getName()); // #FUNC {name}
+
 		for (DefinitionVariable varParam : node.getDefinitionFunctionParams())
-			varParam.accept(CodeGeneratorProvider.cgDefineParam, param);
-		getCodeWriter().metaRet(node.getType());
+			varParam.accept(CodeGeneratorProvider.cgDefineParam, param); // defineParam[[definitionFunctionParams]]
+
+		getCodeWriter().metaRet(node.getType()); // #RET {type}
 
 		int metaLineForEnter = node.getStart().getLine();
 
 		for (DefinitionVariable localVar : node.getLocalVariables()) {
-			localVar.accept(CodeGeneratorProvider.cgDefineLocalVariable, param);
+			localVar.accept(CodeGeneratorProvider.cgDefineLocalVariable, param); // defineLocalVariable[[localVariables]]
 			metaLineForEnter = localVar.getStart().getLine();
 		}
 
 		getCodeWriter().metaLine(metaLineForEnter);
 
-		getCodeWriter().label(node.getName());
+		getCodeWriter().label(node.getName()); // {name}:
 
-		getCodeWriter().enter(node.getLocalVariablesTotalSize());
+		getCodeWriter().enter(node.getLocalVariablesTotalSize()); // enter {localVariables.size}
 
 		for (Sentence sentence : node.getSentences())
-			sentence.accept(CodeGeneratorProvider.cgExecute, param);
-		
-		if(!node.hasGoodReturn())
-			getCodeWriter().ret(node.getType().getMemorySize(), node.getLocalVariablesTotalSize(), node.getDefinitionFunctionParamsTotalSize());
+			sentence.accept(CodeGeneratorProvider.cgExecute, param); // execute[[sentences]]
+
+		if (!node.hasGoodReturn())
+			getCodeWriter().ret(node.getType().getMemorySize(), node.getLocalVariablesTotalSize(),
+					node.getDefinitionFunctionParamsTotalSize()); // ret (0, localVariables.size,
+																	// definitionFunctionParams.size}
 
 		return null;
 	}
 
 	// define[[structField → name:String type:type ]] =
 	// {name} : {type}
-	//
-	// class StructField { String name; Type type; }
 	public Object visit(StructField node, Object param) {
 		getCodeWriter().insert(node.getName() + ":" + node.getType().toStringMAPL());
 
 		return null;
 	}
-
-	
 
 }

@@ -135,7 +135,6 @@ public class CodeWriter {
 	}
 
 	public void cast(Type type, Type newType) {
-		// TODO: mejorar?
 		String cast = type.getExplicitSuffix() + "2" + newType.getExplicitSuffix();
 
 		String multiCast = this.multiCasts.get(cast);

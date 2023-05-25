@@ -1,3 +1,0 @@
-expressiones logicas y de comparacion son siempre int (resultado)
-
-comprobar que no es tipo void en las definiciones de variable

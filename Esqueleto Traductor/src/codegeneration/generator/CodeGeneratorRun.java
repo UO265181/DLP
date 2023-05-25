@@ -18,14 +18,12 @@ public class CodeGeneratorRun extends DefaultCodeGeneratorVisitor {
         super(codeWriter, errorManager, FUNCTION_NAME);
     }
 
-    
     // run[[program → definitions:definition* ]] =
     // #SOURCE {file}
     // call main
     // HALT
     // define[[definitions]]
-    //
-    // class Program { List<Definition> definitions; }
+
     @Override
     public Object visit(Program node, Object param) {
 

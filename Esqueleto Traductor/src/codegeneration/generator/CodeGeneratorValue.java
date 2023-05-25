@@ -74,7 +74,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
     // value[[expressionArray → array:expression index:expression ]] =
     // address[[this]]
-    // load{array.type}//TODO: dcx
+    // load{type.suffix}
     @Override
     public Object visit(ExpressionArray node, Object param) {
 
@@ -86,26 +86,23 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
     // value[[expressionStructField → struct:expression name:String ]] =
     // address[[this]]
-    // load{struct.getStructField(name).type.suffix}
+    // load{type.suffix}
     @Override
     public Object visit(ExpressionStructField node, Object param) {
 
         node.accept(CodeGeneratorProvider.cgAddress, param);
-        getCodeWriter().load(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());
+        getCodeWriter().load(node.getType());
 
         return null;
     }
 
     // value[[expressionCast → newType:type expression:expression ]] =
     // value[[expression]]
-    // {expression.type.suffix}2{newType.suffix}
-    //TODO: update docs
+    // {getCast(expression.type.suffix,newType.suffix)}
     @Override
     public Object visit(ExpressionCast node, Object param) {
 
         node.getExpression().accept(CodeGeneratorProvider.cgValue, param);
-
-        
 
         getCodeWriter().cast(node.getExpression().getType(), node.getNewType());
 
@@ -116,6 +113,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // right:expression ]] =
     // value[[left]]
     // value[[right]]
+    // {getOperation(operator, left.type.suffix)}
     @Override
     public Object visit(ExpressionArithmetic node, Object param) {
 
@@ -130,7 +128,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // right:expression ]] =
     // value[[left]]
     // value[[right]]
-    // {getOperation(operator)}{this.type.suffix}
+    // {getOperation(operator, left.type.suffix)}
     @Override
     public Object visit(ExpressionRelational node, Object param) {
 
@@ -145,7 +143,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // right:expression ]] =
     // value[[left]]
     // value[[right]]
-    // {getOperation(operator)}{this.type.suffix}
+    // {getOperation(operator, left.type.suffix)}
     @Override
     public Object visit(ExpressionLogical node, Object param) {
 
@@ -158,7 +156,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
     // value[[expressionUnary → operator:String expression:expression ]] =
     // value[[expression]]
-    // {getOperation(operator)}{this.type.suffix}
+    // {getOperation(operator, type.suffix)}
     @Override
     public Object visit(ExpressionUnary node, Object param) {
 
@@ -170,14 +168,14 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
 
     // value[[expressionCallFunction → name:String callFunctionParams:expression* ]]
     // =
+    // #LINE {start.line}
     // value[[callFunctionParams]]
     // call {name}
     public Object visit(ExpressionCallFunction node, Object param) {
         getCodeWriter().metaLine(node);
-        // TODO: meter line en el docx
+
         for (Expression parameter : node.getCallFunctionParams())
             parameter.accept(CodeGeneratorProvider.cgValue, param);
-
         getCodeWriter().call(node.getName());
 
         return null;

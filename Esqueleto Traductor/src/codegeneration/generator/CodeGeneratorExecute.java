@@ -55,43 +55,55 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
     // execute[[sentenceIf → condition:expression ifSentences:sentence*
     // elseSentences:sentence* ]] =
+    // #LINE {start.line}
     // value[[condition]]
+    // if (hasElse) {
     // jz {elseLabel}
+    // } else {
+    // jz {endLabel}
+    // }
     // execute[[ifSentences]]
+    // if (hasElse) {
     // jmp {endLabel}
     // {elseLabel}:
     // execute[[elseSentences]]
+    // }
     // {endLabel}:
     @Override
     public Object visit(SentenceIf node, Object param) {
 
-        String[] labels = getCodeWriter().getIfLabels();
+        String[] labels = getCodeWriter().getIfLabels(); // { "else_" + nIfLabels, "endIf_" + nIfLabels };
 
-        getCodeWriter().metaLine(node.getStart());
+        getCodeWriter().metaLine(node.getStart()); // #LINE {start.line}
 
-        node.getCondition().accept(CodeGeneratorProvider.cgValue, param);
-        if (node.hasElse())
-            getCodeWriter().jz(labels[0]);
-        else
-            getCodeWriter().jz(labels[1]);
+        node.getCondition().accept(CodeGeneratorProvider.cgValue, param); // value[[condition]]
+
+        if (node.hasElse()) // if (hasElse) {
+            getCodeWriter().jz(labels[0]); // jz {elseLabel}
+        else // } else {
+            getCodeWriter().jz(labels[1]); // jz {endLabel}
+
         for (Sentence ifSentence : node.getIfSentences())
-            ifSentence.accept(CodeGeneratorProvider.cgExecute, param);
-        if (node.hasElse()) {
-            getCodeWriter().jmp(labels[1]);
-            getCodeWriter().label(labels[0]);
-        }
-        if (node.getElseSentences() != null)
-            for (Sentence elseSentence : node.getElseSentences())
-                elseSentence.accept(CodeGeneratorProvider.cgExecute, param);
-        getCodeWriter().label(labels[1]);
+            ifSentence.accept(CodeGeneratorProvider.cgExecute, param); // execute[[ifSentences]]
 
+        if (node.hasElse()) { // if (hasElse) {
+            getCodeWriter().jmp(labels[1]); // jmp {endLabel}
+            getCodeWriter().label(labels[0]); // {elseLabel}:
+            for (Sentence elseSentence : node.getElseSentences()) // execute[[elseSentences]]
+                elseSentence.accept(CodeGeneratorProvider.cgExecute, param);
+        }
+
+        getCodeWriter().label(labels[1]); // {endLabel}:
+        
         return null;
     }
 
     // execute[[sentencePrint → expression:expression ]] =
     // #LINE {end.line}
-    // push{expression.type.suffix} expression.value
+    // if (expression!= Ø) {
+    // value[[expression]]
     // out{expression.type.suffix}
+    // }
     @Override
     public Object visit(SentencePrint node, Object param) {
         getCodeWriter().metaLine(node);
@@ -104,10 +116,14 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         return null;
     }
 
-    // execute[[sentencePrint → expression:expression ]] =
+    // execute[[sentencePrintsp → expression:expression ]] =
     // #LINE {end.line}
-    // push{expression.type.suffix} expression.value
+    // if (expression!= Ø) {
+    // value[[expression]]
     // out{expression.type.suffix}
+    // }
+    // pushb 32
+    // outb
     @Override
     public Object visit(SentencePrintsp node, Object param) {
         getCodeWriter().metaLine(node);
@@ -122,10 +138,14 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
         return null;
     }
 
-    // execute[[sentencePrint → expression:expression ]] =
+    // execute[[sentencePrintln → expression:expression ]] =
     // #LINE {end.line}
-    // push{expression.type.suffix} expression.value
+    // if (expression!= Ø) {
+    // value[[expression]]
     // out{expression.type.suffix}
+    // }
+    // pushb 10
+    // outb
     @Override
     public Object visit(SentencePrintln node, Object param) {
         getCodeWriter().metaLine(node);
@@ -157,8 +177,9 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
     }
 
     // execute[[sentenceRead → expression:expression ]] =
+    // #LINE {end.line}
     // address[[expression]]
-    // in
+    // in{expression.type.suffix}
     // store{expression.type.suffix}
     @Override
     public Object visit(SentenceRead node, Object param) {
@@ -172,12 +193,17 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
     }
 
     // execute[[sentenceReturn → expression:expression ]] =
+    // #LINE {end.line}
+    // if (fatherFunction.type== TypeVoid) {
+    // ret 0, {fatherFunction.localVariables.size},
+    // {fatherFunction.definitionFunctionParams.size}
+    // } else {
     // value[[expression]]
     // ret {expression.type.size}, {fatherFunction.localVariables.size},
     // {fatherFunction.definitionFunctionParams.size}
+    // }
     public Object visit(SentenceReturn node, Object param) {
         getCodeWriter().metaLine(node);
-        // TODO: meter line en el docx
         if (node.getFatherFunction().getType().isSameType(TypeVoid.getInstance())) {
             getCodeWriter().ret(0,
                     node.getFatherFunction().getLocalVariablesTotalSize(),
@@ -193,11 +219,15 @@ public class CodeGeneratorExecute extends DefaultCodeGeneratorVisitor {
 
     // execute[[sentenceCallFunction → name:String callFunctionParams:expression* ]]
     // =
+    // #LINE {end.line}
     // value[[callFuntionParams]]
-    // call {name}
+    // call {definition.name}
+    // if (definition.type!=TypeVoid) {
+    // pop{definition.type.suffix}
+    // }
     public Object visit(SentenceCallFunction node, Object param) {
         getCodeWriter().metaLine(node);
-        // TODO: meter line en el docx
+
         for (Expression parameter : node.getCallFunctionParams())
             parameter.accept(CodeGeneratorProvider.cgValue, param);
 

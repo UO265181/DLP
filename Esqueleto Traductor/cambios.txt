@@ -1,16 +1,4 @@
-usar genéricos en vez de object
-ga modo miguel
 
-chars de mas de un caracter chunga (meter +1 chunga)
-ifs en code specification
-null en code specification
-
-sumar chars
-
-
-
-
----
 cuidado con orden de la exp
 actualizar los visitor
 asignar el nuevo tipo en el typeChecking (o los atributos del nodo)

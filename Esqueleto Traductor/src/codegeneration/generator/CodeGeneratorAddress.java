@@ -20,13 +20,13 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
     }
 
     // address[[expressionVariable → name:String ]] =
-    // pusha definition.address
-    //
-    //
+    // if(isLocal) {
     // pusha BP
     // push definition.address
     // add
-    // TODO: poner los comentarios de esta clase bien (y )
+    // } else {
+    // pusha definition.address
+    // }
     @Override
     public Object visit(ExpressionVariable node, Object param) {
 
@@ -53,7 +53,7 @@ public class CodeGeneratorAddress extends DefaultCodeGeneratorVisitor {
         node.getArray().accept(CodeGeneratorProvider.cgAddress, param);
 
         node.getIndex().accept(CodeGeneratorProvider.cgValue, param);
-        getCodeWriter().pushi(node.getArray().getType().getTypeOfTheArray().getMemorySize());
+        getCodeWriter().pushi(node.getType().getMemorySize());
         getCodeWriter().mul();
         getCodeWriter().add();
 

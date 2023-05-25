@@ -58,7 +58,6 @@ public class TypeArray extends AbstractType {
 
 	@Override
 	public boolean isSameType(Type type) {
-		//TODO: dudoso
 		return this==type;
 	}
 

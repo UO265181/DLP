@@ -2,70 +2,680 @@
 
 call main
 HALT
-#TYPE Persona : {
-	inicial:char
-	sueldo:float
+#TYPE Pareja : {
+	entero:int
+	caracter:char
 }
 
-#GLOBAL empresa:4*Persona
+#GLOBAL pareja:Pareja
 
-#FUNC main
+#TYPE Empleado : {
+	edad:int
+}
+
+#TYPE Empresa : {
+	empleados:2*Empleado
+}
+
+#GLOBAL acme:2*Empresa
+
+#GLOBAL fibonacci:8*3*int
+
+#FUNC p
 #RET VOID
 
-#line 9
-main:
+#line 22
+p:
 enter 0
+ret 0, 0, 0
+#FUNC f
+#PARAM paramReal:float
+#PARAM paramInt:int
+#RET int
+#LOCAL localReal:float
+#LOCAL digito:char
+#LOCAL resultado:int
 
-#line 11
-pusha 0
-pushi 0
-pushi 5
-mul
+#line 28
+f:
+enter 7
+
+#line 30
+pusha BP
+pushi -4
 add
-pushi 0
+pusha BP
+pushi 6
 add
-pushi 0
-pushb 65
-b2i
+loadf
+pushf 10.0
+mulf
+storef
+
+#line 31
+pusha BP
+pushi -5
 add
+pushb 48
+storeb
+
+#line 32
+pusha BP
+pushi 4
+add
+load
+pushi 256
+lt
+jz else_1
+
+#line 33
+pusha BP
+pushi -5
+add
+pusha BP
+pushi 4
+add
+load
 i2b
 storeb
 
-#line 12
-pusha 0
-pushi 0
-pushi 5
-mul
+#line 34
+pusha BP
+pushi -7
 add
-pushi 0
-add
-pusha 0
-pushi 0
-pushi 5
-mul
-add
-pushi 0
+pusha BP
+pushi -5
 add
 loadb
-pusha 0
+b2i
+store
+jmp endIf_1
+else_1:
+
+#line 37
+pusha BP
+pushi -7
+add
+pusha BP
+pushi -4
+add
+loadf
+f2i
+store
+endIf_1:
+
+#line 39
+pusha BP
+pushi -7
+add
+load
+ret 2, 7, 6
+#FUNC inicializa
+#RET VOID
+#LOCAL i:int
+
+#line 44
+inicializa:
+enter 2
+
+#line 46
+pusha 11
 pushi 0
-pushi 5
+pushi 6
 mul
 add
 pushi 0
+pushi 2
+mul
 add
-loadb
-addb
+pushi 0
+store
+
+#line 47
+pusha 11
+pushi 0
+pushi 6
+mul
+add
+pushi 1
+pushi 2
+mul
+add
+pushi 1
+store
+
+#line 48
+pusha 11
+pushi 0
+pushi 6
+mul
+add
+pushi 2
+pushi 2
+mul
+add
+pushi 1
+store
+
+#line 49
+pusha BP
+pushi -2
+add
+pushi 1
+store
+
+#line 50
+initWhile_1:
+pusha BP
+pushi -2
+add
+load
+pushi 8
+lt
+jz endWhile_1
+
+#line 51
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 0
+pushi 2
+mul
+add
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 1
+sub
+pushi 6
+mul
+add
+pushi 1
+pushi 2
+mul
+add
+load
+store
+
+#line 52
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 1
+pushi 2
+mul
+add
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 1
+sub
+pushi 6
+mul
+add
+pushi 2
+pushi 2
+mul
+add
+load
+store
+
+#line 53
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 2
+pushi 2
+mul
+add
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 0
+pushi 2
+mul
+add
+load
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 1
+pushi 2
+mul
+add
+load
+add
+store
+
+#line 54
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_1
+endWhile_1:
+ret 0, 2, 0
+#FUNC main
+#RET VOID
+#LOCAL i:int
+#LOCAL j:int
+
+#line 62
+main:
+enter 4
+
+#line 64
+call p
+
+#line 66
+pusha BP
+pushi -2
+add
+pushi 0
+store
+
+#line 67
+pusha 0
+pushi 2
+add
+pushb 48
 storeb
 
-#line 13
+#line 68
 pusha 0
 pushi 0
-pushi 5
+add
+pushb 48
+b2i
+store
+
+#line 70
+
+#line 70
+pusha BP
+pushi -2
+add
+load
+i2f
+pusha 0
+pushi 2
+add
+loadb
+b2i
+call f
+out
+pushb 10
+outb
+
+#line 71
+pushf 1.3
+pushi 2
+call f
+pop
+
+#line 73
+call inicializa
+
+#line 74
+pusha BP
+pushi -2
+add
+pushi 0
+store
+
+#line 75
+initWhile_2:
+pusha BP
+pushi -2
+add
+load
+pushi 8
+lt
+jz endWhile_2
+
+#line 76
+pushb 40
+outb
+
+#line 77
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+out
+
+#line 78
+pushb 41
+outb
+
+#line 79
+pushb 32
+outb
+
+#line 80
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 0
+pushi 2
+mul
+add
+load
+out
+
+#line 81
+pushb 43
+outb
+
+#line 82
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 1
+pushi 2
+mul
+add
+load
+out
+
+#line 83
+pushb 61
+outb
+
+#line 84
+pusha 11
+pusha BP
+pushi -2
+add
+load
+pushi 6
+mul
+add
+pushi 2
+pushi 2
+mul
+add
+load
+out
+
+#line 85
+pushb 10
+outb
+
+#line 86
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_2
+endWhile_2:
+
+#line 89
+pusha 3
+pushi 1
+pushi 4
 mul
 add
 pushi 0
 add
-loadb
+pushi 1
+pushi 2
+mul
+add
+pushi 0
+add
+pushi 56
+store
+
+#line 90
+pusha 3
+pushi 1
+pushi 4
+mul
+add
+pushi 0
+add
+pushi 1
+pushi 2
+mul
+add
+pushi 0
+add
+load
+out
+pushb 10
 outb
-ret 0, 0, 0
+
+#line 92
+pusha BP
+pushi -2
+add
+pushi 0
+store
+
+#line 93
+initWhile_3:
+pusha BP
+pushi -2
+add
+load
+pushi 2
+lt
+jz endWhile_3
+
+#line 94
+pusha BP
+pushi -4
+add
+pushi 0
+store
+
+#line 95
+initWhile_4:
+pusha BP
+pushi -4
+add
+load
+pushi 2
+lt
+jz endWhile_4
+
+#line 96
+pusha 3
+pusha BP
+pushi -2
+add
+load
+pushi 4
+mul
+add
+pushi 0
+add
+pusha BP
+pushi -4
+add
+load
+pushi 2
+mul
+add
+pushi 0
+add
+pusha BP
+pushi -2
+add
+load
+pusha BP
+pushi -4
+add
+load
+add
+store
+
+#line 97
+pusha BP
+pushi -4
+add
+pusha BP
+pushi -4
+add
+load
+pushi 1
+add
+store
+jmp initWhile_4
+endWhile_4:
+
+#line 99
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_3
+endWhile_3:
+
+#line 103
+pusha BP
+pushi -2
+add
+pushi 0
+store
+
+#line 104
+initWhile_5:
+pusha BP
+pushi -2
+add
+load
+pushi 2
+lt
+jz endWhile_5
+
+#line 105
+pusha BP
+pushi -4
+add
+pushi 0
+store
+
+#line 106
+initWhile_6:
+pusha BP
+pushi -4
+add
+load
+pushi 2
+lt
+jz endWhile_6
+
+#line 107
+pusha 3
+pusha BP
+pushi -2
+add
+load
+pushi 4
+mul
+add
+pushi 0
+add
+pusha BP
+pushi -4
+add
+load
+pushi 2
+mul
+add
+pushi 0
+add
+load
+out
+pushb 32
+outb
+
+#line 108
+pusha BP
+pushi -4
+add
+pusha BP
+pushi -4
+add
+load
+pushi 1
+add
+store
+jmp initWhile_6
+endWhile_6:
+
+#line 110
+pusha BP
+pushi -2
+add
+pusha BP
+pushi -2
+add
+load
+pushi 1
+add
+store
+jmp initWhile_5
+endWhile_5:
+ret 0, 4, 0
