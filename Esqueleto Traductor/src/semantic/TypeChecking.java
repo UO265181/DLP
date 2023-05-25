@@ -15,9 +15,9 @@ import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionAccessArray;
-import ast.expressions.access.ExpressionAccessStructField;
-import ast.expressions.access.ExpressionAccessVariable;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionStructField;
+import ast.expressions.access.ExpressionVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -169,7 +169,7 @@ public class TypeChecking extends DefaultVisitor {
 
 		predicado(node.getExpression().getType().isPrimitive(), "El tipo de la expresión a leer ha de ser primitivo",
 				node);
-		//predicado(node.getExpression().isModifiable(), "La expresión a leer ha de ser modificable", node);
+		predicado(node.getExpression().isModifiable(), "La expresión a leer ha de ser modificable", node);
 
 		return null;
 	}
@@ -178,7 +178,8 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(SentenceAssignment node, Object param) {
 		super.visit(node, param);
 
-		//predicado(node.getLeft().isModifiable(), "La expresión izquierda de una asignación ha de ser modificable", node);
+		predicado(node.getLeft().isModifiable(), "La expresión izquierda de una asignación ha de ser modificable",
+				node);
 		predicado(node.getLeft().getType().isPrimitive(),
 				"La expresión izquierda de una asignación ha de ser de tipo primitivo", node);
 		predicado(node.getRight().getType().isPrimitive(),
@@ -278,6 +279,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(TypeInt.getInstance());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
@@ -286,6 +289,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(TypeFloat.getInstance());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
@@ -293,6 +298,8 @@ public class TypeChecking extends DefaultVisitor {
 	public Object visit(ExpressionConstantChar node, Object param) {
 
 		node.setType(TypeChar.getInstance());
+
+		node.setModifiable(false);
 
 		return null;
 	}
@@ -331,6 +338,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(node.getDefinition().getType());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
@@ -343,6 +352,8 @@ public class TypeChecking extends DefaultVisitor {
 				node);
 
 		node.setType(TypeInt.getInstance());
+
+		node.setModifiable(false);
 
 		return null;
 	}
@@ -359,6 +370,8 @@ public class TypeChecking extends DefaultVisitor {
 				node);
 
 		node.setType(node.getNewType());
+
+		node.setModifiable(false);
 
 		return null;
 	}
@@ -400,6 +413,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(node.getLeft().getType());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
@@ -423,6 +438,8 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(TypeInt.getInstance());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
@@ -444,19 +461,23 @@ public class TypeChecking extends DefaultVisitor {
 
 		node.setType(TypeInt.getInstance());
 
+		node.setModifiable(false);
+
 		return null;
 	}
 
 	// class ExpressionVariable { String name; }
-	public Object visit(ExpressionAccessVariable node, Object param) {
+	public Object visit(ExpressionVariable node, Object param) {
 
-		node.setType(node.getDefinition().getType());
+		node.setType(node.getDefinitionVariable().getType());
+
+		node.setModifiable(true);
 
 		return null;
 	}
 
 	// class ExpressionStructField { Expression struct; String name; }
-	public Object visit(ExpressionAccessStructField node, Object param) {
+	public Object visit(ExpressionStructField node, Object param) {
 		super.visit(node, param);
 
 		try {
@@ -464,7 +485,9 @@ public class TypeChecking extends DefaultVisitor {
 		} catch (IllegalStateException e) {
 			errorManager.notify("Type Checking", "La expresión del acceso a estructura ha de ser de tipo estructura",
 					node.getStart());
+
 			node.setType(TypeError.getInstance());
+			node.setModifiable(false);
 			return null;
 		}
 
@@ -477,16 +500,18 @@ public class TypeChecking extends DefaultVisitor {
 					node.getStart());
 
 			node.setType(TypeError.getInstance());
+			node.setModifiable(false);
 			return null;
 		}
 
 		node.setType(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());
+		node.setModifiable(true);
 
 		return null;
 	}
 
 	// class ExpressionArray { Expression array; Expression index; }
-	public Object visit(ExpressionAccessArray node, Object param) {
+	public Object visit(ExpressionArray node, Object param) {
 		super.visit(node, param);
 
 		predicado(node.getIndex().getType().isSameType(TypeInt.getInstance()),
@@ -496,6 +521,8 @@ public class TypeChecking extends DefaultVisitor {
 				"La expresión del acceso array ha de hacerse a un array", node);
 
 		node.setType(node.getArray().getType().getTypeOfTheArray());
+
+		node.setModifiable(true);
 
 		return null;
 	}

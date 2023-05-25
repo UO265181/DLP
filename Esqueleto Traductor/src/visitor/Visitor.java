@@ -15,9 +15,9 @@ import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionAccessArray;
-import ast.expressions.access.ExpressionAccessStructField;
-import ast.expressions.access.ExpressionAccessVariable;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionStructField;
+import ast.expressions.access.ExpressionVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -67,7 +67,7 @@ public interface Visitor {
 	public Object visit(ExpressionArithmetic node, Object param);
 	public Object visit(ExpressionRelational node, Object param);
 	public Object visit(ExpressionLogical node, Object param);
-	public Object visit(ExpressionAccessVariable node, Object param);
-	public Object visit(ExpressionAccessStructField node, Object param);
-	public Object visit(ExpressionAccessArray node, Object param);
+	public Object visit(ExpressionVariable node, Object param);
+	public Object visit(ExpressionStructField node, Object param);
+	public Object visit(ExpressionArray node, Object param);
 }

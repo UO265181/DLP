@@ -12,9 +12,9 @@ import ast.expressions.ExpressionCast;
 import ast.expressions.ExpressionLogical;
 import ast.expressions.ExpressionRelational;
 import ast.expressions.ExpressionUnary;
-import ast.expressions.access.ExpressionAccessArray;
-import ast.expressions.access.ExpressionAccessStructField;
-import ast.expressions.access.ExpressionAccessVariable;
+import ast.expressions.access.ExpressionArray;
+import ast.expressions.access.ExpressionStructField;
+import ast.expressions.access.ExpressionVariable;
 import ast.expressions.constant.ExpressionConstantChar;
 import ast.expressions.constant.ExpressionConstantFloat;
 import ast.expressions.constant.ExpressionConstantInt;
@@ -29,12 +29,11 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
         super(codeWriter, errorManager, FUNCTION_NAME);
     }
 
-    //TODO: update access todos
     // value[[expressionVariable → name:String ]] =
     // address[[this]]
     // load{type.suffix}
     @Override
-    public Object visit(ExpressionAccessVariable node, Object param) {
+    public Object visit(ExpressionVariable node, Object param) {
 
         node.accept(CodeGeneratorProvider.cgAddress, param);
 
@@ -77,7 +76,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // address[[this]]
     // load{array.type}//TODO: dcx
     @Override
-    public Object visit(ExpressionAccessArray node, Object param) {
+    public Object visit(ExpressionArray node, Object param) {
 
         node.accept(CodeGeneratorProvider.cgAddress, param);
         getCodeWriter().load(node.getType());
@@ -89,7 +88,7 @@ public class CodeGeneratorValue extends DefaultCodeGeneratorVisitor {
     // address[[this]]
     // load{struct.getStructField(name).type.suffix}
     @Override
-    public Object visit(ExpressionAccessStructField node, Object param) {
+    public Object visit(ExpressionStructField node, Object param) {
 
         node.accept(CodeGeneratorProvider.cgAddress, param);
         getCodeWriter().load(node.getStruct().getType().getDefinitionStruct().getField(node.getName()).getType());

@@ -5,12 +5,14 @@
 package ast.expressions;
 
 import ast.AbstractAST;
+import ast.definitions.DefinitionVariable;
 import ast.types.Type;
 
 public abstract class AbstractExpression extends AbstractAST implements Expression {
 
 
     private Type type;
+	private boolean modifiable;
 
 	public Type getType() {
 		return type;
@@ -19,4 +21,17 @@ public abstract class AbstractExpression extends AbstractAST implements Expressi
 	public void setType(Type type) {
 		this.type = type;
 	}
+
+	public boolean isModifiable() {
+		return modifiable;
+	}
+
+	public void setModifiable(boolean modifiable) {
+		this.modifiable = modifiable;
+	}
+
+	public DefinitionVariable getDefinitionVariable() {
+		return null;
+	}
+
 }

@@ -14,7 +14,7 @@ import ast.definitions.DefinitionStruct;
 import ast.definitions.DefinitionVariable;
 import ast.definitions.StructField;
 import ast.expressions.ExpressionCallFunction;
-import ast.expressions.access.ExpressionAccessVariable;
+import ast.expressions.access.ExpressionVariable;
 import ast.sentences.SentenceCallFunction;
 import ast.types.TypeStruct;
 import main.*;
@@ -126,12 +126,12 @@ public class Identification extends DefaultVisitor {
     }
 
     // class ExpressionVariable { String name; }
-    public Object visit(ExpressionAccessVariable node, Object param) {
+    public Object visit(ExpressionVariable node, Object param) {
     	super.visit(node, param);
 
         DefinitionVariable variable = variables.getFromAny(node.getName());
         predicado(variable != null, "Variable no definida: " + node.getName(), node);
-        node.setDefinition(variable);
+        node.setDefinitionVariable(variable);
 
         return null;
     }

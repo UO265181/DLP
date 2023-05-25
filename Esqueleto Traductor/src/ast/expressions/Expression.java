@@ -5,10 +5,17 @@
 package ast.expressions;
 
 import ast.AST;
+import ast.definitions.DefinitionVariable;
 import ast.types.Type;
 
 public interface Expression extends AST {
 
     Type getType();
 	void setType(Type type);
+	
+	boolean isModifiable();
+	void setModifiable(boolean modifiable);
+
+	DefinitionVariable getDefinitionVariable();
+
 }

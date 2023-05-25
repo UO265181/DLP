@@ -68,16 +68,16 @@ sentences
 
 sentence
 	returns[Sentence ast]:
-	left = access '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
+	left = expression '=' right = expression ';' { $ast = new SentenceAssignment($left.ast, $right.ast); 
 		}
 	| 'return' expression ';' { $ast = new SentenceReturn($expression.ast); }
-	| s = 'return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}
+	| s='return' ';' { $ast = new SentenceReturn(null);  $ast.setPositions($s);}
 	| 'print' expression ';' { $ast = new SentencePrint($expression.ast); }
-	| s = 'print' ';' { $ast = new SentencePrint(null); $ast.setPositions($s);}
+	| s='print' ';' { $ast = new SentencePrint(null); $ast.setPositions($s);}
 	| 'printsp' expression ';' { $ast = new SentencePrintsp($expression.ast); }
-	| s = 'printsp' ';' { $ast = new SentencePrintsp(null); $ast.setPositions($s);}
+	| s='printsp' ';' { $ast = new SentencePrintsp(null); $ast.setPositions($s);}
 	| 'println' expression ';' { $ast = new SentencePrintln($expression.ast); }
-	| s = 'println' ';' { $ast = new SentencePrintln(null); $ast.setPositions($s);}
+	| s='println' ';' { $ast = new SentencePrintln(null); $ast.setPositions($s);}
 	| 'read' expression ';' { $ast = new SentenceRead($expression.ast); }
 	| 'while' '(' expression ')' '{' sentences '}' { $ast = new SentenceWhile($expression.ast, $sentences.list); 
 		}
@@ -98,7 +98,10 @@ callFunctionParams
 expression
 	returns[Expression ast]:
 	'(' expression ')' { $ast = $expression.ast; }
-	| access { $ast = $access.ast; }
+	| array = expression '[' index = expression ']' { $ast = new ExpressionArray($array.ast,$index.ast); 
+		}
+	| struct = expression '.' IDENT { $ast = new ExpressionStructField($struct.ast,$IDENT); }
+	| IDENT { $ast = new ExpressionVariable($IDENT); }
 	| '<' type '>' '(' expression ')' { $ast = new ExpressionCast($type.ast,$expression.ast); }
 	| left = expression operator = ('*' | '/' | '%') right = expression { $ast = new ExpressionArithmetic($left.ast,$operator,$right.ast); 
 		}
@@ -119,9 +122,3 @@ expression
 	| REAL_CONSTANT { $ast = new ExpressionConstantFloat($REAL_CONSTANT); }
 	| CHAR_CONSTANT { $ast = new ExpressionConstantChar($CHAR_CONSTANT); };
 
-access
-	returns[Access ast]:
-	array = access '[' index = expression ']' { $ast = new ExpressionAccessArray($array.ast,$index.ast); 
-		}
-	| struct = access '.' IDENT { $ast = new ExpressionAccessStructField($struct.ast,$IDENT); }
-	| IDENT { $ast = new ExpressionAccessVariable($IDENT); };
